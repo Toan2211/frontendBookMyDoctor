@@ -1,0 +1,57 @@
+.footer {
+    padding-top: 20px;
+    height: 180px;
+    &-content {
+        margin: 0 120px;
+        display: flex;
+    }
+    &__app-info {
+        flex: 2;
+        &-logo {
+            img {
+                width: 40%;
+            }
+        }
+        &-companyname {
+            font-weight: 600;
+            font-size: 20px;
+        }
+        span {
+            display: block;
+        }
+    }
+    &__services {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        // justify-content: center;
+        // align-items: center;
+        &-title {
+            float: left; 
+            font-weight: 600;
+            font-size: 20px;
+        }
+        &-list {
+            margin-top: 20px;
+        }
+        &-item {
+            margin-bottom: 10px;
+        }
+
+    }
+    &__support {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        &-title {
+            float: left; 
+            font-weight: 600;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        span {
+            margin-bottom: 10px;
+        }
+        
+    }
+}
