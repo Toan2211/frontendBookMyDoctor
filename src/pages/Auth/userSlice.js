@@ -4,28 +4,35 @@ const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit')
 
 export const login = createAsyncThunk(
     'users/login',
-    async payload => {
-        const data = await authApi.login(payload)
-        localStorage.setItem('acess_token', data.jwt)
-        localStorage.setItem('user', JSON.stringify(data.user))
-        return data.user
+    async (payload, { rejectWithValue }) => {
+        try {
+            const data = await authApi.login(payload)
+            console.log('data redux', data)
+            localStorage.setItem('access_token', data.token)
+            localStorage.setItem('user', JSON.stringify(data.user))
+            return data.user
+        }
+        catch (error) {
+            return rejectWithValue(error)
+        }
     }
 )
+
 const userSlice = createSlice({
     name: 'user',
     initialState: {
-        profile: JSON.parse(localStorage.getItem('user')) || {},
-        test: 'test ne`'
+        profile: JSON.parse(localStorage.getItem('user')) || {}
     },
     reducers: {
         logout(state) {
             localStorage.removeItem('user')
-            localStorage.removeItem('accessToken')
+            localStorage.removeItem('access_token')
             state.profile = {}
         }
     },
     extraReducers: {
         [login.fulfilled]: (state, action) => {
+            console.log('login fulfilled', action.payload)
             state.profile = action.payload
         }
     }

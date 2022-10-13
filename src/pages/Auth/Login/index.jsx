@@ -1,20 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './index.scss'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import InputField from 'components/InputFiled'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { path } from 'constants/path'
 import { useDispatch } from 'react-redux'
 import { login } from '../userSlice'
-import { unwrapResult } from '@reduxjs/toolkit'
+import { toast } from 'react-toastify'
 
 function Login() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const schema = yup.object().shape({
-        identifier: yup
+        email: yup
             .string()
             .required('Vui lòng nhập Email')
             .email('Email không hợp lệ'),
@@ -22,21 +22,29 @@ function Login() {
     })
     const form = useForm({
         defaultValues: {
-            identifier: '',
+            email: '',
             password: ''
         },
         resolver: yupResolver(schema)
     })
     const handleSubmitForm = async value => {
-        alert(value.identifier + value.password)
         try {
             const reponse = await dispatch(login(value))
-            console.log(unwrapResult(reponse))
+            console.log(reponse)
+            toast.success('Đăng nhập thành công', {
+                position: toast.POSITION.BOTTOM_RIGHT,
+                autoClose: 1000
+            })
             navigate('/')
         } catch (err) {
-            alert(err.message)
+            toast.error(err.message, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
         }
     }
+    useEffect(() => {
+        document.title = 'Login'
+    }, [])
     return (
         <div className="authform">
             <div className="authform__content">
@@ -47,7 +55,7 @@ function Login() {
                     <div className="authform__form-element">
                         <InputField
                             label="Email"
-                            name="identifier"
+                            name="email"
                             type="input"
                             form={form}
                             placeholder="Email"
