@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import InputField from 'components/InputFiled'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import PreviewUploadImg from 'components/PreviewUploadImg'
 
 function ForgotPassWordForm() {
     const schema = yup.object().shape({
@@ -13,13 +14,18 @@ function ForgotPassWordForm() {
     })
     const form = useForm({
         defaultValues: {
-            email: ''
-        },
-        resolver: yupResolver(schema)
+            email: null,
+            image: null
+        }
+        // resolver: yupResolver(schema)
     })
     const handleSubmitForm = value => {
         console.log(value)
+        console.log(value.image)
     }
+    useEffect(() => {
+        document.title = 'Forgot Password'
+    }, [])
     return (
         <div className="authform">
             <div className="authform__content">
@@ -31,10 +37,13 @@ function ForgotPassWordForm() {
                         <InputField
                             label="Email"
                             name="email"
-                            type="email"
+                            type="date"
                             form={form}
                             placeholder="Nhập địa chỉ Email"
                         />
+                    </div>
+                    <div className="authform__form-element">
+                        <PreviewUploadImg form={form} name = "image"/>
                     </div>
                     <div className="button-submit">
                         <button

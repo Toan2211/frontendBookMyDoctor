@@ -1,3 +1,4 @@
+@import '_setting.scss';
 .mainlayout-introduce {
     &__container {
         margin: 0 120px;
@@ -63,4 +64,27 @@
 }
 .text-active {
     color: #056EDF;
+}
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .mainlayout-introduce {
+        &__container {
+            margin: 0 $margin-tablet;
+            margin-bottom: 40px;
+
+        }
+    }
+}
+@media screen and (max-width: 768px){
+    .mainlayout-introduce {
+        &__container {
+            margin: 0 $margin-mobile;
+            margin-bottom: 40px;
+        }
+        &__content {
+            flex-direction: column;
+            &-detail-item {
+                padding: 20px;
+            }
+        }
+    }
 }

@@ -1,0 +1,24 @@
+@import '_setting.scss';
+.doctorMarkDown {
+    background-color: $second-color-background;
+    &__container {
+        margin: 0 120px;
+        padding: 20px 0;
+        margin-bottom: 40px;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .doctorMarkDown {
+        &__container {
+            margin: 0 $margin-tablet;
+        }
+    }
+}
+@media only screen and (max-width: 768px) {
+    .doctorMarkDown {
+        &__container {
+            margin: 0 $margin-mobile;
+        }
+    }
+}

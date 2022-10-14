@@ -5,6 +5,8 @@ class Path {
         this.login = '/login'
         this.register = '/register'
         this.forgotPassword = '/forgotPassword'
+        this.profile = '/profile'
+        this.detailDoctor = '/detailDoctor'
     }
 }
 

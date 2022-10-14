@@ -1,3 +1,4 @@
+@import '_setting.scss';
 .header {
     color: #000000;
     position: sticky;
@@ -8,15 +9,30 @@
     height: 80px;
     display: flex;
     align-items: center;
-
-    &__logo {
+    font-size: $text-font-size;
+    &__left {
         flex: 1;
+    }
+    &__center {
+        
+        flex: 2;
+        text-align: center;
+    }
+    &__right {
+        flex: 1;
+    }
+    &__logo {
         img {
             width: 200px;
         }
+        &-center {
+            display: none;
+            img {
+                width: 160px;
+            }
+        }
     }
     &__menu {
-        flex: 2;
         display: flex;
         justify-content: center;
         padding: 0;
@@ -31,9 +47,15 @@
                 }
             }
         }
+        &-mobile {
+            display: none;
+            cursor: pointer;
+            span {
+                font-size: 30px;
+            }
+        }
     }
     &__action {
-        flex: 1;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -44,7 +66,7 @@
                 border: 2px solid #066EDF;
                 color: #066EDF;
                 border-radius: 4px;
-                font-size: 20px;
+                font-size: $text-font-size;
                 cursor: pointer;
                 outline: none;
                 -webkit-transition: 0.5s;
@@ -95,6 +117,28 @@
                 &:hover {
                     background-color: #F5F5F5;
                 }
+            }
+        }
+    }
+}
+@media only screen and (max-width: 768px) {
+    .header {
+        padding: 4px $margin-mobile;
+        &__action {
+            &-auth-button {
+                padding: 2px 5px;
+            }
+        }
+        &__logo {
+            display: none;
+            &-center {
+                display: block;
+            }
+        }
+        &__menu {
+            display: none;
+            &-mobile {
+                display: block;
             }
         }
     }

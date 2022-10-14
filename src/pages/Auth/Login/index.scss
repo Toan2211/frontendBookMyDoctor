@@ -1,3 +1,4 @@
+@import '_setting.scss';
 .authform {
     background-color: #ffffff;
     margin-top: 50px;
@@ -38,6 +39,9 @@
             border-radius: 4px;
             color: #ffffff;
             background-color: #056EDF;
+            &:hover {
+                color: $hover-color;
+            }
         }
     }
 }

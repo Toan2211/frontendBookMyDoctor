@@ -1,3 +1,4 @@
+@import '_setting.scss';
 .content-layout {
     background-color: #F9FAFB;
     &-content {
@@ -15,4 +16,21 @@
 }
 .footer {
     background-color: #F9FAFB;
+}
+
+@media screen and (max-width: 768px) {
+    .content-layout {
+        &-content {
+            padding: 40px $margin-mobile;
+        }
+    }
+}
+@media screen and (max-width: 1024px) {
+    .content-layout{
+        &-content {
+            &-banner {
+                display: none;
+            }
+        }
+    }
 }

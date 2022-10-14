@@ -8,7 +8,8 @@ function InputField({
     type = 'input',
     form,
     placeholder,
-    icon
+    icon,
+    disabled
 }) {
     const {
         formState: { errors }
@@ -21,7 +22,7 @@ function InputField({
                 name={name}
                 control={form.control}
                 render={({
-                    field: { onChange, onBlur, value, name }
+                    field: { onChange, onBlur, name }
                 }) => (
                     <div className="input-field__container">
                         <div className="input-field__icon">
@@ -36,6 +37,7 @@ function InputField({
                             value={form.getValues(name)}
                             type={type}
                             placeholder={placeholder}
+                            disabled = {disabled}
                             className={`${
                                 type === 'date' ? 'inputDate ' : ''
                             }input-field__input`}

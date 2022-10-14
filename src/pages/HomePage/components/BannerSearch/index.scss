@@ -1,3 +1,4 @@
+@import '_setting.scss';
 .bannerSearch {
     height: 460px;
     background-color: #01B3F5;
@@ -34,6 +35,30 @@
             color: #ffffff;
             display: inline-block;
             margin-bottom: 10px;
+        }
+    }
+}
+@media only screen and (min-width: 768px) and (max-width:1024px) {
+    .bannerSearch {
+        &__container {
+            margin: 0 $margin-tablet;
+        }
+    }
+}
+@media only screen and (max-width: 768px) { 
+    .bannerSearch {
+        height: 200px;
+        &__container {
+            margin: 0 $margin-mobile;
+        }
+        &__img {
+            display: none; 
+        }
+        &__content{
+            width: 90%;
+        }
+        &__title {
+            display: none;
         }
     }
 }
