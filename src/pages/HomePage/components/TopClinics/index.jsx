@@ -1,6 +1,6 @@
 import React from 'react'
 import Slider from 'react-slick'
-import ClinicItem from '../ClinicItem'
+import ClinicItem from '../../../../components/ClinicItem'
 import './index.scss'
 function TopClinics() {
     const settings = {

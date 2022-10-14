@@ -1,5 +1,10 @@
 @import '_setting.scss';
 .doctorItem{
+    .listColumn-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
     &__container {
         border: 2px solid #F1F5F9;
         border-radius: 4px;
@@ -10,13 +15,14 @@
         display: flex;
         gap: 20px;
         &-img {
+            width: 120px;
             img {
                 border-radius: 50%;
             }
         }
         &-main {
             span {
-                display: inline-block;
+                display: block;
             }
             &-position {
                 font-size: 14px;
@@ -34,6 +40,9 @@
         }
     }
     &__action {
+        &--column {
+            margin-top: auto;
+        }
         &-link {
             color: $primary-color;
             &:hover {

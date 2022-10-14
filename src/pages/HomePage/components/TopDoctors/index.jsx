@@ -1,6 +1,6 @@
 import React from 'react'
 import Slider from 'react-slick'
-import DoctorItem from '../DoctorItem'
+import DoctorItem from '../../../../components/DoctorItem'
 import './index.scss'
 
 function TopDoctors() {

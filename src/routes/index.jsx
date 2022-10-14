@@ -1,3 +1,5 @@
+import HeaderClinicList from 'components/Header/components/HeaderClinicList'
+import HeaderDoctorList from 'components/Header/components/HeaderDoctorList'
 import { path } from 'constants/path'
 import AuthenticatedGuard from 'guards/AuthenticatedGuard'
 import UnauthenticatedGuard from 'guards/UnauthenticatedGuard'
@@ -21,6 +23,8 @@ function RoutesComponent() {
                     <Route path = {path.home} element = {<HomePage />}/>
                     <Route path = {path.detailDoctor} element = {<DetailDoctor />}/>
                 </Route>
+                <Route path={path.headerClinic} element = {<HeaderClinicList />}/>
+                <Route path = {path.headerDoctor} element = {<HeaderDoctorList />}/>
                 <Route element ={<AuthenticatedGuard />}>
                     <Route element = {<MainLayout />}>
                         <Route path = {path.profile} element = {<Profile />}/>

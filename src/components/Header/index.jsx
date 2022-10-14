@@ -52,22 +52,22 @@ function Header() {
                         </a>
                     </li>
                     <li className="header__menu-item">
-                        <a
-                            href="/#"
+                        <Link
+                            to = {path.headerClinic}
                             className="header__menu-item-link"
                         >
                             Cơ sở y tế
                             <span>Chọn bác sĩ theo phòng khám</span>
-                        </a>
+                        </Link>
                     </li>
                     <li className="header__menu-item">
-                        <a
-                            href="/#"
+                        <Link
+                            to = {path.headerDoctor}
                             className="header__menu-item-link"
                         >
                             Bác sĩ
                             <span>Chọn bác sĩ giỏi</span>
-                        </a>
+                        </Link>
                     </li>
                 </ul>
                 <div className="header__logo-center">
