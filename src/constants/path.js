@@ -10,6 +10,7 @@ class Path {
         this.forgotPassword = '/forgotPassword'
         this.profile = '/profile'
         this.detailDoctor = '/detailDoctor'
+        this.system = '/system'
     }
 }
 
