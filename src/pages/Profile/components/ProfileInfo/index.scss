@@ -2,7 +2,6 @@
 .profileInfo {
     margin-bottom: 100px;
     &__img {
-        height: 140px;
         background-color: #F6F6F6;
         margin-bottom: 40px !important;
         margin: 0 auto;
@@ -10,10 +9,15 @@
         align-items: center;
         justify-content: center;
         &-container {
+            height: 140px;
+
             cursor: pointer;
             width: 160px;
-            border-radius: 50%;
             position: relative;
+            img {
+                height: 100% !important;
+                border-radius: 50%;
+            }
             &:hover .profileAction {
                 display: block;
             }
@@ -21,6 +25,7 @@
     }
 }
 .profileAction {
+    z-index: 11;
     top: 100%;
     left: 50%;
     width: 200px;
@@ -34,7 +39,7 @@
         padding: 4px 2px;
     }
     li:hover {
-        background-color: rgba(255,255,255,0.6);
+        background-color: #cccc;
         color: $primary-color;
     }
 }

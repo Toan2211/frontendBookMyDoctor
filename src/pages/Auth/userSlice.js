@@ -1,4 +1,5 @@
 import authApi from 'api/authApi'
+import userApi from 'api/userApi'
 
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit')
 
@@ -7,13 +8,23 @@ export const login = createAsyncThunk(
     async (payload, { rejectWithValue }) => {
         try {
             const data = await authApi.login(payload)
-            console.log('data redux', data)
             localStorage.setItem('access_token', data.token)
             localStorage.setItem('user', JSON.stringify(data.user))
             return data.user
+        } catch (err) {
+            return rejectWithValue(err)
         }
-        catch (error) {
-            return rejectWithValue(error)
+    }
+)
+export const update = createAsyncThunk(
+    'users/update',
+    async (payload, { rejectWithValue }) => {
+        try {
+            const data = await userApi.updateInfoUser(payload)
+            localStorage.setItem('user', JSON.stringify(data.message))
+            return data.message
+        } catch (err) {
+            return rejectWithValue(err)
         }
     }
 )
@@ -32,7 +43,9 @@ const userSlice = createSlice({
     },
     extraReducers: {
         [login.fulfilled]: (state, action) => {
-            console.log('login fulfilled', action.payload)
+            state.profile = action.payload
+        },
+        [update.fulfilled]: (state, action) => {
             state.profile = action.payload
         }
     }

@@ -29,7 +29,7 @@ function PreviewUploadImg({ form, name }) {
                     {previewSource ? (
                         <img alt="img" src={previewSource} />
                     ) : (
-                        <img alt="img" src={images.doctorEx} />
+                        <img alt="img" src={form.getValues('image')} />
                     )}
                 </div>
                 <div>
