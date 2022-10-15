@@ -2,9 +2,11 @@ import HeaderClinicList from 'components/Header/components/HeaderClinicList'
 import HeaderDoctorList from 'components/Header/components/HeaderDoctorList'
 import { path } from 'constants/path'
 import AuthenticatedGuard from 'guards/AuthenticatedGuard'
+import SystemAuthenticated from 'guards/SystemAuthenticated'
 import UnauthenticatedGuard from 'guards/UnauthenticatedGuard'
 import AuthLayout from 'layouts/AuthLayout'
 import MainLayout from 'layouts/MainLayout'
+import SystemLayout from 'layouts/SystemLayout'
 import ForgotPassWordForm from 'pages/Auth/ForgotPassword'
 import Login from 'pages/Auth/Login'
 import Register from 'pages/Auth/Register'
@@ -25,6 +27,11 @@ function RoutesComponent() {
                 </Route>
                 <Route path={path.headerClinic} element = {<HeaderClinicList />}/>
                 <Route path = {path.headerDoctor} element = {<HeaderDoctorList />}/>
+                <Route element = {<SystemAuthenticated />}>
+                    <Route path={path.system} element = {<SystemLayout />}>
+
+                    </Route>
+                </Route>
                 <Route element ={<AuthenticatedGuard />}>
                     <Route element = {<MainLayout />}>
                         <Route path = {path.profile} element = {<Profile />}/>

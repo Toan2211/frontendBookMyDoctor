@@ -24,6 +24,10 @@ function Header() {
         navigate(path.profile)
         setShowDropdown(false)
     }
+    const handleSystem = () => {
+        navigate(path.system)
+        setShowDropdown(false)
+    }
     return (
         <header className="header">
             <div className="header__left">
@@ -37,7 +41,9 @@ function Header() {
                     </Link>
                 </div>
                 <div className="header__menu-mobile">
-                    <span><FiMenu /></span>
+                    <span>
+                        <FiMenu />
+                    </span>
                 </div>
             </div>
             <div className="header__center">
@@ -53,7 +59,7 @@ function Header() {
                     </li>
                     <li className="header__menu-item">
                         <Link
-                            to = {path.headerClinic}
+                            to={path.headerClinic}
                             className="header__menu-item-link"
                         >
                             Cơ sở y tế
@@ -62,7 +68,7 @@ function Header() {
                     </li>
                     <li className="header__menu-item">
                         <Link
-                            to = {path.headerDoctor}
+                            to={path.headerDoctor}
                             className="header__menu-item-link"
                         >
                             Bác sĩ
@@ -91,10 +97,20 @@ function Header() {
                             />
                             {showDropdown && (
                                 <ul className="header__profile-dropdown">
-                                    <li className="header__profile-dropdown-item"
+                                    {userData.role_id === 1 && (
+                                        <li
+                                            className="header__profile-dropdown-item"
+                                            onClick={handleSystem}
+                                        >
+                                            Quản lí
+                                        </li>
+                                    )}
+
+                                    <li
+                                        className="header__profile-dropdown-item"
                                         onClick={handleProfile}
                                     >
-                                        Trang cá nhân {userData.lastname}
+                                        Trang cá nhân
                                     </li>
                                     <li
                                         className="header__profile-dropdown-item"
