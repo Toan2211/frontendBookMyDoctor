@@ -6,7 +6,6 @@ import { path } from 'constants/path'
 
 function SystemAuthenticated() {
     const systemAuthenticated = useSystemAuthenticated()
-    console.log(systemAuthenticated)
     if (!systemAuthenticated) return <Navigate to={path.home} />
     return (
         <>
