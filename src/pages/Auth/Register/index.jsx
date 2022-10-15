@@ -42,7 +42,8 @@ function Register() {
             gender: '',
             birthday: '',
             password: '',
-            passwordConfirm: ''
+            passwordConfirm: '',
+            address: ''
         },
         resolver: yupResolver(schema)
     })
@@ -57,16 +58,16 @@ function Register() {
         (async () => {
             try {
                 setDisabledButton(true)
+                // eslint-disable-next-line no-unused-vars
                 const data = await authApi.signup(formData, {
                     headers: { 'Content-Type': 'multipart/form-data' }
                 })
-                console.log(data)
                 toast.success('Đăng ký thành công, mời bạn vào mail để xác nhận', {
                     position: toast.POSITION.BOTTOM_RIGHT
                 })
                 navigate('/login')
             } catch (err) {
-                toast.success(err.message, {
+                toast.error(err.message, {
                     position: toast.POSITION.BOTTOM_RIGHT
                 })
             }
@@ -140,7 +141,15 @@ function Register() {
                             type="date"
                         />
                     </div>
-
+                    <div className="authform__form-element">
+                        <InputField
+                            label="Địa chỉ"
+                            name="address"
+                            form={form}
+                            placeholder="Địa chỉ"
+                            type="input"
+                        />
+                    </div>
                     <div className="authform__form-element">
                         <InputField
                             label="Mật khẩu"

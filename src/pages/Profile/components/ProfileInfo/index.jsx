@@ -1,7 +1,6 @@
-import images from 'assets'
 import InputField from 'components/InputFiled'
 import RadioGroup from 'components/RadioGroup'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import {
     BsFillCalendarFill,
@@ -19,27 +18,35 @@ function ProfileInfo() {
     const [isShowFormEdit, setIsShowFormEdit] = useState(false)
     const [isShowFormEditPassword, setIsShowFormEditPassword] =
         useState(false)
-
     const toggleShowFormEdit = () =>
         setIsShowFormEdit(!isShowFormEdit)
     const toggleShowFormEditPassword = () =>
         setIsShowFormEditPassword(!isShowFormEditPassword)
     const form = useForm({
         defaultValues: {
-            phoneNumber: '' || 1,
-            email: '' || userData.email,
-            firstName: '' || userData.firsname,
-            lastName: '' || userData.lastname,
-            gender: Number,
-            birthdate: '',
-            address: ''
+            phoneNumber: userData.phoneNumber,
+            email: userData.email,
+            firsname: userData.firsname,
+            lastname: userData.lastname,
+            gender: userData.gender === true ? '1' : '0',
+            birthday: userData.birthday.split('T')[0],
+            address: userData.address
         }
     })
+    useEffect(() => {
+        form.setValue('phoneNumber', userData.phoneNumber)
+        form.setValue('address', userData.email)
+        form.setValue('firsname', userData.firsname)
+        form.setValue('lastname', userData.lastname)
+        form.setValue('gender', userData.gender === true ? '1' : '0')
+        form.setValue('birthday', userData.birthday.split('T')[0])
+        form.setValue('address', userData.address)
+    }, [userData, form])
     return (
         <div className="profileInfo">
             <div className="profileInfo__img">
                 <div className="profileInfo__img-container">
-                    <img src={images.logoUser} alt="test" />
+                    <img src={userData.image} alt="test" />
                     <ul className="profileAction">
                         <li onClick={toggleShowFormEdit}>
                             Chỉnh sửa thông tin
@@ -54,7 +61,7 @@ function ProfileInfo() {
                 <div className="form__element-two-input">
                     <div>
                         <InputField
-                            name="firstName"
+                            name="firsname"
                             type="input"
                             form={form}
                             placeholder="Họ"
@@ -64,13 +71,12 @@ function ProfileInfo() {
                     </div>
                     <div>
                         <InputField
-                            name="lastName"
+                            name="lastname"
                             type="input"
                             form={form}
                             placeholder="Tên"
                             disabled={true}
                             icon={<FaUser />}
-
                         />
                     </div>
                 </div>
@@ -97,7 +103,7 @@ function ProfileInfo() {
                 </div>
                 <div className="form__element">
                     <InputField
-                        name="birthdate"
+                        name="birthday"
                         type="date"
                         form={form}
                         placeholder="Ngày sinh"

@@ -8,17 +8,19 @@ import {
 } from 'react-icons/bs'
 import { FaUser } from 'react-icons/fa'
 import { MdEmail, MdLocationPin } from 'react-icons/md'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import './index.scss'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import PreviewUploadImg from 'components/PreviewUploadImg'
-import patientsApi from 'api/patientsApi'
 import { toast } from 'react-toastify'
+import { update } from 'pages/Auth/userSlice'
+import { unwrapResult } from '@reduxjs/toolkit'
 // eslint-disable-next-line no-useless-escape
 const phoneRegExp = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/
 function ProfileUpdateForm({ onClose }) {
     const userData = useSelector(state => state.user.profile)
+    const dispatch = useDispatch()
     const schema = yup.object().shape({
         phoneNumber: yup
             .string()
@@ -32,36 +34,38 @@ function ProfileUpdateForm({ onClose }) {
             .string()
             .required('Vui lòng nhập Email')
             .email('Email không hợp lệ'),
-        birthday: yup.string().required('Vui lòng nhập ngày sinh')
+        birthday: yup.string().required('Vui lòng nhập ngày sinh'),
+        address: yup.string().required('Vui lòng nhập địa chỉ')
     })
     const form = useForm({
         defaultValues: {
-            image: '',
-            phoneNumber: '',
+            image: userData.image,
+            phoneNumber: '' || userData.phoneNumber,
             email: '' || userData.email,
             firsname: '' || userData.firsname,
             lastname: '' || userData.lastname,
-            gender: Number,
-            birthday: '',
-            address: ''
+            gender: userData.gender === true ? '1' : '0',
+            birthday: userData.birthday.split('T')[0],
+            address: userData.address
         },
         resolver: yupResolver(schema)
     })
     const handleSubmitForm = value => {
-        console.log('edit profile form', value)
-        const submitValue = { ...value, id: 7 }
+        const submitValue = { ...value, id: userData.id }
+        submitValue.gender = submitValue.gender === '1' ? 1 : 0
         const formData = new FormData()
         for (let key in submitValue) {
             formData.append(key, submitValue[key])
         }
         (async () => {
             try {
-                const datares = await patientsApi.updatePatient(formData)
-                console.log(datares)
-                toast.error('Cập nhật thành công', {
+                const datares = await dispatch(update(formData))
+                unwrapResult(datares)
+                toast.success('Cập nhật thành công', {
                     position: toast.POSITION.BOTTOM_RIGHT,
                     autoClose: 2000
                 })
+                onClose()
             } catch (err) {
                 toast.error(err.message, {
                     position: toast.POSITION.BOTTOM_RIGHT
@@ -117,6 +121,7 @@ function ProfileUpdateForm({ onClose }) {
                             form={form}
                             placeholder="Email"
                             icon={<MdEmail />}
+                            disabled = {true}
                         />
                     </div>
                     <div className="form__element">

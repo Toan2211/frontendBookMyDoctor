@@ -11,11 +11,11 @@ function Header() {
     const location = useLocation()
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const userData = useSelector(state => state.user.profile)
     const [showDropdown, setShowDropdown] = useState(false)
     const toggleDropdownProfile = () => {
         setShowDropdown(!showDropdown)
     }
-    const currentUser = useSelector(state => state.user)
     const handleLogout = () => {
         dispatch(logout())
         navigate('/login')
@@ -82,11 +82,11 @@ function Header() {
             </div>
             <div className="header__right">
                 <div className="header__action">
-                    {currentUser.profile.email && (
+                    {userData.id && (
                         <div className="header__profile">
                             <img
                                 className="header__profile-img"
-                                src={images.vietnamflag}
+                                src={userData.image}
                                 onClick={toggleDropdownProfile}
                             />
                             {showDropdown && (
@@ -94,7 +94,7 @@ function Header() {
                                     <li className="header__profile-dropdown-item"
                                         onClick={handleProfile}
                                     >
-                                        Trang cá nhân
+                                        Trang cá nhân {userData.lastname}
                                     </li>
                                     <li
                                         className="header__profile-dropdown-item"
@@ -106,7 +106,7 @@ function Header() {
                             )}
                         </div>
                     )}
-                    {!currentUser.profile.email && (
+                    {!userData.email && (
                         <div className="header__action-auth">
                             {location.pathname === '/login' ? (
                                 <Link to={path.register}>

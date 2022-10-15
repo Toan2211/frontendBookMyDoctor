@@ -4,15 +4,15 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import InputField from 'components/InputFiled'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { path } from 'constants/path'
 import { useDispatch } from 'react-redux'
 import { login } from '../userSlice'
 import { toast } from 'react-toastify'
+import { unwrapResult } from '@reduxjs/toolkit'
 
 function Login() {
     const dispatch = useDispatch()
-    const navigate = useNavigate()
     const schema = yup.object().shape({
         email: yup
             .string()
@@ -30,12 +30,11 @@ function Login() {
     const handleSubmitForm = async value => {
         try {
             const reponse = await dispatch(login(value))
-            console.log(reponse)
+            unwrapResult(reponse)
             toast.success('Đăng nhập thành công', {
                 position: toast.POSITION.BOTTOM_RIGHT,
                 autoClose: 1000
             })
-            navigate('/')
         } catch (err) {
             toast.error(err.message, {
                 position: toast.POSITION.BOTTOM_RIGHT
