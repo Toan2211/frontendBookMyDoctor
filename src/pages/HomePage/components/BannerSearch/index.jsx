@@ -13,7 +13,7 @@ function BannerSearch() {
                         <span>Giải pháp y tế thông minh giúp tối ưu kết nối, chăm sóc sức khỏe tốt hơn cho cả bạn và gia đình</span>
                     </div>
                     <div className="bannerSearch__input-container">
-                        <SearchInput />
+                        <SearchInput placeholder="Bác sĩ, phòng khám, chuyên khoa ..."/>
                     </div>
                 </div>
 

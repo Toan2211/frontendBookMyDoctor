@@ -5,7 +5,6 @@ import Footer from 'components/Footer'
 import './index.scss'
 import images from 'assets'
 import { Outlet } from 'react-router-dom'
-import Introduce from './Introduce'
 MainLayout.propTypes = {
     children: PropTypes.oneOfType([
         PropTypes.element,
@@ -18,7 +17,6 @@ function MainLayout() {
         <>
             <Header />
             <div className="mainlayout-content"><Outlet /></div>
-            <Introduce />
             <div className="mainlayout-banner">
                 <div className="mainlayout-banner-content">
                     <div className="mainlayout-banner-content-slogan">

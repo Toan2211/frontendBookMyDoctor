@@ -1,4 +1,5 @@
-import React from 'react'
+
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import InputField from 'components/InputFiled'
 import * as yup from 'yup'
@@ -18,8 +19,12 @@ function ForgotPassWordForm() {
         resolver: yupResolver(schema)
     })
     const handleSubmitForm = value => {
+        // eslint-disable-next-line no-console
         console.log(value)
     }
+    useEffect(() => {
+        document.title = 'Forgot Password'
+    }, [])
     return (
         <div className="authform">
             <div className="authform__content">

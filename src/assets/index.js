@@ -7,7 +7,9 @@ const images = {
     imgIntroduce2: require('assets/img/imgIntroduce2.png'),
     bannerSearchImg: require('assets/img/bannerSearchImg.png'),
     dalieu: require('assets/img/da-lieu.png'),
-
+    logoUser: require('assets/img/logoUser.png'),
+    doctorEx: require('assets/img/doctorEx.png'),
+    clinicEx: require('assets/img/phongkhamEx.png')
 }
 
 export default images

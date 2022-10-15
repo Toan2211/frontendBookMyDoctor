@@ -1,6 +1,7 @@
-.mainlayout-content {
-    // margin: 40px 0;
-}
+@import '_setting.scss';
+// .mainlayout-content {
+//     // margin: 40px 0;
+// }
 .mainlayout-banner {
     position: relative;
     height: 300px;
@@ -37,4 +38,31 @@
     }
 
 
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .mainlayout-banner-content {
+        &-slogan {
+            margin: 0 $margin-tablet !important;
+        }
+        &-img {
+            right: $margin-tablet !important;
+        }
+    }
+}
+@media screen and (max-width: 768px){
+    .mainlayout-banner {
+        margin-bottom: 40px;
+        &-content {
+            &-slogan {
+                margin: 0 $margin-mobile !important;
+                &-content {
+                    width: 100% !important;
+                }
+            }
+            &-img {
+                display: none;
+            }
+        }
+    }
 }

@@ -1,16 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
-Profile.propTypes = {
-    
-};
-
-function Profile(props) {
+import React, { useEffect } from 'react'
+import ProfileInfo from './components/ProfileInfo'
+import './index.scss'
+function Profile() {
+    useEffect(() => {
+        document.title = 'Profile'
+    }, [])
     return (
-        <div>
-            
+        <div className="profile">
+            <ProfileInfo />
         </div>
-    );
+    )
 }
 
-export default Profile;
+export default Profile

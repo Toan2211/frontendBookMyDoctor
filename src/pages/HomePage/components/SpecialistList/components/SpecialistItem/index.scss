@@ -20,3 +20,9 @@
         font-size: 18px;
     }
 }
+
+@media screen and (max-width: 768px){
+    .specialistItem {
+        width: calc(100%/3);
+    }
+}

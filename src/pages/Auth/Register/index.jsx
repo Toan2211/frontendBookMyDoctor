@@ -1,13 +1,18 @@
 /* eslint-disable no-useless-escape */
 import { yupResolver } from '@hookform/resolvers/yup'
+import authApi from 'api/authApi'
 import InputField from 'components/InputFiled'
 import RadioGroup from 'components/RadioGroup'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import * as yup from 'yup'
 const phoneRegExp = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/
 
 function Register() {
+    const [disableButton, setDisabledButton] = useState(false)
+    const navigate = useNavigate()
     const schema = yup.object().shape({
         phoneNumber: yup
             .string()
@@ -15,14 +20,14 @@ function Register() {
             .matches(phoneRegExp, 'Vui lòng nhập số điện thoại')
             .min(10, 'Số điện thoại không hợp lệ')
             .max(10, 'Số điện thoại không hợp lệ'),
-        firstName: yup.string().required('Vui lòng nhập họ'),
-        lastName: yup.string().required('Vui lòng nhập tên'),
+        firsname: yup.string().required('Vui lòng nhập họ'),
+        lastname: yup.string().required('Vui lòng nhập tên'),
         email: yup
             .string()
             .required('Vui lòng nhập Email')
             .email('Email không hợp lệ'),
         password: yup.string().required('Vui lòng nhập mật khẩu'),
-        birthdate: yup.string().required('Vui lòng nhập ngày sinh'),
+        birthday: yup.string().required('Vui lòng nhập ngày sinh'),
         passwordConfirm: yup
             .string()
             .required('Vui lòng nhập lại mật khẩu')
@@ -32,12 +37,13 @@ function Register() {
         defaultValues: {
             phoneNumber: '',
             email: '',
-            firstName: '',
-            lastName: '',
-            gender: Number,
-            birthdate: '',
+            firsname: '',
+            lastname: '',
+            gender: '',
+            birthday: '',
             password: '',
-            passwordConfirm: ''
+            passwordConfirm: '',
+            address: ''
         },
         resolver: yupResolver(schema)
     })
@@ -45,8 +51,32 @@ function Register() {
         const valueSubmit = { ...value }
         valueSubmit.gender = valueSubmit.gender === '1' ? 1 : 0
         delete valueSubmit.passwordConfirm
-        console.log(valueSubmit)
+        const formData = new FormData()
+        for (let key in valueSubmit) {
+            formData.append(key, valueSubmit[key])
+        }
+        (async () => {
+            try {
+                setDisabledButton(true)
+                // eslint-disable-next-line no-unused-vars
+                const data = await authApi.signup(formData, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                })
+                toast.success('Đăng ký thành công, mời bạn vào mail để xác nhận', {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                })
+                navigate('/login')
+            } catch (err) {
+                toast.error(err.message, {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                })
+            }
+            setDisabledButton(false)
+        })()
     }
+    useEffect(() => {
+        document.title = 'Register'
+    }, [])
     return (
         <div className="authform">
             <div className="authform__content">
@@ -58,7 +88,7 @@ function Register() {
                         <div>
                             <InputField
                                 label="Họ"
-                                name="firstName"
+                                name="firsname"
                                 type="input"
                                 form={form}
                                 placeholder="Họ"
@@ -67,7 +97,7 @@ function Register() {
                         <div>
                             <InputField
                                 label="Tên"
-                                name="lastName"
+                                name="lastname"
                                 type="input"
                                 form={form}
                                 placeholder="Tên"
@@ -106,12 +136,20 @@ function Register() {
                     <div className="authform__form-element">
                         <InputField
                             label="Ngày sinh"
-                            name="birthdate"
+                            name="birthday"
                             form={form}
                             type="date"
                         />
                     </div>
-
+                    <div className="authform__form-element">
+                        <InputField
+                            label="Địa chỉ"
+                            name="address"
+                            form={form}
+                            placeholder="Địa chỉ"
+                            type="input"
+                        />
+                    </div>
                     <div className="authform__form-element">
                         <InputField
                             label="Mật khẩu"
@@ -134,6 +172,7 @@ function Register() {
                         <button
                             type="submit"
                             className="button-submit-login"
+                            disabled = {disableButton}
                         >
                             Đăng ký
                         </button>
