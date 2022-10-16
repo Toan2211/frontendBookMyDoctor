@@ -128,7 +128,6 @@ function Register() {
                             name="gender"
                             form={form}
                             mode = "gender"
-
                             optionData={[
                                 { label: 'Nam', value: Number(1) },
                                 { label: 'Nữ', value: Number(0) }
