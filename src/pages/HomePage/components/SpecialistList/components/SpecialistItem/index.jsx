@@ -10,10 +10,10 @@ function SpecialistItem({ data }) {
     return (
         <div className="specialistItem" onClick = {handleClick}>
             <div className="specialistItem__img">
-                <img src={data.img} alt="specialistItem image" />
+                <img src={data.image} alt="specialistItem image" />
             </div>
             <span className="specialistItem__title">
-                {data.title}
+                {data.name}
             </span>
         </div>
     )

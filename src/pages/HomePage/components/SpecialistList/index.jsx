@@ -6,6 +6,7 @@ import {
     BsFillArrowUpCircleFill,
     BsFillArrowDownCircleFill
 } from 'react-icons/bs'
+import specialistApi from 'api/specialistApi'
 
 function SpecialistList() {
     const [data, setData] = useState([])
@@ -21,8 +22,12 @@ function SpecialistList() {
         }
     }
     useEffect(() => {
-        setData(dataspecialist)
-        setDataShow(dataspecialist.slice(0, 6))
+
+        (async () => {
+            const respone = await specialistApi.getAllSpecialist()
+            setData(respone.message)
+            setDataShow(respone.message.slice(0, 6))
+        })()
     }, [])
     return (
         <div className="specialistList">
