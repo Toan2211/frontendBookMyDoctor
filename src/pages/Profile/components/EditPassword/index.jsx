@@ -33,7 +33,13 @@ function EditPassword({ onClose }) {
         delete valueSubmit.retypeNewPassword
         ;(async () => {
             try {
-                await userApi.changePassword(valueSubmit)
+                await userApi.changePassword(valueSubmit, {
+                    headers: {
+                        Authorization: `${localStorage.getItem(
+                            'access_token'
+                        )}`
+                    }
+                })
                 toast.success('Thay đổi mật khẩu thành công', {
                     position: toast.POSITION.BOTTOM_RIGHT
                 })

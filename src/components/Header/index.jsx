@@ -6,12 +6,14 @@ import { path } from 'constants/path'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from 'pages/Auth/userSlice'
 import { FiMenu } from 'react-icons/fi'
+import { useSystemAuthenticated } from 'hooks/useSystemAuthenticated'
 
 function Header() {
     const location = useLocation()
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const userData = useSelector(state => state.user.profile)
+    const isSystem = useSystemAuthenticated()
     const [showDropdown, setShowDropdown] = useState(false)
     const toggleDropdownProfile = () => {
         setShowDropdown(!showDropdown)
@@ -97,7 +99,7 @@ function Header() {
                             />
                             {showDropdown && (
                                 <ul className="header__profile-dropdown">
-                                    {userData.role_id === 1 && (
+                                    {isSystem && (
                                         <li
                                             className="header__profile-dropdown-item"
                                             onClick={handleSystem}
@@ -122,7 +124,7 @@ function Header() {
                             )}
                         </div>
                     )}
-                    {!userData.email && (
+                    {!userData.id && (
                         <div className="header__action-auth">
                             {location.pathname === '/login' ? (
                                 <Link to={path.register}>

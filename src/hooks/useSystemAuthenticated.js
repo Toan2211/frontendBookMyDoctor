@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux'
 
 export function useSystemAuthenticated() {
-    const roleId = useSelector(state => state.user.profile.role_id)
-    if (roleId === 1)
+    const role = useSelector(state => state.user.profile.role)
+    if (role && role.name === 'ROLE_ADMIN')
         return true
     return false
 }
