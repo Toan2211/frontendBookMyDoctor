@@ -20,7 +20,14 @@ export const update = createAsyncThunk(
     'users/update',
     async (payload, { rejectWithValue }) => {
         try {
-            const data = await userApi.updateInfoUser(payload)
+            const data = await userApi.updateInfoUser(payload, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `${localStorage.getItem(
+                        'access_token'
+                    )}`
+                }
+            })
             localStorage.setItem('user', JSON.stringify(data.message))
             return data.message
         } catch (err) {
