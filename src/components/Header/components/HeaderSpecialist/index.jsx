@@ -1,5 +1,4 @@
 import specialistApi from 'api/specialistApi'
-import ClinicItem from 'components/ClinicItem'
 import SearchInput from 'components/SearchInput'
 import SpecialistItem from 'pages/HomePage/components/SpecialistList/components/SpecialistItem'
 import React, { useEffect, useState } from 'react'

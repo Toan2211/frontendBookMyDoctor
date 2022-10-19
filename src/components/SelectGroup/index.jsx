@@ -2,7 +2,6 @@ import React from 'react'
 import './index.scss'
 
 function SelectGroup({ dataSelectGroup, title, form, name }) {
-    console.log('selection', name, form.getValues(name))
     return (
         <div className="select-group">
             <header className="select-group__title">{title}</header>

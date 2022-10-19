@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import InputField from 'components/InputFiled'
 import RadioGroup from 'components/RadioGroup'
@@ -16,13 +16,11 @@ import { toast } from 'react-toastify'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { path } from 'constants/path'
 import doctorApi from 'api/doctorApi'
-import userApi from 'api/userApi'
 
 function UpdateDoctor() {
     const navigate = useNavigate()
     const location = useLocation()
     const doctor = location.state.doctor
-    console.log('update doctor', doctor.hospital_id)
     const [dataHospital, setDataHospital] =useState([])
     const [dataClinic, setDataClinic] = useState([])
     const [dataSpecialist, setDataSpecialist] = useState([])
@@ -44,14 +42,14 @@ function UpdateDoctor() {
     const form = useForm({
         defaultValues: {
             id: doctor.id,
-            phoneNumber: doctor['user.phoneNumber'],
-            email: doctor['user.email'],
-            firsname: doctor['user.firsname'],
-            lastname: doctor['user.lastname'],
-            gender: String(doctor['user.gender']),
-            birthday: doctor['user.birthday'].split('T')[0],
-            address: doctor['user.address'],
-            image: doctor['user.image'],
+            phoneNumber: doctor.user.phoneNumber,
+            email: doctor.user.email,
+            firsname: doctor.user.firsname,
+            lastname: doctor.user.lastname,
+            gender: String(doctor.user.gender),
+            birthday: doctor.user.birthday.split('T')[0],
+            address: doctor.user.address,
+            image: doctor.user.image,
             hospital_id: String(doctor.hospital_id),
             clinic_id: String(doctor.clinic_id),
             specialty_id: String(doctor.specialty_id),
@@ -87,7 +85,6 @@ function UpdateDoctor() {
                 })
                 navigate(path.doctorManagement)
             } catch (err) {
-                console.log(err)
                 toast.error('loi', {
                     position: toast.POSITION.BOTTOM_RIGHT
                 })

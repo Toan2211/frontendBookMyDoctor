@@ -13,11 +13,9 @@ function DoctorManagement() {
         (async () => {
             const respone = await doctorApi.getAllDoctor()
             setDataListDoctors(respone.doctor)
-            console.log(dataListDoctors[0])
         })()
     }, [])
-    console.log(dataListDoctors)
-    // console.log(dataListDoctors[0].user.birthday)
+
     return (
         <div className="doctorManagement">
             <div className="doctorManagement__container">
@@ -49,14 +47,14 @@ function DoctorManagement() {
                         {dataListDoctors && dataListDoctors.map(doctor => (
                             <tr key={doctor.id}>
                                 <td>{doctor.id}</td>
-                                <td>{`${doctor['user.firsname']} ${doctor['user.lastname']}`}</td>
-                                <td>{doctor['user.birthday'].split('T')[0]}</td>
-                                <td>{doctor['user.phoneNumber']}</td>
-                                <td>{doctor['user.gender'] === 1 ? 'Nam' : 'Nữ'}</td>
-                                <td>{doctor['user.email']}</td>
-                                <td>{doctor.specialty_id}</td>
-                                <td>{doctor.clinic_id}</td>
-                                <td>{doctor.hospital_id}</td>
+                                <td>{`${doctor.user.firsname} ${doctor.user.lastname}`}</td>
+                                <td>{doctor.user.birthday.split('T')[0]}</td>
+                                <td>{doctor.user.phoneNumber}</td>
+                                <td>{doctor.user.gender === 1 ? 'Nam' : 'Nữ'}</td>
+                                <td>{doctor.user.email}</td>
+                                <td>{doctor.specialty.name}</td>
+                                <td>{doctor.clinic.name}</td>
+                                <td>{doctor.hospital.name}</td>
                                 <td>
                                     <Link
                                         to={`/system/updateDoctor/${doctor.id}`}

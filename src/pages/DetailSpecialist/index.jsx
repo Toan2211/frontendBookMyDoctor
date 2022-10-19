@@ -6,6 +6,7 @@ DetailSpecialist.propTypes = {}
 
 function DetailSpecialist() {
     const { id } = useParams('id')
+    alert(id)
     return (
         <div className="detailSpecialist">
             <div className="detailSpecialist__container">
