@@ -17,18 +17,15 @@ import UpdateClinic from 'pages/Clinic/UpdateClinic'
 import DetailClinic from 'pages/DetailClinic'
 import DetailDoctor from 'pages/DetailDoctor'
 import DetailSpecialist from 'pages/DetailSpecialist'
-import AddDoctor from 'pages/Doctor/AddDoctor'
-import DoctorManagement from 'pages/Doctor/DoctorManagement'
-import UpdateDoctor from 'pages/Doctor/UpdateDoctor'
 import HomePage from 'pages/HomePage'
 import AddHospital from 'pages/Hospital/AddHospital'
 import HospitalManagement from 'pages/Hospital/HospitalManagement'
 import UpdateHospital from 'pages/Hospital/UpdateHospital'
-import PatientManagement from 'pages/Patient/PatientManagement'
+import PatientList from 'pages/Patient/PatientList'
 import Profile from 'pages/Profile'
 import AddSpecialist from 'pages/Specialist/AddSpecialist'
+import EditSpecialist from 'pages/Specialist/EditSpecialist'
 import SpecialistManagement from 'pages/Specialist/SpecialistManagement'
-import UpdateSpecialist from 'pages/Specialist/UpdateSpecialist'
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
@@ -46,10 +43,10 @@ function RoutesComponent() {
                 <Route path={path.headerClinic} element = {<HeaderClinicList />}/>
                 <Route path = {path.headerDoctor} element = {<HeaderDoctorList />}/>
                 <Route element = {<SystemAuthenticated />}>
-                    <Route path={path.system} element = {<SystemLayout />}>
+                    <Route path={path.system} element = {<SystemLayout />} >
                         <Route path={path.specialistManagement} element = {<SpecialistManagement />}/>
                         <Route path = {path.addSpecialist} element = {<AddSpecialist />}/>
-                        <Route path = {path.editSpecialist} element = {<UpdateSpecialist />}/>
+                        <Route path = {path.editSpecialist} element = {<EditSpecialist />}/>
 
                         <Route path={path.clinicManagement} element = {<ClinicManagement />}/>
                         <Route path = {path.addClinic} element = {<AddClinic />}/>
@@ -59,11 +56,7 @@ function RoutesComponent() {
                         <Route path = {path.addHospital} element = {<AddHospital />}/>
                         <Route path = {path.updateHospital} element = {<UpdateHospital />}/>
 
-                        <Route path = {path.patientManagement} element = {<PatientManagement />}/>
-
-                        <Route path = {path.addDoctor} element = {<AddDoctor />}/>
-                        <Route path = {path.updateDoctor} element = {<UpdateDoctor />}/>
-                        <Route path = {path.doctorManagement} element = {<DoctorManagement />}/>
+                        <Route path = {path.patientManagement} element = {<PatientList />}/>
                     </Route>
                 </Route>
                 <Route element ={<AuthenticatedGuard />}>

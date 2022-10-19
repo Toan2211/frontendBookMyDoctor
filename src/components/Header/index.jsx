@@ -7,13 +7,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { logout } from 'pages/Auth/userSlice'
 import { FiMenu } from 'react-icons/fi'
 import { useSystemAuthenticated } from 'hooks/useSystemAuthenticated'
-
 function Header() {
+    const isSystem = useSystemAuthenticated()
     const location = useLocation()
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const userData = useSelector(state => state.user.profile)
-    const isSystem = useSystemAuthenticated()
     const [showDropdown, setShowDropdown] = useState(false)
     const toggleDropdownProfile = () => {
         setShowDropdown(!showDropdown)
@@ -124,7 +123,7 @@ function Header() {
                             )}
                         </div>
                     )}
-                    {!userData.id && (
+                    {!userData.email && (
                         <div className="header__action-auth">
                             {location.pathname === '/login' ? (
                                 <Link to={path.register}>
