@@ -13,7 +13,6 @@ class Path {
         this.detailSpecialist = '/detailSpecialist/:id'
         this.detailClinic = '/detailClinic/:id'
         this.bookAppointment = '/bookAppointment'
-
         this.system = '/system'
         this.specialistManagement = '/system/specialistManagement'
         this.addSpecialist = '/system/addSpecialist'
@@ -25,10 +24,6 @@ class Path {
         this.addHospital = '/system/addHospital'
         this.updateHospital = '/system/updateHospital/:id'
         this.patientManagement = '/system/patientManagement'
-
-        this.addDoctor = '/system/addDoctor'
-        this.updateDoctor = '/system/updateDoctor/:id'
-        this.doctorManagement = '/system/doctorManagement'
     }
 }
 
