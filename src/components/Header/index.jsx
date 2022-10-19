@@ -6,12 +6,14 @@ import { path } from 'constants/path'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from 'pages/Auth/userSlice'
 import { FiMenu } from 'react-icons/fi'
+import { useSystemAuthenticated } from 'hooks/useSystemAuthenticated'
 
 function Header() {
     const location = useLocation()
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const userData = useSelector(state => state.user.profile)
+    const isSystem = useSystemAuthenticated()
     const [showDropdown, setShowDropdown] = useState(false)
     const toggleDropdownProfile = () => {
         setShowDropdown(!showDropdown)
@@ -22,6 +24,10 @@ function Header() {
     }
     const handleProfile = () => {
         navigate(path.profile)
+        setShowDropdown(false)
+    }
+    const handleSystem = () => {
+        navigate(path.system)
         setShowDropdown(false)
     }
     return (
@@ -37,7 +43,9 @@ function Header() {
                     </Link>
                 </div>
                 <div className="header__menu-mobile">
-                    <span><FiMenu /></span>
+                    <span>
+                        <FiMenu />
+                    </span>
                 </div>
             </div>
             <div className="header__center">
@@ -53,7 +61,7 @@ function Header() {
                     </li>
                     <li className="header__menu-item">
                         <Link
-                            to = {path.headerClinic}
+                            to={path.headerClinic}
                             className="header__menu-item-link"
                         >
                             Cơ sở y tế
@@ -62,7 +70,7 @@ function Header() {
                     </li>
                     <li className="header__menu-item">
                         <Link
-                            to = {path.headerDoctor}
+                            to={path.headerDoctor}
                             className="header__menu-item-link"
                         >
                             Bác sĩ
@@ -91,10 +99,20 @@ function Header() {
                             />
                             {showDropdown && (
                                 <ul className="header__profile-dropdown">
-                                    <li className="header__profile-dropdown-item"
+                                    {isSystem && (
+                                        <li
+                                            className="header__profile-dropdown-item"
+                                            onClick={handleSystem}
+                                        >
+                                            Quản lí
+                                        </li>
+                                    )}
+
+                                    <li
+                                        className="header__profile-dropdown-item"
                                         onClick={handleProfile}
                                     >
-                                        Trang cá nhân {userData.lastname}
+                                        Trang cá nhân
                                     </li>
                                     <li
                                         className="header__profile-dropdown-item"
@@ -106,7 +124,7 @@ function Header() {
                             )}
                         </div>
                     )}
-                    {!userData.email && (
+                    {!userData.id && (
                         <div className="header__action-auth">
                             {location.pathname === '/login' ? (
                                 <Link to={path.register}>

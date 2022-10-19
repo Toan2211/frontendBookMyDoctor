@@ -59,7 +59,9 @@ function ProfileUpdateForm({ onClose }) {
         }
         (async () => {
             try {
-                const datares = await dispatch(update(formData))
+                const datares = await dispatch(
+                    update(formData)
+                )
                 unwrapResult(datares)
                 toast.success('Cập nhật thành công', {
                     position: toast.POSITION.BOTTOM_RIGHT,
@@ -112,6 +114,7 @@ function ProfileUpdateForm({ onClose }) {
                                 { label: 'Nam', value: Number(1) },
                                 { label: 'Nữ', value: Number(0) }
                             ]}
+                            mode="gender"
                         />
                     </div>
                     <div className="form__element">
@@ -121,7 +124,7 @@ function ProfileUpdateForm({ onClose }) {
                             form={form}
                             placeholder="Email"
                             icon={<MdEmail />}
-                            disabled = {true}
+                            disabled={true}
                         />
                     </div>
                     <div className="form__element">

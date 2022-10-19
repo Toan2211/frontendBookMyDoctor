@@ -2,15 +2,33 @@ import HeaderClinicList from 'components/Header/components/HeaderClinicList'
 import HeaderDoctorList from 'components/Header/components/HeaderDoctorList'
 import { path } from 'constants/path'
 import AuthenticatedGuard from 'guards/AuthenticatedGuard'
+import SystemAuthenticated from 'guards/SystemAuthenticated'
 import UnauthenticatedGuard from 'guards/UnauthenticatedGuard'
 import AuthLayout from 'layouts/AuthLayout'
 import MainLayout from 'layouts/MainLayout'
+import SystemLayout from 'layouts/SystemLayout'
 import ForgotPassWordForm from 'pages/Auth/ForgotPassword'
 import Login from 'pages/Auth/Login'
 import Register from 'pages/Auth/Register'
+import BookAppointment from 'pages/BookAppointment'
+import AddClinic from 'pages/Clinic/AddClinic'
+import ClinicManagement from 'pages/Clinic/ClinicManagement'
+import UpdateClinic from 'pages/Clinic/UpdateClinic'
+import DetailClinic from 'pages/DetailClinic'
 import DetailDoctor from 'pages/DetailDoctor'
+import DetailSpecialist from 'pages/DetailSpecialist'
+import AddDoctor from 'pages/Doctor/AddDoctor'
+import DoctorManagement from 'pages/Doctor/DoctorManagement'
+import UpdateDoctor from 'pages/Doctor/UpdateDoctor'
 import HomePage from 'pages/HomePage'
+import AddHospital from 'pages/Hospital/AddHospital'
+import HospitalManagement from 'pages/Hospital/HospitalManagement'
+import UpdateHospital from 'pages/Hospital/UpdateHospital'
+import PatientManagement from 'pages/Patient/PatientManagement'
 import Profile from 'pages/Profile'
+import AddSpecialist from 'pages/Specialist/AddSpecialist'
+import SpecialistManagement from 'pages/Specialist/SpecialistManagement'
+import UpdateSpecialist from 'pages/Specialist/UpdateSpecialist'
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
@@ -22,12 +40,36 @@ function RoutesComponent() {
                 <Route element = {<MainLayout />}>
                     <Route path = {path.home} element = {<HomePage />}/>
                     <Route path = {path.detailDoctor} element = {<DetailDoctor />}/>
+                    <Route path={path.detailSpecialist} element = {<DetailSpecialist />} />
+                    <Route path = {path.detailClinic} element = {<DetailClinic />} />
                 </Route>
                 <Route path={path.headerClinic} element = {<HeaderClinicList />}/>
                 <Route path = {path.headerDoctor} element = {<HeaderDoctorList />}/>
+                <Route element = {<SystemAuthenticated />}>
+                    <Route path={path.system} element = {<SystemLayout />}>
+                        <Route path={path.specialistManagement} element = {<SpecialistManagement />}/>
+                        <Route path = {path.addSpecialist} element = {<AddSpecialist />}/>
+                        <Route path = {path.editSpecialist} element = {<UpdateSpecialist />}/>
+
+                        <Route path={path.clinicManagement} element = {<ClinicManagement />}/>
+                        <Route path = {path.addClinic} element = {<AddClinic />}/>
+                        <Route path = {path.updateClinic} element = {<UpdateClinic />}/>
+
+                        <Route path = {path.hospitalManagement} element = {<HospitalManagement />}/>
+                        <Route path = {path.addHospital} element = {<AddHospital />}/>
+                        <Route path = {path.updateHospital} element = {<UpdateHospital />}/>
+
+                        <Route path = {path.patientManagement} element = {<PatientManagement />}/>
+
+                        <Route path = {path.addDoctor} element = {<AddDoctor />}/>
+                        <Route path = {path.updateDoctor} element = {<UpdateDoctor />}/>
+                        <Route path = {path.doctorManagement} element = {<DoctorManagement />}/>
+                    </Route>
+                </Route>
                 <Route element ={<AuthenticatedGuard />}>
                     <Route element = {<MainLayout />}>
                         <Route path = {path.profile} element = {<Profile />}/>
+                        <Route path = {path.bookAppointment} element = {<BookAppointment />}/>
                     </Route>
                 </Route>
                 <Route element = {<UnauthenticatedGuard />}>

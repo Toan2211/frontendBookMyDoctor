@@ -85,6 +85,7 @@ function ProfileInfo() {
                         name="gender"
                         form={form}
                         disabled={true}
+                        mode = "gender"
                         optionData={[
                             { label: 'Nam', value: Number(1) },
                             { label: 'Nữ', value: Number(0) }
