@@ -1,10 +1,9 @@
 import patientsApi from 'api/patientsApi'
-import userApi from 'api/userApi'
 import Loading from 'components/Loading'
 import React, { useEffect, useState } from 'react'
 import { AiFillEdit } from 'react-icons/ai'
 
-function PatientList(props) {
+function PatientList() {
     const [patientsData, setPatientsData] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     useEffect(() => {
@@ -21,7 +20,6 @@ function PatientList(props) {
         })()
     }, [])
     if (isLoading) return <Loading />
-    console.log('patient data', patientsData[0])
     return (
         <div className="specialistManagement">
             <div className="specialistManagement__container">
@@ -43,12 +41,12 @@ function PatientList(props) {
                         {patientsData.map(pateintItem => (
                             <tr key={pateintItem.id}>
                                 <td>{pateintItem.id}</td>
-                                <td>{pateintItem['user.email']}</td>
-                                <td>{`${pateintItem['user.firsname']} ${pateintItem['user.lastname']}`}</td>
-                                <td>{pateintItem['user.gender'] === 1 ? 'Name' : 'Nữ'}</td>
-                                <td>{pateintItem['user.birthday'].split('T')[0]}</td>
-                                <td>{pateintItem['user.phoneNumber']}</td>
-                                <td>{pateintItem['user.address']}</td>
+                                <td>{pateintItem.user.email}</td>
+                                <td>{`${pateintItem.user.firsname} ${pateintItem.user.lastname}`}</td>
+                                <td>{pateintItem.user.gender === 1 ? 'Name' : 'Nữ'}</td>
+                                <td>{pateintItem.user.birthday.split('T')[0]}</td>
+                                <td>{pateintItem.user.phoneNumber}</td>
+                                <td>{pateintItem.user.address}</td>
 
                                 <td>
                                     {/* <Link
