@@ -1,6 +1,4 @@
 import DoctorItem from 'components/DoctorItem'
-import RadioGroup from 'components/RadioGroup'
-import SearchInput from 'components/SearchInput'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import './index.scss'
@@ -11,10 +9,10 @@ function DetailSpecialist() {
     return (
         <div className="detailSpecialist">
             <div className="detailSpecialist__container">
-                {/* <header>Chuyên khoa Răng hàm mặt</header> */}
+                <header>Chuyên khoa Răng hàm mặt</header>
                 <div className="detailSpecialist__content">
-                    <div className="detailSpecialist__content-specialist">
-                        <header>Chuyên khoa</header>
+                    {/* <div className="detailSpecialist__content-specialist"> */}
+                    {/* <header>Chuyên khoa</header>
                         <div className="detailSpecialist__content-specialist-search">
                             <SearchInput
                                 placeholder="Chuyên khoa tìm kiếm"
@@ -38,7 +36,7 @@ function DetailSpecialist() {
                                 ]}
                             />
                         </div>
-                    </div>
+                    </div> */}
                     <ul className="detailSpecialist__content-doctorsList">
                         <DoctorItem mode="listColumn" />
                         <DoctorItem mode="listColumn" />
