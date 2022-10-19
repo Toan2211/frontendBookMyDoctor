@@ -1,5 +1,6 @@
 import HeaderClinicList from 'components/Header/components/HeaderClinicList'
 import HeaderDoctorList from 'components/Header/components/HeaderDoctorList'
+import HeaderSpecialist from 'components/Header/components/HeaderSpecialist'
 import { path } from 'constants/path'
 import AuthenticatedGuard from 'guards/AuthenticatedGuard'
 import SystemAuthenticated from 'guards/SystemAuthenticated'
@@ -17,6 +18,9 @@ import UpdateClinic from 'pages/Clinic/UpdateClinic'
 import DetailClinic from 'pages/DetailClinic'
 import DetailDoctor from 'pages/DetailDoctor'
 import DetailSpecialist from 'pages/DetailSpecialist'
+import AddDoctor from 'pages/Doctor/AddDoctor'
+import DoctorManagement from 'pages/Doctor/DoctorManagement'
+import UpdateDoctor from 'pages/Doctor/UpdateDoctor'
 import HomePage from 'pages/HomePage'
 import AddHospital from 'pages/Hospital/AddHospital'
 import HospitalManagement from 'pages/Hospital/HospitalManagement'
@@ -42,6 +46,7 @@ function RoutesComponent() {
                 </Route>
                 <Route path={path.headerClinic} element = {<HeaderClinicList />}/>
                 <Route path = {path.headerDoctor} element = {<HeaderDoctorList />}/>
+                <Route path = {path.headerSpecialist} element = {<HeaderSpecialist />}/>
                 <Route element = {<SystemAuthenticated />}>
                     <Route path={path.system} element = {<SystemLayout />} >
                         <Route path={path.specialistManagement} element = {<SpecialistManagement />}/>
@@ -55,8 +60,11 @@ function RoutesComponent() {
                         <Route path = {path.hospitalManagement} element = {<HospitalManagement />}/>
                         <Route path = {path.addHospital} element = {<AddHospital />}/>
                         <Route path = {path.updateHospital} element = {<UpdateHospital />}/>
-
                         <Route path = {path.patientManagement} element = {<PatientList />}/>
+
+                        <Route path= {path.doctorManagement} element = {<DoctorManagement />}/>
+                        <Route path = {path.addDoctor} element = {<AddDoctor />} />
+                        <Route path = {path.updateDoctor} element = {<UpdateDoctor />} />
                     </Route>
                 </Route>
                 <Route element ={<AuthenticatedGuard />}>

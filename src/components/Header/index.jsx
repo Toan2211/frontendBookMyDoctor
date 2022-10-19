@@ -50,13 +50,13 @@ function Header() {
             <div className="header__center">
                 <ul className="header__menu">
                     <li className="header__menu-item">
-                        <a
-                            href="/#"
+                        <Link
+                            to={path.headerSpecialist}
                             className="header__menu-item-link"
                         >
                             Chuyên khoa
                             <span>Tìm bác sĩ theo khoa</span>
-                        </a>
+                        </Link>
                     </li>
                     <li className="header__menu-item">
                         <Link
