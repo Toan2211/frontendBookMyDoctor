@@ -1,12 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { GrFormPreviousLink } from 'react-icons/gr'
 import './index.scss'
 import DoctorItem from 'components/DoctorItem'
 import SearchInput from 'components/SearchInput'
+import doctorApi from 'api/doctorApi'
 
 function HeaderDoctorList() {
+    const [data, setData] = useState([])
     const navigate = useNavigate()
+    useEffect(() => {
+        (async () => {
+            const respone = await doctorApi.getAllDoctor()
+            setData(respone.doctor)
+        })()
+    }, [])
     return (
         <div className="headerLinkComponent">
             <div className="headerLinkComponent__container">
@@ -25,14 +33,7 @@ function HeaderDoctorList() {
                     <SearchInput placeholder="Tìm kiếm bác sĩ" mode = "list"/>
                 </div>
                 <ul className="headerLinkComponent__list">
-                    <DoctorItem mode= "listColumn"/>
-                    <DoctorItem mode= "listColumn"/>
-                    <DoctorItem mode= "listColumn"/>
-                    <DoctorItem mode= "listColumn"/>
-                    <DoctorItem mode= "listColumn"/>
-                    <DoctorItem mode= "listColumn"/>
-                    <DoctorItem mode= "listColumn"/>
-
+                    {data.map(doctor => <DoctorItem data = {doctor} key = {doctor.id} mode= "listColumn" />)}
                 </ul>
             </div>
         </div>

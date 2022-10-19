@@ -1,12 +1,15 @@
-import DoctorItem from 'components/DoctorItem'
+import doctorApi from 'api/doctorApi'
+import DoctorItemX from 'components/DoctorItemX'
 import RadioGroup from 'components/RadioGroup'
 import SearchInput from 'components/SearchInput'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import './index.scss'
 
 function DetailClinic() {
     const { id } = useParams('id')
+    const [data, setData] = useState()
+    console.log(id)
     return (
         <div className="detailClinic">
             <div className="detailClinic__container">
@@ -39,12 +42,12 @@ function DetailClinic() {
                         </div>
                     </div>
                     <ul className="detailClinic__content-doctorsList">
-                        <DoctorItem mode="listColumn" />
-                        <DoctorItem mode="listColumn" />
-                        <DoctorItem mode="listColumn" />
-                        <DoctorItem mode="listColumn" />
-                        <DoctorItem mode="listColumn" />
-                        <DoctorItem mode="listColumn" />
+                        <DoctorItemX mode="listColumn" />
+                        <DoctorItemX mode="listColumn" />
+                        <DoctorItemX mode="listColumn" />
+                        <DoctorItemX mode="listColumn" />
+                        <DoctorItemX mode="listColumn" />
+                        <DoctorItemX mode="listColumn" />
                     </ul>
                 </div>
             </div>

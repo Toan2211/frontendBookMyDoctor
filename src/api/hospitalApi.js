@@ -9,6 +9,9 @@ const hospitalApi = {
     },
     updateHospital(data, config) {
         return http.put(`/hospital/${data.get('id')}`, data, config)
+    },
+    getHospitalById(id) {
+        return http.get(`/hospital/${id}`)
     }
 }
 export default hospitalApi

@@ -15,7 +15,6 @@
         margin-bottom: 10px;
         display: flex;
         gap: 20px;
-        min-height: 120px;
         &-img {
             width: 120px;
             img {
@@ -42,7 +41,6 @@
         }
     }
     &__action {
-        margin-top: auto;
         &--column {
             margin-top: auto;
         }

@@ -1,16 +1,25 @@
 .clinicItem {
     cursor: pointer;
     &__content {
+        display: flex;
+        flex-direction: column;
         &--list {
             display: flex;
+            flex-direction: row;
             gap: 30px;
             margin-bottom: 20px;
             div {
                 width: 300px;
             }
         }
+        &-img {
+            img {
+                height: 180px;
+                flex-shrink: 0;
+            }
+        }
         span {
-            display: inline-block;
+            display: block;
             margin-top: 10px;
         }
     }

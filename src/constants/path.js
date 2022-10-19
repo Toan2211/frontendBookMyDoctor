@@ -9,7 +9,7 @@ class Path {
         this.register = '/register'
         this.forgotPassword = '/forgotPassword'
         this.profile = '/profile'
-        this.detailDoctor = '/detailDoctor'
+        this.detailDoctor = '/detailDoctor/:id'
         this.detailSpecialist = '/detailSpecialist/:id'
         this.detailClinic = '/detailClinic/:id'
         this.bookAppointment = '/bookAppointment'

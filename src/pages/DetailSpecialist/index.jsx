@@ -1,4 +1,5 @@
 import DoctorItem from 'components/DoctorItem'
+import DoctorItemX from 'components/DoctorItemX'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import './index.scss'
@@ -39,12 +40,12 @@ function DetailSpecialist() {
                         </div>
                     </div> */}
                     <ul className="detailSpecialist__content-doctorsList">
-                        <DoctorItem mode="listColumn" />
-                        <DoctorItem mode="listColumn" />
-                        <DoctorItem mode="listColumn" />
-                        <DoctorItem mode="listColumn" />
-                        <DoctorItem mode="listColumn" />
-                        <DoctorItem mode="listColumn" />
+                        <DoctorItemX mode="listColumn" />
+                        <DoctorItemX mode="listColumn" />
+                        <DoctorItemX mode="listColumn" />
+                        <DoctorItemX mode="listColumn" />
+                        <DoctorItemX mode="listColumn" />
+                        <DoctorItemX mode="listColumn" />
                     </ul>
                 </div>
             </div>

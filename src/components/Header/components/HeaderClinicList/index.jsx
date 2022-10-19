@@ -1,10 +1,18 @@
+import hospitalApi from 'api/hospitalApi'
 import ClinicItem from 'components/ClinicItem'
 import SearchInput from 'components/SearchInput'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { GrFormPreviousLink } from 'react-icons/gr'
 import { useNavigate } from 'react-router-dom'
 
 function HeaderClinicList() {
+    const [hospitalData, setHospitalData] = useState([])
+    useEffect(() => {
+        (async () => {
+            const data = await hospitalApi.getAllHospital()
+            setHospitalData(data.hospital)
+        })()
+    }, [])
     const navigate = useNavigate()
     return (
         <div className="headerLinkComponent">
@@ -18,21 +26,13 @@ function HeaderClinicList() {
                             <GrFormPreviousLink />
                         </span>
                     </button>
-                    <span>Phòng khám</span>
+                    <span>Bệnh viện</span>
                 </header>
                 <div className="headerLinkComponent__search">
                     <SearchInput placeholder="Tìm kiếm phòng khám" mode = "list"/>
                 </div>
                 <ul className="headerLinkComponent__list">
-                    <ClinicItem mode = "cpm-list"/>
-                    <ClinicItem mode = "cpm-list"/>
-                    <ClinicItem mode = "cpm-list"/>
-                    <ClinicItem mode = "cpm-list"/>
-                    <ClinicItem mode = "cpm-list"/>
-                    <ClinicItem mode = "cpm-list"/>
-                    <ClinicItem mode = "cpm-list"/>
-                    <ClinicItem mode = "cpm-list"/>
-
+                    {hospitalData.map (hospital => <ClinicItem key={hospital.id} data = {hospital} mode = "cpm-list"/>)}
                 </ul>
             </div>
         </div>
