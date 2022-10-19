@@ -24,6 +24,9 @@ class Path {
         this.addHospital = '/system/addHospital'
         this.updateHospital = '/system/updateHospital/:id'
         this.patientManagement = '/system/patientManagement'
+        this.doctorManagement = '/system/doctorManagement'
+        this.addDoctor = '/system/addDoctor'
+        this.updateDoctor = '/system/updateDoctor/:id'
     }
 }
 

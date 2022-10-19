@@ -1,4 +1,4 @@
-.specialistManagement {
+.doctorManagement {
     &__container {
         header {
             text-align: center;
@@ -9,30 +9,21 @@
 
         table {
             background-color: #ffffff;
-            border-collapse: collapse; 
             width: 100%;
-
+            border-collapse: collapse;
         }
         tbody {
-            height: 50vh;
-            overflow-y: scroll;
-            // display: block;
-        }
-        tr {
-            // display: block;
+            height: 10px;      
+            overflow-y: auto;    
         }
         th {
             padding: 16px 4px;
             background-color: #ccc;
             text-align: left;
-            // float: left;
-            // width: 20%;
-
         }
         td {
             border-bottom: 1px solid #ccc;
             padding: 10px 0;
-            // width: 25%;
         }
 
     }

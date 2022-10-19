@@ -17,6 +17,9 @@ import UpdateClinic from 'pages/Clinic/UpdateClinic'
 import DetailClinic from 'pages/DetailClinic'
 import DetailDoctor from 'pages/DetailDoctor'
 import DetailSpecialist from 'pages/DetailSpecialist'
+import AddDoctor from 'pages/Doctor/AddDoctor'
+import DoctorManagement from 'pages/Doctor/DoctorManagement'
+import UpdateDoctor from 'pages/Doctor/UpdateDoctor'
 import HomePage from 'pages/HomePage'
 import AddHospital from 'pages/Hospital/AddHospital'
 import HospitalManagement from 'pages/Hospital/HospitalManagement'
@@ -55,8 +58,11 @@ function RoutesComponent() {
                         <Route path = {path.hospitalManagement} element = {<HospitalManagement />}/>
                         <Route path = {path.addHospital} element = {<AddHospital />}/>
                         <Route path = {path.updateHospital} element = {<UpdateHospital />}/>
-
                         <Route path = {path.patientManagement} element = {<PatientList />}/>
+
+                        <Route path= {path.doctorManagement} element = {<DoctorManagement />}/>
+                        <Route path = {path.addDoctor} element = {<AddDoctor />} />
+                        <Route path = {path.updateDoctor} element = {<UpdateDoctor />} />
                     </Route>
                 </Route>
                 <Route element ={<AuthenticatedGuard />}>

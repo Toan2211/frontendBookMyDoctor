@@ -26,6 +26,11 @@ function MenuSystem() {
                     Quản lí Bệnh nhân
                 </NavLink>
             </li>
+            <li className="menuSystem-item">
+                <NavLink to={path.doctorManagement} className = "menuSystem-item-link">
+                    Quản lí Bác sĩ
+                </NavLink>
+            </li>
         </ul>
     )
 }
