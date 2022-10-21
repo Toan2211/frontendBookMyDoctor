@@ -2,9 +2,9 @@ import React, { useEffect } from 'react'
 import BannerSearch from './components/BannerSearch'
 import Introduce from './components/Introduce'
 import SpecialistList from './components/SpecialistList'
-import TopClinics from './components/TopClinics'
 import TopDoctors from './components/TopDoctors'
 import './index.scss'
+import TopHospitals from './components/TopHospitals'
 
 function HomePage() {
     useEffect(() => {
@@ -15,7 +15,7 @@ function HomePage() {
             <BannerSearch />
             <TopDoctors />
             <SpecialistList />
-            <TopClinics />
+            <TopHospitals />
             <Introduce />
         </div>
     )

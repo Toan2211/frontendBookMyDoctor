@@ -1,8 +1,8 @@
 import http from 'utils/http'
 
 const hospitalApi = {
-    getAllHospital() {
-        return http.get('/hospital')
+    getAllHospital(params) {
+        return http.get('/hospital', { params: params })
     },
     addHospital(data, config) {
         return http.post('/hospital', data, config)
@@ -10,7 +10,7 @@ const hospitalApi = {
     updateHospital(data, config) {
         return http.put(`/hospital/${data.get('id')}`, data, config)
     },
-    getHospitalById(id) {
+    getDetailHospital(id) {
         return http.get(`/hospital/${id}`)
     }
 }

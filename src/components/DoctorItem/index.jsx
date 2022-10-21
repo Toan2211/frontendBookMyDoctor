@@ -1,4 +1,3 @@
-import { path } from 'constants/path'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './index.scss'
@@ -18,7 +17,7 @@ function DoctorItem({ data, mode }) {
                     </div>
                 </div>
                 <div className={`${mode === 'listColumn' ? 'doctorItem__action--column ': ''}doctorItem__action`}>
-                    <button ><Link to={`/detailDoctor/${data.id}`} className = "doctorItem__action-link" state={data}>Đặt lịch</Link></button>
+                    <button ><Link to={`/detailDoctor/${data.id}`} className = "doctorItem__action-link">Đặt lịch</Link></button>
                 </div>
             </div>
         </div>

@@ -9,6 +9,9 @@ const specialistApi = {
     },
     updateSpecialist(data, config) {
         return http.put(`/specialty/${data.get('id')}`, data, config)
+    },
+    getDetailSpecialist(id) {
+        return http.get(`/specialty/${id}`)
     }
 }
 export default specialistApi

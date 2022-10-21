@@ -1,26 +1,56 @@
 import hospitalApi from 'api/hospitalApi'
-import ClinicItem from 'components/ClinicItem'
+import ClinicItem from 'components/HospitalItem'
 import SearchInput from 'components/SearchInput'
-import React, { useEffect, useState } from 'react'
+import { useDebounce } from 'hooks/useDebounce'
+import React, { useEffect, useMemo, useState } from 'react'
 import { GrFormPreviousLink } from 'react-icons/gr'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import queryString from 'query-string'
+import { path } from 'constants/path'
 
 function HeaderClinicList() {
     const [hospitalData, setHospitalData] = useState([])
+    const location = useLocation()
+    const [searchValue, setSearchValue] = useState(() => queryString.parse(location.search).key)
+    const debounceValue = useDebounce(searchValue, 500)
+    const navigate = useNavigate()
+    const handleSearchClinic = (e) => {
+        setSearchValue(e.target.value)
+    }
+    const queryParams = useMemo(() => {
+        const params = queryString.parse(location.search)
+        return {
+            page: Number.parseInt(params.page) || 0,
+            limit: Number.parseInt(params.limit) || 30,
+            key: params.key || ''
+        }
+    }, [location.search])
+
+    useEffect(() => {
+        const params = { key: debounceValue }
+        navigate(`?${queryString.stringify(params)}`)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [debounceValue])
+
     useEffect(() => {
         (async () => {
-            const data = await hospitalApi.getAllHospital()
-            setHospitalData(data.hospital)
+            try {
+                const data = await hospitalApi.getAllHospital(queryParams)
+                setHospitalData(data.hospital)
+            }
+            catch (err) {
+                alert(err)
+            }
         })()
-    }, [])
-    const navigate = useNavigate()
+    }, [queryParams])
+
     return (
         <div className="headerLinkComponent">
             <div className="headerLinkComponent__container">
                 <header className="headerLinkComponent__header">
                     <button
                         className="headerLinkComponent__header-btn"
-                        onClick={() => navigate(-1)}
+                        onClick={() => navigate(path.home)}
                     >
                         <span>
                             <GrFormPreviousLink />
@@ -29,7 +59,7 @@ function HeaderClinicList() {
                     <span>Bệnh viện</span>
                 </header>
                 <div className="headerLinkComponent__search">
-                    <SearchInput placeholder="Tìm kiếm phòng khám" mode = "list"/>
+                    <SearchInput placeholder="Tìm kiếm bệnh viện" mode = "list" handleSearch = {handleSearchClinic} value = {searchValue}/>
                 </div>
                 <ul className="headerLinkComponent__list">
                     {hospitalData.map (hospital => <ClinicItem key={hospital.id} data = {hospital} mode = "cpm-list"/>)}

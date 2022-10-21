@@ -11,7 +11,7 @@ class Path {
         this.profile = '/profile'
         this.detailDoctor = '/detailDoctor/:id'
         this.detailSpecialist = '/detailSpecialist/:id'
-        this.detailClinic = '/detailClinic/:id'
+        this.detailHospital = '/detailHospital/:id'
         this.bookAppointment = '/bookAppointment'
         this.system = '/system'
         this.specialistManagement = '/system/specialistManagement'

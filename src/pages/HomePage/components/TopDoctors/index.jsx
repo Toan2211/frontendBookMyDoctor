@@ -37,7 +37,7 @@ function TopDoctors() {
     useEffect(() => {
         (async () => {
             const respone = await doctorApi.getAllDoctor()
-            setData(respone.doctor)
+            setData(respone.doctor.slice(0, 6))
         })()
     }, [])
     return (

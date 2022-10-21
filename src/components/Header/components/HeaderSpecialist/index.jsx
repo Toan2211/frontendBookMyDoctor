@@ -1,5 +1,4 @@
 import specialistApi from 'api/specialistApi'
-import SearchInput from 'components/SearchInput'
 import SpecialistItem from 'pages/HomePage/components/SpecialistList/components/SpecialistItem'
 import React, { useEffect, useState } from 'react'
 import { GrFormPreviousLink } from 'react-icons/gr'
@@ -30,7 +29,6 @@ function HeaderSpecialist() {
                     <span>Chuyên khoa</span>
                 </header>
                 <div className="headerLinkComponent__search">
-                    <SearchInput placeholder="Tìm kiếm chuyên khoa" mode = "list"/>
                 </div>
                 <ul className="headerLinkComponent__list">
                     {

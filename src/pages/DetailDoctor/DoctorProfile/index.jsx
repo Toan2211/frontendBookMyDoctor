@@ -1,11 +1,9 @@
 import React from 'react'
-import images from 'assets'
 import { AiFillStar } from 'react-icons/ai'
 import './index.scss'
 DoctorProfile.propTypes = {}
 
 function DoctorProfile({ doctor }) {
-    console.log(doctor)
     return (
         <div className="doctorProfile">
             <div className="doctorProfile__container">

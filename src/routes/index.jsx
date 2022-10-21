@@ -15,7 +15,6 @@ import BookAppointment from 'pages/BookAppointment'
 import AddClinic from 'pages/Clinic/AddClinic'
 import ClinicManagement from 'pages/Clinic/ClinicManagement'
 import UpdateClinic from 'pages/Clinic/UpdateClinic'
-import DetailClinic from 'pages/DetailClinic'
 import DetailDoctor from 'pages/DetailDoctor'
 import DetailSpecialist from 'pages/DetailSpecialist'
 import AddDoctor from 'pages/Doctor/AddDoctor'
@@ -32,6 +31,7 @@ import EditSpecialist from 'pages/Specialist/EditSpecialist'
 import SpecialistManagement from 'pages/Specialist/SpecialistManagement'
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import DetailHospital from 'pages/DetailHospital'
 
 
 function RoutesComponent() {
@@ -42,7 +42,7 @@ function RoutesComponent() {
                     <Route path = {path.home} element = {<HomePage />}/>
                     <Route path = {path.detailDoctor} element = {<DetailDoctor />}/>
                     <Route path={path.detailSpecialist} element = {<DetailSpecialist />} />
-                    <Route path = {path.detailClinic} element = {<DetailClinic />} />
+                    <Route path = {path.detailHospital} element = {<DetailHospital />} />
                 </Route>
                 <Route path={path.headerClinic} element = {<HeaderClinicList />}/>
                 <Route path = {path.headerDoctor} element = {<HeaderDoctorList />}/>

@@ -1,5 +1,5 @@
 @import '_setting.scss';
-.topClinics {
+.topHospitals {
     &__container {
         margin: 0 120px;
         margin-bottom: 60px;
@@ -11,7 +11,7 @@
     }
 }
 @media only screen and (max-width: 768px) {
-    .topClinics {
+    .topHospitals {
         &__container {
             margin: 0 $margin-mobile;
             margin-bottom: 40px;
@@ -20,7 +20,7 @@
     }
 }
 @media only screen and (max-width: 1024px) {
-    .topClinics {
+    .topHospitals {
         &__container {
             margin: 0 $margin-tablet;
             margin-bottom: 40px;

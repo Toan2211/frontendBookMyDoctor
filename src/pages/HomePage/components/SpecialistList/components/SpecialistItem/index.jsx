@@ -5,7 +5,7 @@ import './index.scss'
 function SpecialistItem({ data, mode }) {
     const navigate = useNavigate()
     const handleClick = () => {
-        navigate('/detailSpecialist/5')
+        navigate(`/detailSpecialist/${data.id}`)
     }
     return (
         <div className={`${mode === 'column' ? 'specialistItem--column ': '' }specialistItem`} onClick = {handleClick}>
