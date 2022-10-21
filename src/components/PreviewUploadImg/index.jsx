@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import images from 'assets'
 import './index.scss'
 
 PreviewUploadImg.propTypes = {}

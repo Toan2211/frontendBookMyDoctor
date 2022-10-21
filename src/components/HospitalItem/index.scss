@@ -1,5 +1,10 @@
+@import '_setting.scss';
 .clinicItem {
     cursor: pointer;
+    &:hover {
+        background-color: $second-color-background;
+    }
+    background-color: #fff;
     &__content {
         display: flex;
         flex-direction: column;
@@ -9,10 +14,17 @@
             gap: 30px;
             margin-bottom: 20px;
             div {
-                width: 300px;
+                img {
+                    width: 200px;
+                }
             }
         }
         &-img {
+            &-list{
+                img {
+                    height: 100px !important;
+                }
+            }
             img {
                 height: 180px;
                 flex-shrink: 0;

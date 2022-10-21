@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './index.scss'
 import SpecialistItem from './components/SpecialistItem'
-import dataspecialist from './data'
 import {
     BsFillArrowUpCircleFill,
     BsFillArrowDownCircleFill

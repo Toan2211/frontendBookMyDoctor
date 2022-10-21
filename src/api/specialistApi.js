@@ -1,8 +1,8 @@
 import http from 'utils/http'
 
 const specialistApi = {
-    getAllSpecialist() {
-        return http.get('/specialty')
+    getAllSpecialist(params) {
+        return http.get('/specialty', { params: params })
     },
     addSpecialist(data, config) {
         return http.post('/specialty', data, config)
