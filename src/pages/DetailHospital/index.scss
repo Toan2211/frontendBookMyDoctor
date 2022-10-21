@@ -17,25 +17,6 @@
         display: flex;
         padding-bottom: 40px;
         gap: 20px;
-        &-specialist {
-            flex: 1;
-            height: 360px;
-            background-color: #ffffff;
-            padding: 20px 8px;
-            header {
-                font-size: 18px;
-                margin-bottom: 10px;
-            }
-            &-search {
-                width: 80%;
-                margin: 0 auto;
-            }
-            &-list {
-                margin-top: 10px;
-                height: 200px;
-                overflow-y: auto;
-            }
-        }
         &-doctorsList {
             flex: 3;
             border: 1px solid #ccc;

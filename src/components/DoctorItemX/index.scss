@@ -10,17 +10,13 @@
         border: 2px solid #F1F5F9;
         border-radius: 4px;
         padding: 20px;
-        display: flex;
-        flex-direction: column;
     }
     &__content {
         margin-bottom: 10px;
         display: flex;
         gap: 20px;
-        height: 136px;
-        flex-shrink: 0;
         &-img {
-            width: 100px;
+            width: 120px;
             img {
                 border-radius: 50%;
             }
@@ -45,7 +41,6 @@
         }
     }
     &__action {
-        margin-top: auto;
         &--column {
             margin-top: auto;
         }
@@ -63,11 +58,5 @@
 
 
         }
-    }
-}
-
-@media screen and (max-width: 1024px) and (min-width: 768px) {
-    .doctorItem__content {
-        height: 180px;
     }
 }

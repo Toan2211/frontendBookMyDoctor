@@ -1,14 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import {
     BsFillCalendarFill
 } from 'react-icons/bs'
 import './index.scss'
 import TimeTableItem from './TimeTableItem'
 import SelectOption from 'components/SelectOption'
-BookTimeTable.propTypes = {}
 
-function BookTimeTable(props) {
+function BookTimeTable({ doctor }) {
     return (
         <div className="bookTimeTable">
             <div className="bookTimeTable__container">
@@ -33,8 +31,7 @@ function BookTimeTable(props) {
                     <span className="address_doctor">
                         <header>Địa chỉ khám</header>
                         <span>
-                            Hệ thống Y tế Thu Cúc cơ sở Thụy Khuê 286
-                            Thụy Khuê, quận Tây Hồ, Hà Nội
+                            {doctor.clinic.street} {doctor.clinic.city}
                         </span>
                     </span>
                     <span className="price">

@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './index.scss'
 import { BiSearch } from 'react-icons/bi'
-function SearchInput({ placeholder, mode }) {
-    const [value, setValue] = useState('')
+function SearchInput({ placeholder, mode, handleSearch, value }) {
     return (
         <div
             className={`${
@@ -14,7 +13,7 @@ function SearchInput({ placeholder, mode }) {
             </div>
             <input
                 value={value}
-                onChange={e => setValue(e.target.value)}
+                onChange={e => handleSearch(e)}
                 className={`${
                     mode === 'list' ? 'searchInput__input--list ' : ''
                 }searchInput__input`}

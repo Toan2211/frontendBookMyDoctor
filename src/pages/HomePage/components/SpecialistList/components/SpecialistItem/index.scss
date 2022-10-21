@@ -12,7 +12,7 @@
     }
     &__img {
         background-color: #E8F1FC;
-        width: 30%;
+        width: 60px;
         border-radius: 50%;
     }
     &__title {
@@ -21,6 +21,11 @@
     }
     &--column {
         flex-direction: row !important;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-left: 0;
+        width: 100%;
+        justify-content: flex-start;
     }
 }
 
