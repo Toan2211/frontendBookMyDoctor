@@ -7,7 +7,7 @@ function HospitalItem({ mode, data }) {
         <div className="clinicItem" onClick={() => navigate(`/detailHospital/${data.id}`)}>
             <div className="clinicItem__container">
                 <div className={`${mode === 'cpm-list' ? 'clinicItem__content--list ': ''}clinicItem__content`}>
-                    <div className="clinicItem__content-img">
+                    <div className={`${mode === 'cpm-list' ? 'clinicItem__content-img-list ' : ''}clinicItem__content-img`}>
                         <img src = {data.image} alt = "clinic Ex"/>
                     </div>
                     <span>{data.name}</span>
