@@ -1,9 +1,11 @@
-import React from 'react'
+import doctorApi from 'api/doctorApi'
+import React, { useEffect, useState } from 'react'
 import Slider from 'react-slick'
 import DoctorItem from '../../../../components/DoctorItem'
 import './index.scss'
 
 function TopDoctors() {
+    const [data, setData] = useState([])
     const settings = {
         dots: true,
         infinite: true,
@@ -32,17 +34,18 @@ function TopDoctors() {
             }
         ]
     }
+    useEffect(() => {
+        (async () => {
+            const respone = await doctorApi.getAllDoctor()
+            setData(respone.doctor.slice(0, 6))
+        })()
+    }, [])
     return (
         <div className="topDoctors">
             <div className="topDoctors__container">
                 <header>Bác sĩ tiêu biểu</header>
                 <Slider {...settings}>
-                    <DoctorItem />
-                    <DoctorItem />
-                    <DoctorItem />
-                    <DoctorItem />
-                    <DoctorItem />
-                    <DoctorItem />
+                    {data.map(doctor => <DoctorItem data = {doctor} key = {doctor.id} />)}
                 </Slider>
             </div>
         </div>

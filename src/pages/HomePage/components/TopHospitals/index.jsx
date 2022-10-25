@@ -1,8 +1,10 @@
-import React from 'react'
+import hospitalApi from 'api/hospitalApi'
+import React, { useEffect, useState } from 'react'
 import Slider from 'react-slick'
-import ClinicItem from '../../../../components/ClinicItem'
+import HospitalItem from '../../../../components/HospitalItem'
 import './index.scss'
-function TopClinics() {
+function TopHospitals() {
+    const [hospitalData, setHospitalData] = useState([])
     const settings = {
         dots: true,
         infinite: true,
@@ -30,21 +32,22 @@ function TopClinics() {
             }
         ]
     }
+    useEffect(() => {
+        (async () => {
+            const data = await hospitalApi.getAllHospital()
+            setHospitalData(data.hospital.slice(0, 6))
+        })()
+    }, [])
     return (
-        <div className="topClinics">
-            <div className="topClinics__container">
-                <header>Bác sĩ tiêu biểu</header>
+        <div className="topHospitals">
+            <div className="topHospitals__container">
+                <header>Bệnh viện tiêu biểu</header>
                 <Slider {...settings}>
-                    <ClinicItem />
-                    <ClinicItem />
-                    <ClinicItem />
-                    <ClinicItem />
-                    <ClinicItem />
-                    <ClinicItem />
+                    {hospitalData.map (hospital => <HospitalItem key={hospital.id} data = {hospital}/>)}
                 </Slider>
             </div>
         </div>
     )
 }
 
-export default TopClinics
+export default TopHospitals

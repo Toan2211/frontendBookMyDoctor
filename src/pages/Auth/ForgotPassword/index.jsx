@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form'
 import InputField from 'components/InputFiled'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import userApi from 'api/userApi'
+import { toast } from 'react-toastify'
 
 function ForgotPassWordForm() {
     const schema = yup.object().shape({
@@ -19,8 +21,21 @@ function ForgotPassWordForm() {
         resolver: yupResolver(schema)
     })
     const handleSubmitForm = value => {
-        // eslint-disable-next-line no-console
-        console.log(value)
+        (async () => {
+            try {
+                await userApi.resetPassword(value)
+                toast.success('Reset mật khẩu thành công, mời vào mail xem mật khẩu', {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                    autoClose: 1000
+                })
+            }
+            catch (err) {
+                toast.error(err.message, {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                    autoClose: 1000
+                })
+            }
+        })()
     }
     useEffect(() => {
         document.title = 'Forgot Password'

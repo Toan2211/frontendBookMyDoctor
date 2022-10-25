@@ -6,8 +6,9 @@ import { path } from 'constants/path'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from 'pages/Auth/userSlice'
 import { FiMenu } from 'react-icons/fi'
-
+import { useSystemAuthenticated } from 'hooks/useSystemAuthenticated'
 function Header() {
+    const isSystem = useSystemAuthenticated()
     const location = useLocation()
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -24,6 +25,10 @@ function Header() {
         navigate(path.profile)
         setShowDropdown(false)
     }
+    const handleSystem = () => {
+        navigate(path.system)
+        setShowDropdown(false)
+    }
     return (
         <header className="header">
             <div className="header__left">
@@ -37,23 +42,25 @@ function Header() {
                     </Link>
                 </div>
                 <div className="header__menu-mobile">
-                    <span><FiMenu /></span>
+                    <span>
+                        <FiMenu />
+                    </span>
                 </div>
             </div>
             <div className="header__center">
                 <ul className="header__menu">
                     <li className="header__menu-item">
-                        <a
-                            href="/#"
+                        <Link
+                            to={path.headerSpecialist}
                             className="header__menu-item-link"
                         >
                             Chuyên khoa
                             <span>Tìm bác sĩ theo khoa</span>
-                        </a>
+                        </Link>
                     </li>
                     <li className="header__menu-item">
                         <Link
-                            to = {path.headerClinic}
+                            to={path.headerClinic}
                             className="header__menu-item-link"
                         >
                             Cơ sở y tế
@@ -62,7 +69,7 @@ function Header() {
                     </li>
                     <li className="header__menu-item">
                         <Link
-                            to = {path.headerDoctor}
+                            to={path.headerDoctor}
                             className="header__menu-item-link"
                         >
                             Bác sĩ
@@ -91,10 +98,20 @@ function Header() {
                             />
                             {showDropdown && (
                                 <ul className="header__profile-dropdown">
-                                    <li className="header__profile-dropdown-item"
+                                    {isSystem && (
+                                        <li
+                                            className="header__profile-dropdown-item"
+                                            onClick={handleSystem}
+                                        >
+                                            Quản lí
+                                        </li>
+                                    )}
+
+                                    <li
+                                        className="header__profile-dropdown-item"
                                         onClick={handleProfile}
                                     >
-                                        Trang cá nhân {userData.lastname}
+                                        Trang cá nhân
                                     </li>
                                     <li
                                         className="header__profile-dropdown-item"

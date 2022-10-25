@@ -1,6 +1,6 @@
 import React from 'react'
 import './index.scss'
-function SelectOption({ allSeclectData }) {
+function SelectOption() {
     return (
         <div className="selectOption">
             <div className="selectOption__container">

@@ -107,6 +107,7 @@ function ProfileUpdateForm({ onClose }) {
                     <div className="form__element">
                         <RadioGroup
                             name="gender"
+                            mode = "gender"
                             form={form}
                             optionData={[
                                 { label: 'Nam', value: Number(1) },

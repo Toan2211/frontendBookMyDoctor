@@ -1,18 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
 import './index.scss'
-import DoctorReviewItem from './DoctorReviewItem';
-DoctorReviews.propTypes = {
-    
-};
+import DoctorReviewItem from './DoctorReviewItem'
+DoctorReviews.propTypes = {}
 
-function DoctorReviews(props) {
+function DoctorReviews() {
     return (
         <div className="doctorReviews">
             <div className="doctorReviews__container">
-                <header>
-                    Đánh giá bác sĩ
-                </header>
+                <header>Đánh giá bác sĩ</header>
                 <ul className="doctorReviews__list">
                     <DoctorReviewItem />
                     <DoctorReviewItem />
@@ -20,11 +15,10 @@ function DoctorReviews(props) {
                     <DoctorReviewItem />
                     <DoctorReviewItem />
                     <DoctorReviewItem />
-
                 </ul>
             </div>
         </div>
-    );
+    )
 }
 
-export default DoctorReviews;
+export default DoctorReviews
