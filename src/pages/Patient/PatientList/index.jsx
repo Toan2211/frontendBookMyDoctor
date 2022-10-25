@@ -115,7 +115,6 @@ function PatientList() {
                     </thead>
                     <tbody>
                         {patientsData.map(pateintItem => (
-                            console.log(pateintItem),
                             <tr key={pateintItem.id}>
                                 <td>{pateintItem.id}</td>
                                 <td>{pateintItem.user.email}</td>

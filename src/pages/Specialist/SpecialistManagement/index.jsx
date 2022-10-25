@@ -41,7 +41,6 @@ function SpecialistManagement() {
                     </thead>
                     <tbody>
                         {specialistData.map(specialistItem => (
-                            console.log(specialistItem),
                             <tr key={specialistItem.id}>
                                 <td>{specialistItem.id}</td>
                                 <td>{specialistItem.name}</td>
