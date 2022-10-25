@@ -1,8 +1,8 @@
 import http from 'utils/http'
 
 const clinicApi = {
-    getAllClinic() {
-        return http.get('/clinic')
+    getAllClinic(params) {
+        return http.get('/clinic', { params: params })
     },
     addClinic(data, config) {
         return http.post('/clinic', data, config)

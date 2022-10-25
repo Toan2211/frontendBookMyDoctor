@@ -76,7 +76,7 @@ function RoutesComponent() {
                 <Route element = {<UnauthenticatedGuard />}>
                     <Route element = {<AuthLayout />}>
                         <Route path = {path.login} element = {<Login />}/>
-                        <Route path = {path.register} element = <Register /> />
+                        <Route path = {path.register} element = {<Register />} />
                         <Route path = {path.forgotPassword} element = {<ForgotPassWordForm />} />
                     </Route>
                 </Route>

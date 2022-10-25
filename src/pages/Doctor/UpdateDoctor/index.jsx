@@ -199,12 +199,18 @@ function UpdateDoctor() {
                         />
                     </div>
 
-                    <div className="button-submit">
-                        <button
-                            type="submit"
-                            className="button btnSuccess"
-                        >
+                    <div className="updateClinic__action">
+                        <button type="submit" className="btnSuccess">
                             Cập nhật
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() =>
+                                navigate(-1)
+                            }
+                            className="btnCancel"
+                        >
+                            Hủy
                         </button>
                     </div>
                 </form>

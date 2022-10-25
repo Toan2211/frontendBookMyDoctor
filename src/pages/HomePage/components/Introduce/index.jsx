@@ -37,7 +37,7 @@ function Introduce() {
                             <div
                                 className={`${
                                     index === indexImg
-                                        ? 'active '
+                                        ? 'active-banner '
                                         : ' '
                                 }mainlayout-introduce__content-detail-item`}
                                 key={index}

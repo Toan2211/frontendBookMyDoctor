@@ -1,17 +1,17 @@
-import React, { useState } from 'react'
+import React from 'react'
+import './index.scss'
 
-
-function SwitchButton() {
-    const [check, setCheck] = useState(false)
+function SwitchButton({ id, status, handleChangeStatus }) {
     const handleOnChecked = () => {
-        setCheck(!check)
+        handleChangeStatus(id, status)
     }
     return (
         <label>
             <input
                 type="checkbox"
                 className="inputCheckbox"
-                checked={check}
+                checked={status}
+                readOnly
             />
             <span className="check" onClick={handleOnChecked}></span>
         </label>

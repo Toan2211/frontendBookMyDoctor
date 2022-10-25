@@ -6,6 +6,10 @@ const userApi = {
     },
     updateInfoUser(data, config) {
         return http.put(`/users/${data.get('id')}`, data, config)
+    },
+    toggleStatusUser(id, status, config) {
+        if (status) return http.get(`/users/disable/${id}`, config)
+        return http.get(`/users/enable/${id}`, config)
     }
 }
 export default userApi

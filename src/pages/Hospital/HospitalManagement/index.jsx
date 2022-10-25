@@ -1,33 +1,78 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useEffect, useMemo, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { path } from 'constants/path'
 import { AiFillEdit } from 'react-icons/ai'
 import hospitalApi from 'api/hospitalApi'
 import './index.scss'
 import Loading from 'components/Loading'
+import queryString from 'query-string'
+import SearchInput from 'components/SearchInput'
+import { useDebounce } from 'hooks/useDebounce'
+import Pagination from 'components/Pagination'
 function HospitalManagement() {
-    const [hospitalData, setHospitalData] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+
+    const [hospitalList, setHospitalList] = useState([])
+    const [pagination, setPagination] = useState({
+        totalPages: 3,
+        totalElements: 11,
+        page: 0
+    })
+    const handlePageChange = page => {
+        const filters = { ...queryParams, page: page }
+        navigate(`?${queryString.stringify(filters)}`)
+    }
+    const location = useLocation()
+    const [searchValue, setSearchValue] = useState(
+        () => queryString.parse(location.search).key
+    )
+    const debounceValue = useDebounce(searchValue, 500)
     const navigate = useNavigate()
+    const handleOnChangeSearchInput = e => {
+        setSearchValue(e.target.value)
+    }
+    const queryParams = useMemo(() => {
+        const params = queryString.parse(location.search)
+        return {
+            page: Number.parseInt(params.page) || 0,
+            limit: Number.parseInt(params.limit) || 10,
+            key: params.key || ''
+        }
+    }, [location.search])
+
+    useEffect(() => {
+        const params = { ...queryParams, key: debounceValue, page: 0 }
+        navigate(`?${queryString.stringify(params)}`)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [debounceValue])
+
     useEffect(() => {
         (async () => {
-            const data = await hospitalApi.getAllHospital()
-            setHospitalData(data.hospital)
-            setIsLoading(false)
+            try {
+                const data = await hospitalApi.getAllHospital(queryParams)
+                setHospitalList(data.hospital)
+                setPagination(data.page)
+                setIsLoading(false)
+            } catch (err) {
+                alert(err)
+            }
         })()
-    }, [])
+    }, [queryParams])
     if (isLoading) return <Loading />
     return (
         <div className="hospitalManagement">
             <div className="hospitalManagement__container">
                 <header>Quản lí bệnh viện</header>
-                <div className="specialistManagement__action">
+                <div className="hospitalManagement__action">
                     <button
                         className="btnSuccess"
                         onClick={() => navigate(path.addHospital)}
                     >
                         Thêm bệnh viện mới
                     </button>
+                    <div className="hospitalManagement__action-search">
+                        <SearchInput placeholder="Tìm kiếm bệnh viện" mode = "list" handleSearch = {handleOnChangeSearchInput} value = {searchValue}/>
+                    </div>
                 </div>
                 <table>
                     <thead>
@@ -40,7 +85,7 @@ function HospitalManagement() {
                         </tr>
                     </thead>
                     <tbody>
-                        {hospitalData && hospitalData.map(hospitalItem => (
+                        {hospitalList.map(hospitalItem => (
                             <tr key={hospitalItem.id}>
                                 <td>{hospitalItem.id}</td>
                                 <td>{hospitalItem.name}</td>
@@ -60,6 +105,9 @@ function HospitalManagement() {
                         ))}
                     </tbody>
                 </table>
+                <div className="hospitalManagement__pagination">
+                    <Pagination totalPage={pagination.totalPages} currentPage={pagination.page} onClick = {handlePageChange}/>
+                </div>
             </div>
         </div>
     )
