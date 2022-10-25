@@ -42,19 +42,19 @@ function UpdateDoctor() {
     const form = useForm({
         defaultValues: {
             id: doctor.id,
-            phoneNumber: doctor[Object.values(Object.keys(doctor))[15]],
-            email: doctor[Object.values(Object.keys(doctor))[10]],
-            firsname: doctor[Object.values(Object.keys(doctor))[11]],
-            lastname: doctor[Object.values(Object.keys(doctor))[12]],
-            gender: String(doctor[Object.values(Object.keys(doctor))[14]]),
-            birthday: doctor[Object.values(Object.keys(doctor))[16]].split('T')[0],
-            address: doctor[Object.values(Object.keys(doctor))[17]],
-            image: doctor[Object.values(Object.keys(doctor))[13]],
-            hospital_id: String(doctor[Object.values(Object.keys(doctor))[4]]),
-            clinic_id: String(doctor[Object.values(Object.keys(doctor))[5]]),
-            specialty_id: String(doctor[Object.values(Object.keys(doctor))[6]]),
-            description: doctor[Object.values(Object.keys(doctor))[1]],
-            rate: doctor[Object.values(Object.keys(doctor))[2]]
+            phoneNumber: doctor.user.phoneNumber,
+            email: doctor.user.email,
+            firsname: doctor.user.firsname,
+            lastname: doctor.user.lastname,
+            gender: String(doctor.user.gender),
+            birthday: doctor.user.birthday.split('T')[0],
+            address: doctor.user.address,
+            image: doctor.user.image,
+            hospital_id: String(doctor.hospital_id),
+            clinic_id: String(doctor.clinic_id),
+            specialty_id: String(doctor.specialty_id),
+            description: doctor.description,
+            rate: doctor.rate
         },
         resolver: yupResolver(schema)
     })
