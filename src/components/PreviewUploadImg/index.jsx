@@ -25,11 +25,9 @@ function PreviewUploadImg({ form, name }) {
         <div className="previewUploadImg">
             <div className="previewUploadImg__container">
                 <div className="previewUploadImg__img">
-                    {previewSource ? (
-                        <img alt="img" src={previewSource} />
-                    ) : (
-                        <img alt="img" src={form.getValues('image')} />
-                    )}
+                    {previewSource && <img alt="img" src={previewSource} />}
+                    {!previewSource && form.getValues('image') !== '' && <img alt="img" src={form.getValues('image')} />}
+                    {!previewSource && form.getValues('image') === '' && <img alt="img" src="https://via.placeholder.com/300" />}
                 </div>
                 <div>
                     <label

@@ -1,24 +1,65 @@
 import clinicApi from 'api/clinicApi'
 import Loading from 'components/Loading'
+import Pagination from 'components/Pagination'
 import { path } from 'constants/path'
-import React, { useEffect, useState } from 'react'
+import { useDebounce } from 'hooks/useDebounce'
+import React, { useEffect, useMemo, useState } from 'react'
 import { AiFillEdit } from 'react-icons/ai'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import './index.scss'
+import queryString from 'query-string'
+import SearchInput from 'components/SearchInput'
 
 function ClinicManagement() {
+    const [isLoading, setIsLoading] = useState(true)
+
+    const [clinicList, setClinicList] = useState([])
+    const [pagination, setPagination] = useState({
+        totalPages: 3,
+        totalElements: 11,
+        page: 0
+    })
+    const handlePageChange = page => {
+        const filters = { ...queryParams, page: page }
+        navigate(`?${queryString.stringify(filters)}`)
+    }
+    const location = useLocation()
+    const [searchValue, setSearchValue] = useState(
+        () => queryString.parse(location.search).key
+    )
+    const debounceValue = useDebounce(searchValue, 500)
     const navigate = useNavigate()
-    const [isLoading, setIsLoading] =useState(true)
-    const [clinicsData, setClinicsData] = useState([])
+    const handleOnChangeSearchInput = e => {
+        setSearchValue(e.target.value)
+    }
+    const queryParams = useMemo(() => {
+        const params = queryString.parse(location.search)
+        return {
+            page: Number.parseInt(params.page) || 0,
+            limit: Number.parseInt(params.limit) || 10,
+            key: params.key || ''
+        }
+    }, [location.search])
+
+    useEffect(() => {
+        const params = { ...queryParams, key: debounceValue, page: 0 }
+        navigate(`?${queryString.stringify(params)}`)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [debounceValue])
+
     useEffect(() => {
         (async () => {
-            const data = await clinicApi.getAllClinic()
-            setClinicsData(data.clinic)
-            setIsLoading(false)
+            try {
+                const data = await clinicApi.getAllClinic(queryParams)
+                setClinicList(data.clinic)
+                setPagination(data.page)
+                setIsLoading(false)
+            } catch (err) {
+                alert(err)
+            }
         })()
-    }, [])
+    }, [queryParams])
     if (isLoading) return <Loading />
-
     return (
         <div className="clinicManagement">
             <div className="clinicManagement__container">
@@ -30,6 +71,9 @@ function ClinicManagement() {
                     >
                         Thêm phòng khám mới
                     </button>
+                    <div className="clinicManagement__action-search">
+                        <SearchInput placeholder="Tìm kiếm phòng khám" mode = "list" handleSearch = {handleOnChangeSearchInput} value = {searchValue}/>
+                    </div>
                 </div>
                 <table>
                     <thead>
@@ -42,7 +86,7 @@ function ClinicManagement() {
                         </tr>
                     </thead>
                     <tbody>
-                        {clinicsData.map(clinicItem => (
+                        {clinicList.map(clinicItem => (
                             <tr key={clinicItem.id}>
                                 <td>{clinicItem.id}</td>
                                 <td>{clinicItem.name}</td>
@@ -62,6 +106,9 @@ function ClinicManagement() {
                         ))}
                     </tbody>
                 </table>
+                <div className="clinicManagement__pagination">
+                    <Pagination totalPage={pagination.totalPages} currentPage={pagination.page} onClick = {handlePageChange}/>
+                </div>
             </div>
         </div>
     )

@@ -25,5 +25,13 @@
     }
     &__action {
         margin-bottom: 40px;
+        display: flex;
+        justify-content: space-between;
+        &-search {
+            width: 50%;
+        }
+    }
+    &__pagination {
+        margin-top: 20px;
     }
 }
