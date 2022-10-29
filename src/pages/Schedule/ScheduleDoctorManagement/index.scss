@@ -1,4 +1,4 @@
-.specialistManagement {
+.scheduleDoctorManagement {
     &__container {
         header {
             text-align: center;
@@ -6,7 +6,6 @@
             font-size: 24px;
             margin-bottom: 40px;
         }
-
         table {
             background-color: #ffffff;
             border-collapse: collapse; 
@@ -24,16 +23,29 @@
             text-align: left;
             // float: left;
             // width: 20%;
+            font-weight: 500;
 
         }
         td {
             border-bottom: 1px solid #ccc;
             padding: 10px 0;
             // width: 25%;
+            &:nth-child(2), &:nth-child(3) {
+                font-weight: 500;
+            }
         }
-
     }
     &__action {
-        margin-bottom: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 3%;
+    }
+    &__form {
+        margin: 0;
+    }
+    .searchResult_null {
+        display: block;
+        text-align: center;
     }
 }
