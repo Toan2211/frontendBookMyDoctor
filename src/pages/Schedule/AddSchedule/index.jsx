@@ -5,15 +5,11 @@ import { useSelector } from 'react-redux'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import './index.scss'
-import strftime from 'strftime'
 import scheduleApi from 'api/scheduleApi'
 import { toast } from 'react-toastify'
-import { useNavigate } from 'react-router-dom'
-import { path } from 'constants/path'
 const yesterday = new Date(Date.now() - 86400000)
 function AddSchedule({ onClose }) {
     const userDoctor = useSelector(state => state.user.profile)
-    const nagivate = useNavigate()
     const schema = yup.object().shape({
         cost: yup
             .number('Nhập số')
@@ -44,14 +40,8 @@ function AddSchedule({ onClose }) {
     })
     const handleSubmitForm = value => {
         const valueSubmit = { ...value }
-        valueSubmit.begin = strftime(
-            '%Y-%m-%dT%H:%M:%S',
-            valueSubmit.begin
-        )
-        valueSubmit.end = strftime(
-            '%Y-%m-%dT%H:%M:%S',
-            valueSubmit.end
-        )
+        valueSubmit.begin = valueSubmit.begin.toISOString()
+        valueSubmit.end = valueSubmit.end.toISOString()
         ;(async () => {
             try {
                 await scheduleApi.addSchedule(valueSubmit,
@@ -66,7 +56,7 @@ function AddSchedule({ onClose }) {
                 toast.success('Tạo lịch khám thành công', {
                     position: toast.POSITION.BOTTOM_RIGHT
                 })
-                nagivate(path.scheduleManagement)
+                onClose()
             }
             catch (err) {
                 toast.error(err.message, {

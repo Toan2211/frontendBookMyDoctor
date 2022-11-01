@@ -10,8 +10,10 @@ import {
 } from 'react-icons/fa'
 import { MdFolderSpecial } from 'react-icons/md'
 import { AiFillSchedule } from 'react-icons/ai'
+import { useSelector } from 'react-redux'
 
 function MenuSystem() {
+    const userData = useSelector(state => state.user.profile)
     return (
         <ul className="menuSystem">
             <li className="menuSystem-item">
@@ -104,6 +106,40 @@ function MenuSystem() {
                     Quản lí lịch khám
                 </NavLink>
             </li>
+            {userData.role.name === 'ROLE_DOCTOR' && (
+                <li className="menuSystem-item">
+                    <NavLink
+                        to={path.appointmentManagement}
+                        className={({ isActive }) =>
+                            isActive
+                                ? 'menuSystem-item-link--active menuSystem-item-link'
+                                : 'menuSystem-item-link'
+                        }
+                    >
+                        <span className="menuSystem-item-icon">
+                            <AiFillSchedule />
+                        </span>
+                        Quản lí cuộc hẹn
+                    </NavLink>
+                </li>
+            )}
+            {userData.role.name === 'ROLE_ADMIN' && (
+                <li className="menuSystem-item">
+                    <NavLink
+                        to={path.appointmentManagement}
+                        className={({ isActive }) =>
+                            isActive
+                                ? 'menuSystem-item-link--active menuSystem-item-link'
+                                : 'menuSystem-item-link'
+                        }
+                    >
+                        <span className="menuSystem-item-icon">
+                            <AiFillSchedule />
+                        </span>
+                        Quản lí cuộc hẹn
+                    </NavLink>
+                </li>
+            )}
         </ul>
     )
 }

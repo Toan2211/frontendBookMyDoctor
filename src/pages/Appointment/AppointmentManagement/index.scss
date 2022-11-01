@@ -1,0 +1,40 @@
+.appointmentManagement {
+    &__container {
+        header {
+            text-align: center;
+            font-weight: 500;
+            font-size: 24px;
+            margin-bottom: 40px;
+        }
+        table {
+            background-color: #ffffff;
+            border-collapse: collapse; 
+            width: 100%;
+            margin-bottom: 40px;
+        }
+        tbody {
+            // height: 50vh;
+            overflow-y: scroll;
+            // display: block;
+        }
+
+        th {
+            padding: 16px 4px;
+            background-color: #ccc;
+            text-align: left;
+            font-weight: 500;
+
+        }
+        tr {
+            border-bottom: 1px solid #ccc;
+
+        }
+        td {
+            padding: 10px 0;
+            // width: 25%;
+            &:nth-child(4), &:nth-child(5){
+                font-weight: 500;
+            }
+        }
+    }
+}

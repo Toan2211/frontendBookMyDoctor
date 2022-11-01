@@ -34,6 +34,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import DetailHospital from 'pages/DetailHospital'
 import ScheduleDoctorManagement from 'pages/Schedule/ScheduleDoctorManagement'
 import AddSchedule from 'pages/Schedule/AddSchedule'
+import AppointmentManagement from 'pages/Appointment/AppointmentManagement'
 
 
 function RoutesComponent() {
@@ -70,6 +71,8 @@ function RoutesComponent() {
 
                         <Route path = {path.scheduleManagement} element = {<ScheduleDoctorManagement />} />
                         <Route path = {path.addSchedule} element = {<AddSchedule />} />
+
+                        <Route path= {path.appointmentManagement} element = {<AppointmentManagement />}  />
                     </Route>
                 </Route>
                 <Route element ={<AuthenticatedGuard />}>
