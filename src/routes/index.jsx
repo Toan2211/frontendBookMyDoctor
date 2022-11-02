@@ -72,7 +72,7 @@ function RoutesComponent() {
                         <Route path = {path.scheduleManagement} element = {<ScheduleDoctorManagement />} />
                         <Route path = {path.addSchedule} element = {<AddSchedule />} />
 
-                        <Route path= {path.appointmentManagement} element = {<AppointmentManagement />}  />
+                        <Route path= {path.appointmentManagement} element = {<AppointmentManagement />} />
                     </Route>
                 </Route>
                 <Route element ={<AuthenticatedGuard />}>

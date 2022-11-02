@@ -76,7 +76,6 @@ function AppointmentManager() {
             })
         }
     }
-    console.log('userdata', listAppointment)
     return (
         <div className="appointmentManager">
             <div className="appointmentManager__container">

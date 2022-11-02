@@ -47,7 +47,6 @@ function BookTimeTable({ doctor }) {
             size: 100,
             page: 0
         }
-        console.log(valueSubmit)
         ;(async () => {
             try {
                 const respone = await scheduleApi.getSchedule(

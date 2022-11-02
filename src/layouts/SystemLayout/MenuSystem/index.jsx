@@ -28,7 +28,7 @@ function MenuSystem() {
                     <span className="menuSystem-item-icon">
                         <FaClinicMedical />
                     </span>
-                    Quản lí Phòng khám
+                    Phòng khám
                 </NavLink>
             </li>
             <li className="menuSystem-item">
@@ -43,7 +43,7 @@ function MenuSystem() {
                     <span className="menuSystem-item-icon">
                         <MdFolderSpecial />
                     </span>
-                    Quản lí Chuyên khoa
+                    Chuyên khoa
                 </NavLink>
             </li>
             <li className="menuSystem-item">
@@ -58,7 +58,7 @@ function MenuSystem() {
                     <span className="menuSystem-item-icon">
                         <FaHospital />
                     </span>
-                    Quản lí Bệnh viện
+                    Bệnh viện
                 </NavLink>
             </li>
             <li className="menuSystem-item">
@@ -73,7 +73,7 @@ function MenuSystem() {
                     <span className="menuSystem-item-icon">
                         <FaUserAlt />
                     </span>
-                    Quản lí Bệnh nhân
+                    Bệnh nhân
                 </NavLink>
             </li>
             <li className="menuSystem-item">
@@ -88,7 +88,7 @@ function MenuSystem() {
                     <span className="menuSystem-item-icon">
                         <FaUserNurse />
                     </span>
-                    Quản lí Bác sĩ
+                    Bác sĩ
                 </NavLink>
             </li>
             <li className="menuSystem-item">
@@ -103,7 +103,7 @@ function MenuSystem() {
                     <span className="menuSystem-item-icon">
                         <AiFillSchedule />
                     </span>
-                    Quản lí lịch khám
+                    Lịch khám
                 </NavLink>
             </li>
             {userData.role.name === 'ROLE_DOCTOR' && (
@@ -119,7 +119,7 @@ function MenuSystem() {
                         <span className="menuSystem-item-icon">
                             <AiFillSchedule />
                         </span>
-                        Quản lí cuộc hẹn
+                        Cuộc hẹn
                     </NavLink>
                 </li>
             )}
@@ -136,7 +136,7 @@ function MenuSystem() {
                         <span className="menuSystem-item-icon">
                             <AiFillSchedule />
                         </span>
-                        Quản lí cuộc hẹn
+                        Cuộc hẹn
                     </NavLink>
                 </li>
             )}
