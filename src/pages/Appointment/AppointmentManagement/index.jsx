@@ -11,12 +11,17 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import Select from 'react-select'
 import SearchInput from 'components/SearchInput'
 import { useDebounce } from 'hooks/useDebounce'
+import ReactDatePicker from 'react-datepicker'
+import strftime from 'strftime'
 const options = [
     { value: '', label: 'Tất cả' },
     { value: 'NEW', label: 'Chờ xử lí' },
     { value: 'DONE', label: 'Đã hoàn thành' },
     { value: 'CONFIRMED', label: 'Chờ khám' },
-    { value: 'CANCEL', label: 'Đã hủy' }
+    { value: 'CANCEL', label: 'Đã hủy' },
+    { value: 'REPORT', label: 'Báo cáo' },
+    { value: 'PATIENT VIOLATE', label: 'BN vi phạm' }
+
 ]
 function AppointmentManagement() {
     const [listAppointment, setListAppointment] = useState([])
@@ -30,7 +35,8 @@ function AppointmentManagement() {
             page: Number.parseInt(params.page) || 0,
             limit: Number.parseInt(params.limit) || 10,
             key: params.key || '',
-            status: params.status || ''
+            status: params.status || '',
+            date: params.date || ''
         }
     }, [location.search])
     const fetchListAppointment = async (queryParams) => {
@@ -130,6 +136,7 @@ function AppointmentManagement() {
         toggleShowItem()
         setAppointmentItemDetail(item)
     }
+    {isShowAppointmentItemDetail && <AppointmentDetail appointmentData = {AppointmentItemDetail} onClose = {toggleShowItem} confirmAppointment = {confirmAppointment}/>}
     //status
     const handleStatusChange = (value) => {
         const filters = { ...queryParams, status: value.value, page: 0 }
@@ -143,11 +150,79 @@ function AppointmentManagement() {
         navigate(`?${queryString.stringify(params)}`)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [debounceValue])
+    const reportPatient = (appointmentID) => {
+        try {
+            ( async () => {
+                await appointmentApi.reportAppointment(
+                    appointmentID,
+                    {
+                        headers: {
+                            Authorization: `${localStorage.getItem(
+                                'access_token'
+                            )}`
+                        }
+                    }
+                )
+                const filters = { ...queryParams, status: options[0].value, page: 0 }
+                navigate(`?${queryString.stringify(filters)}`)
+                toast.success('Báo cáo thành công', {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                    autoClose: 2000
+                })
+            })()
+        }
+        catch (err) {
+            toast.error(err.message, {
+                position: toast.POSITION.BOTTOM_RIGHT,
+                autoClose: 2000
+            })
+        }
+    }
+    const resolveReport = (idAppointment, actor) => {
+        try {
+            ( async () => {
+                await appointmentApi.resolveReport(
+                    idAppointment,
+                    { violator: actor },
+                    {
+                        headers: {
+                            Authorization: `${localStorage.getItem(
+                                'access_token'
+                            )}`
+                        }
+                    }
+                )
+                fetchListAppointment(queryParams)
+                toast.success('Xử lí thành công', {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                    autoClose: 2000
+                })
+            })()
+        }
+        catch (err) {
+            toast.error(err.message, {
+                position: toast.POSITION.BOTTOM_RIGHT,
+                autoClose: 2000
+            })
+        }
+    }
+    const [selectedDate, setSelectedDate] = useState(new Date())
+    const handleDateChange = date => {
+        setSelectedDate(date)
+        const params = { ...queryParams, date: strftime('%Y-%m-%d', date), page: 0 }
+        navigate(`?${queryString.stringify(params)}`)
+    }
     return (
         <div className="appointmentManagement">
             <div className="appointmentManagement__container">
                 <header>Quản lí cuộc hẹn</header>
                 <div className="appointmentManagement__action">
+                    <div>
+                        <ReactDatePicker
+                            selected={selectedDate}
+                            onChange={handleDateChange}
+                        />
+                    </div>
                     <div className="appointmentManagement__action-search">
                         <SearchInput placeholder="Tìm kiếm bác sĩ, bệnh nhân" mode = "list" handleSearch = {handleInputSearchChange} value = {searchValue}/>
                     </div>
@@ -165,6 +240,7 @@ function AppointmentManagement() {
                             <th>Ngày</th>
                             <th>Thời gian</th>
                             <th>Tình trạng</th>
+                            <th>Chi tiết</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -181,7 +257,16 @@ function AppointmentManagement() {
                                     {item.status.id === 2 && <td><span className="label__confirm">Đã chấp nhận</span></td>}
                                     {item.status.id === 4 && <td><span className="label__cancel">Đã hủy</span></td>}
                                     {item.status.id === 3 && <td><span className="label__done">Hoàn thành</span></td>}
+                                    {item.status.id === 5 && <td><span className="label__cancel">Admin xử lí...</span></td>}
+                                    {item.status.id === 6 && <td><span className="label__cancel">Không khám</span></td>}
+
                                     <td><button className="btnDetail" onClick={() => showAppointmentItemDetail(item)}>Chi tiết</button></td>
+                                    <td>
+                                        {userData.role.name === 'ROLE_DOCTOR' && item.status.name === 'NEW' && <button className="btnSuccess" onClick={() => confirmAppointment(item.id)}>Xác nhận</button>}
+                                        {userData.role.name === 'ROLE_DOCTOR' && item.status.id === 3 && <button className="btnCancel" onClick={() => reportPatient(item.id)}>Không đến khám</button>}
+                                        {userData.role.name === 'ROLE_ADMIN' && item.status.id === 5 && <button className="btnCancel" onClick={() => resolveReport(item.id, 'patient')}>BN không đến khám</button>}
+                                        {userData.role.name === 'ROLE_ADMIN' && item.status.id === 5 && <button className="btnCancel" onClick={() => resolveReport(item.id, 'doctor')}>BN đã đến khám</button>}
+                                    </td>
                                 </tr>
                             ))
                         }

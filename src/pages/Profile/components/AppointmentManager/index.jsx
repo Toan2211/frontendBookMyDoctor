@@ -1,4 +1,6 @@
 import appointmentApi from 'api/appointmentApi'
+import ReviewDialog from 'components/ReviewDialog'
+import AppointmentDetail from 'pages/Appointment/AppointmentDetail'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
@@ -76,6 +78,19 @@ function AppointmentManager() {
             })
         }
     }
+    const [AppointmentItemDetail, setAppointmentItemDetail] = useState({})
+    const [isShowAppointmentItemDetail, setIsShowAppointmentItemDetail] = useState(false)
+    const toggleShowItem = () => setIsShowAppointmentItemDetail(!isShowAppointmentItemDetail)
+    const showAppointmentItemDetail = (item) => {
+        toggleShowItem()
+        setAppointmentItemDetail(item)
+    }
+    const [isShowReview, setIsShowReview] = useState(false)
+    const toggleShowReview = () => setIsShowReview(!isShowReview)
+    const showReviewItem = (item) => {
+        toggleShowReview()
+        setAppointmentItemDetail(item)
+    }
     return (
         <div className="appointmentManager">
             <div className="appointmentManager__container">
@@ -85,10 +100,10 @@ function AppointmentManager() {
                         <tr>
                             <th>ID</th>
                             {userData.role.name === 'ROLE_DOCTOR' ? (<th>Bệnh nhân</th>) : (<th>Bác sĩ</th>)}
-                            <th>Bắt đầu</th>
-                            <th>Kết thúc</th>
-                            <th>Triệu chứng</th>
+                            <th>Ngày</th>
+                            <th>Thời gian</th>
                             <th>Tình trạng</th>
+                            <th>Chi tiết</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -98,18 +113,26 @@ function AppointmentManager() {
                                 <tr key={item.id}>
                                     <td>{item.id}</td>
                                     {userData.role.name === 'ROLE_DOCTOR' ? (<td>{`${item.patient.user.firsname} ${item.patient.user.lastname}`}</td>) : (<td>{`${item.schedule.doctor.user.firsname} ${item.schedule.doctor.user.lastname}`}</td>)}
-                                    <td>{convertTZ7Str(item.schedule.begin)}</td>
-                                    <td>{convertTZ7Str(item.schedule.end)}</td>
-                                    <td>{item.symptoms}</td>
-                                    <td>{item.status.name}</td>
-                                    {userData.role.name === 'ROLE_DOCTOR' && item.status.name === 'NEW' && <td><button className="btnSuccess" onClick={() => confirmAppointment(item.id)}>Xác nhận</button></td>}
-                                    {userData.role.name === 'ROLE_PATIENT' && item.status.name === 'NEW' && <td><button className="btnCancel" onClick={() => cancelAppointment(item.id)}>Hủy cuộc hẹn</button></td>}
+                                    <td>{convertTZ7Str(item.schedule.begin).split('T')[0]}</td>
+                                    <td>{`${convertTZ7Str(item.schedule.begin).split('T')[1]} - ${convertTZ7Str(item.schedule.end).split('T')[1]}`}</td>
+                                    {item.status.id === 1 && <td><span className="label__pending">Chờ xử lí</span></td>}
+                                    {item.status.id === 2 && <td><span className="label__confirm">Đã chấp nhận</span></td>}
+                                    {item.status.id === 4 && <td><span className="label__cancel">Đã hủy</span></td>}
+                                    {item.status.id === 3 && <td><span className="label__done">Hoàn thành</span></td>}
+                                    <td><button className="btnDetail" onClick={() => showAppointmentItemDetail(item)}>Chi tiết</button></td>
+                                    <td>
+                                        {userData.role.name === 'ROLE_DOCTOR' && item.status.name === 'NEW' && <button className="btnSuccess" onClick={() => confirmAppointment(item.id)}>Xác nhận</button>}
+                                        {userData.role.name === 'ROLE_PATIENT' && item.status.name === 'NEW' && <button className="btnCancel" onClick={() => cancelAppointment(item.id)}>Hủy cuộc hẹn</button>}
+                                        {userData.role.name === 'ROLE_PATIENT'&& item.status.id === 3 && <button className="btnReview" onClick={() => showReviewItem(item)}>Đánh giá</button>}
+                                    </td>
                                 </tr>
                             ))
                         }
                     </tbody>
                 </table>
             </div>
+            {isShowAppointmentItemDetail && <AppointmentDetail appointmentData = {AppointmentItemDetail} onClose = {toggleShowItem} confirmAppointment = {confirmAppointment}/>}
+            {isShowReview && <ReviewDialog appointmentData = {AppointmentItemDetail} onClose = {toggleShowReview}/>}
         </div>
     )
 }

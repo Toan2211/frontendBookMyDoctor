@@ -57,7 +57,7 @@ function EditSpecialist() {
             <div className="editSpecialist__container">
                 <header>Cập nhật chuyên khoa</header>
                 <form
-                    className="form"
+                    className="form editSpecialist__form"
                     onSubmit={form.handleSubmit(handleSubmitForm)}
                 >
                     <div className="form__element">
@@ -67,6 +67,7 @@ function EditSpecialist() {
                         <InputField
                             form={form}
                             name="name"
+                            label = "Tên chuyên khoa"
                             placeholder="Tên chuyên khoa"
                         />
                     </div>
@@ -74,6 +75,7 @@ function EditSpecialist() {
                         <InputField
                             form={form}
                             name="description"
+                            label = "Chi tiết"
                             placeholder="Mô tả chuyên khoa"
                         />
                     </div>

@@ -64,6 +64,9 @@
         td {
             padding: 10px 0;
             padding-left: 10px;
+            &:last-child {
+                text-align: center;
+            }
         }
 
     }

@@ -68,7 +68,6 @@ function RoutesComponent() {
                         <Route path= {path.doctorManagement} element = {<DoctorManagement />}/>
                         <Route path = {path.addDoctor} element = {<AddDoctor />} />
                         <Route path = {path.updateDoctor} element = {<UpdateDoctor />} />
-
                         <Route path = {path.scheduleManagement} element = {<ScheduleDoctorManagement />} />
                         <Route path = {path.addSchedule} element = {<AddSchedule />} />
 

@@ -59,7 +59,7 @@ function AddHospital() {
             <div className="addHospital__container">
                 <header>Thêm bệnh viện mới</header>
                 <form
-                    className="form"
+                    className="form addHospital__form"
                     onSubmit={form.handleSubmit(handleSubmitForm)}
                 >
                     <div className="form__element">

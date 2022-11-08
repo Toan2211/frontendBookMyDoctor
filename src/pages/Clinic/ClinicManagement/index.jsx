@@ -55,7 +55,7 @@ function ClinicManagement() {
                 setPagination(data.page)
                 setIsLoading(false)
             } catch (err) {
-                alert(err)
+                return err.message
             }
         })()
     }, [queryParams])

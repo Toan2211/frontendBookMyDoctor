@@ -1,7 +1,7 @@
 .appointmentManagement {
     &__container {
         background-color: #FFFFFF;
-        height: 94vh;
+        height: 95vh;
         padding: 20px 26px;
         display: flex;
         flex-direction: column;
@@ -58,11 +58,17 @@
         td {
             padding: 10px 0;
             padding-left: 10px;
+            
+            &:last-child {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
         }
     }
     &__action {
         display: flex;
-        justify-content: space-between;
+        gap: 20px;
         margin-bottom: 10px;
         &-filterStatus {
             width: 20%;

@@ -2,11 +2,11 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { BsFillCalendarFill } from 'react-icons/bs'
 import './index.scss'
 import TimeTableItem from './TimeTableItem'
-import SelectOption from 'components/SelectOption'
 import strftime from 'strftime'
 import { toast } from 'react-toastify'
 import scheduleApi from 'api/scheduleApi'
 import { useParams } from 'react-router-dom'
+import ReactDatePicker from 'react-datepicker'
 
 function BookTimeTable({ doctor }) {
     const doctorId = useParams().id
@@ -36,9 +36,6 @@ function BookTimeTable({ doctor }) {
     }, [])
     const [day, setDay] = useState(dataDay[0].value)
     const [listTimeTable, setListTimeTable] = useState([])
-    const hanleSelectionOnChange = (value ) => {
-        setDay(value)
-    }
     useEffect(() => {
         let date = new Date(day)
         const valueSubmit = {
@@ -63,6 +60,11 @@ function BookTimeTable({ doctor }) {
             }
         })()
     }, [day, doctorId])
+    const [selectedDate, setSelectedDate] = useState(new Date())
+    const handleDateChange = date => {
+        setSelectedDate(date)
+        setDay(strftime('%Y-%m-%d', date))
+    }
     return (
         <div className="bookTimeTable">
             <div className="bookTimeTable__container">
@@ -74,7 +76,12 @@ function BookTimeTable({ doctor }) {
                         Lịch khám
                     </header>
                     <div className="bookTimeTable__bookDay-time">
-                        <SelectOption data = {dataDay} hanleSelectionOnChange = {hanleSelectionOnChange}/>
+                        <div>
+                            <ReactDatePicker
+                                selected={selectedDate}
+                                onChange={handleDateChange}
+                            />
+                        </div>
                     </div>
                     <ul className="bookTimeTable__bookDay-list">
                         {

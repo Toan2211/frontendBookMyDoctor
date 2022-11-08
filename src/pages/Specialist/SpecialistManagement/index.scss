@@ -44,7 +44,9 @@
                 border-bottom: 2px solid #FCFCFC;
                 border-right: 2px solid #F2F2F2;
                 top: 100px;
-
+                &:last-child {
+                    text-align: center;
+                }
             }
         }
         table {
@@ -67,6 +69,9 @@
         td {
             padding: 10px 0;
             padding-left: 10px;
+            &:last-child {
+                text-align: center;
+            }
         }
     }
     &__action {

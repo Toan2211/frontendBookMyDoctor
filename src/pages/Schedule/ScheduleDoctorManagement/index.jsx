@@ -11,13 +11,47 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import 'react-datepicker/dist/react-datepicker.css'
 import ReactDatePicker from 'react-datepicker'
 import strftime from 'strftime'
+import AddMultiSchedule from '../AddMultiSchedule'
+import { BsFillTrashFill } from 'react-icons/bs'
+import doctorApi from 'api/doctorApi'
+import Select from 'react-select'
 function ScheduleDoctorManagement() {
     const navigate = useNavigate()
-
-    const userDoctor = useSelector(state => state.user.profile)
+    const user = useSelector(state => state.user.profile)
+    const [doctorId, setDoctorId] = useState(
+        () => user.doctor && user.doctor.id
+    )
     const [showAddSchedule, setShowAddSchedule] = useState(false)
+    const [listDoctor, setListDoctor] = useState([])
+    useEffect(() => {
+        (async () => {
+            try {
+                const data = await doctorApi.getAllDoctor({
+                    page: 0,
+                    limit: 100
+                })
+                const dataDoctor = [...data.doctor]
+                const dataDoctorShow = dataDoctor.map(doctor => {
+                    return {
+                        value: doctor.id,
+                        label: `${doctor.user.firsname} ${doctor.user.lastname}`
+                    }
+                })
+                setListDoctor(dataDoctorShow)
+            } catch (err) {
+                alert(err)
+            }
+        })()
+    }, [])
+    const handleDoctorChange = value => {
+        setDoctorId(value.value)
+    }
     const toggleShowAddSchedule = () =>
         setShowAddSchedule(!showAddSchedule)
+    const [showAddMultiSchedule, setShowAddMultiSchedule] =
+        useState(false)
+    const toggleShowAddMultiSchedule = () =>
+        setShowAddMultiSchedule(!showAddMultiSchedule)
     const [scheduleSearchResult, setScheduleSearchResult] = useState(
         []
     )
@@ -49,24 +83,23 @@ function ScheduleDoctorManagement() {
                 ).toISOString()
         }
     }, [location.search])
+    const getAllSchedule = async () => {
+        try {
+            const respone = await scheduleApi.getSchedule(doctorId, {
+                params: { ...queryParams }
+            })
+            setScheduleSearchResult(respone.schedules)
+            setPagination(respone.page)
+        } catch (err) {
+            toast.error(err.message, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        }
+    }
     useEffect(() => {
-        (async () => {
-            try {
-                const respone = await scheduleApi.getSchedule(
-                    userDoctor.doctor.id,
-                    {
-                        params: { ...queryParams }
-                    }
-                )
-                setScheduleSearchResult(respone.schedules)
-                setPagination(respone.page)
-            } catch (err) {
-                toast.error(err.message, {
-                    position: toast.POSITION.BOTTOM_RIGHT
-                })
-            }
-        })()
-    }, [queryParams, userDoctor.doctor.id])
+        getAllSchedule()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [queryParams, doctorId])
 
     const [selectedDate, setSelectedDate] = useState(new Date())
     const handleDateChange = date => {
@@ -84,6 +117,27 @@ function ScheduleDoctorManagement() {
         }
         navigate(`?${queryString.stringify(filters)}`)
     }
+    const deleteSchedule = id => {
+        (async () => {
+            try {
+                await scheduleApi.deleteSchedule(id, {
+                    headers: {
+                        Authorization: `${localStorage.getItem(
+                            'access_token'
+                        )}`
+                    }
+                })
+                toast.success('Xóa lịch khám thành công', {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                })
+                getAllSchedule()
+            } catch (err) {
+                toast.error(err.message, {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                })
+            }
+        })()
+    }
     return (
         <div className="scheduleDoctorManagement">
             <div className="scheduleDoctorManagement__container">
@@ -95,14 +149,31 @@ function ScheduleDoctorManagement() {
                             onChange={handleDateChange}
                         />
                     </div>
-                    <div>
-                        <button
-                            className="btnSuccess"
-                            onClick={toggleShowAddSchedule}
-                        >
-                            Thêm lịch khám mới
-                        </button>
-                    </div>
+                    {user.role.id === 2 && (
+                        <div className="scheduleDoctorManagement__action--select">
+                            <Select
+                                options={listDoctor}
+                                onChange={handleDoctorChange}
+                            />
+                        </div>
+                    )}
+
+                    {user.doctor && (
+                        <div>
+                            <button
+                                className="btnSuccess"
+                                onClick={toggleShowAddSchedule}
+                            >
+                                Thêm lịch khám mới
+                            </button>
+                            <button
+                                className="btnSuccess"
+                                onClick={toggleShowAddMultiSchedule}
+                            >
+                                Thêm nhiều lịch khám mới
+                            </button>
+                        </div>
+                    )}
                 </div>
                 <table>
                     <thead>
@@ -112,6 +183,7 @@ function ScheduleDoctorManagement() {
                             <th>Kết thúc</th>
                             <th>Giá</th>
                             <th>Tình trạng</th>
+                            <th></th>
                         </tr>
                     </thead>
                     {scheduleSearchResult.length > 0 ? (
@@ -120,18 +192,42 @@ function ScheduleDoctorManagement() {
                                 <tr key={schedule.id}>
                                     <td>{schedule.id}</td>
                                     <td>
-                                        {convertTZ7Str(
-                                            schedule.begin
-                                        ).split('T')[0]}
+                                        {
+                                            convertTZ7Str(
+                                                schedule.begin
+                                            ).split('T')[0]
+                                        }
                                     </td>
                                     <td>
-                                        {`${convertTZ7Str(schedule.begin).split('T')[1]} - ${convertTZ7Str(schedule.end).split('T')[1]}`}
+                                        {`${
+                                            convertTZ7Str(
+                                                schedule.begin
+                                            ).split('T')[1]
+                                        } - ${
+                                            convertTZ7Str(
+                                                schedule.end
+                                            ).split('T')[1]
+                                        }`}
                                     </td>
                                     <td>{schedule.cost}</td>
                                     <td>
-                                        {schedule.status
-                                            ? 'Đã đặt'
-                                            : 'Trống'}
+                                        {schedule.status ? (
+                                            <span className="label__confirm">
+                                                Đã đặt
+                                            </span>
+                                        ) : (
+                                            'Trống'
+                                        )}
+                                    </td>
+                                    <td>
+                                        <BsFillTrashFill
+                                            className="icon-trash"
+                                            onClick={() =>
+                                                deleteSchedule(
+                                                    schedule.id
+                                                )
+                                            }
+                                        />
                                     </td>
                                 </tr>
                             ))}
@@ -152,6 +248,11 @@ function ScheduleDoctorManagement() {
             </div>
             {showAddSchedule && (
                 <AddSchedule onClose={toggleShowAddSchedule} />
+            )}
+            {showAddMultiSchedule && (
+                <AddMultiSchedule
+                    onClose={toggleShowAddMultiSchedule}
+                />
             )}
         </div>
     )

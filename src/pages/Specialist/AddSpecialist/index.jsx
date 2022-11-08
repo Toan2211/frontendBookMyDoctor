@@ -55,7 +55,7 @@ function AddSpecialist() {
             <div className="addSpecialist__container">
                 <header>Thêm mới chuyên khoa</header>
                 <form
-                    className="form"
+                    className="form addSpecialist__form"
                     onSubmit={form.handleSubmit(handleSubmitForm)}
                 >
                     <div className="form__element">

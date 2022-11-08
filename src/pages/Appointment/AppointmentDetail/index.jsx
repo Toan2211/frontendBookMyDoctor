@@ -134,7 +134,7 @@ function AppointmentDetail({
                             />
                         </div>
                     </div>
-                    {userData.role.name === 'ROLE_ADMIN' && (
+                    {(userData.role.name === 'ROLE_ADMIN' || userData.role.name === 'ROLE_PATIENT') && (
                         <>
                             <div className="appointmentDetail__content-row">
                                 <div>
