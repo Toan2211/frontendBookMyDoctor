@@ -93,6 +93,7 @@ function DoctorManagement() {
                                 <th>Chuyên khoa</th>
                                 <th>Phòng khám </th>
                                 <th>Bệnh viện </th>
+                                <th>Vi phạm</th>
                                 <th>Chỉnh sửa </th>
                             </tr>
                         </thead>
@@ -125,6 +126,7 @@ function DoctorManagement() {
                                         <td>
                                             {doctor.hospital.name}
                                         </td>
+                                        <td>{!doctor.user.violation ? 0 : doctor.user.violation}</td>
                                         <td>
                                             <Link
                                                 to={`/system/updateDoctor/${doctor.id}`}

@@ -1,11 +1,12 @@
 import BaseTableItem from 'components/BaseTableItem.jsx'
 import listTimes from 'constants/listTimes'
 import weekdays from 'constants/weekdays'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import strftime from 'strftime'
+import getDaysOfWeekBetweenDates from 'utils/getDaysBetweenTwoDates'
 import './index.scss'
 
 function AddMultiSchedule({ onClose }) {
@@ -13,10 +14,10 @@ function AddMultiSchedule({ onClose }) {
     const [startDate, setStartDate] = useState(new Date())
     const [endDate, setEndDate] = useState(new Date())
     const [weekdaysSubmit, setWeekDaysSubmit] = useState(
-        () => weekdays
+        () => [...weekdays]
     )
     const [scheduleSubmit, setScheduleSubmit] = useState(
-        () => listTimes
+        () => [...listTimes]
     )
     const [cost, setCost] = useState(100000)
     const handleOnClick = e => {
@@ -77,9 +78,16 @@ function AddMultiSchedule({ onClose }) {
         valueToSubmit.endDate = new Date(
             strftime('%Y-%m-%dT00:00:00', endDate)
         ).toISOString()
-
-        console.log(valueToSubmit)
     }
+    useEffect(() => {
+        const daysBetweenTwoDates = getDaysOfWeekBetweenDates(startDate, endDate)
+        const weekdaysShow = []
+        weekdays.forEach(element => {
+            if (daysBetweenTwoDates.find(day => day === element.id) !== undefined)
+                weekdaysShow.push(element)
+        })
+        setWeekDaysSubmit(weekdaysShow)
+    }, [startDate, endDate])
     return (
         <div className="addMultiSchedule" onClick={handleOnClick}>
             <div className="addMultiSchedule__container">

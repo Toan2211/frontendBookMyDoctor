@@ -1,5 +1,6 @@
 import InputShow from 'components/InputShow'
 import React from 'react'
+import { AiFillStar } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
 import convertTZ7Str from 'utils/convertTZ7Str'
 import './index.scss'
@@ -13,14 +14,25 @@ function AppointmentDetail({
     const handleOnClick = e => {
         if (e.target.className === 'appointmentDetail') onClose()
     }
+    const arr = [1, 2, 3, 4, 5]
     return (
         <div className="appointmentDetail" onClick={handleOnClick}>
             <div className="appointmentDetail__container">
                 <header>
                     <span>Thông tin cuộc hẹn</span>
+                    {appointmentData.status.id === 1 && (
+                        <span className="appointmentDetail__status-pending">
+                            Chờ xử lí
+                        </span>
+                    )}
                     {appointmentData.status.id === 2 && (
                         <span className="appointmentDetail__status-confirm">
                             Đã chấp nhận
+                        </span>
+                    )}
+                    {appointmentData.status.id === 3 && (
+                        <span className="appointmentDetail__status-confirm">
+                            Hoàn thành
                         </span>
                     )}
                     {appointmentData.status.id === 4 && (
@@ -28,13 +40,26 @@ function AppointmentDetail({
                             Đã hủy
                         </span>
                     )}
-                    {appointmentData.status.id === 1 && (
-                        <span className="appointmentDetail__status-pending">
-                            Chờ xử lí
-                        </span>
-                    )}
                 </header>
                 <div className="appointmentDetail__content">
+                    <div className="appointmentDetail__content-rating">
+                        {appointmentData.rating && arr.map(item => {
+                            if (
+                                item <= appointmentData.rating
+                            ) {
+                                return (
+                                    <span key={item}>
+                                        <AiFillStar className="star icon__active" />
+                                    </span>
+                                )
+                            }
+                            return (
+                                <span key={item}>
+                                    <AiFillStar className="star" />
+                                </span>
+                            )
+                        })}
+                    </div>
                     <div className="appointmentDetail__content-row">
                         <div>
                             <InputShow
@@ -134,7 +159,8 @@ function AppointmentDetail({
                             />
                         </div>
                     </div>
-                    {(userData.role.name === 'ROLE_ADMIN' || userData.role.name === 'ROLE_PATIENT') && (
+                    {(userData.role.name === 'ROLE_ADMIN' ||
+                        userData.role.name === 'ROLE_PATIENT') && (
                         <>
                             <div className="appointmentDetail__content-row">
                                 <div>

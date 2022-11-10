@@ -119,11 +119,13 @@ function AppointmentManager() {
                                     {item.status.id === 2 && <td><span className="label__confirm">Đã chấp nhận</span></td>}
                                     {item.status.id === 4 && <td><span className="label__cancel">Đã hủy</span></td>}
                                     {item.status.id === 3 && <td><span className="label__done">Hoàn thành</span></td>}
+                                    {item.status.id === 5 && <td><span className="label__cancel">Admin xử lí ...</span></td>}
+
                                     <td><button className="btnDetail" onClick={() => showAppointmentItemDetail(item)}>Chi tiết</button></td>
                                     <td>
                                         {userData.role.name === 'ROLE_DOCTOR' && item.status.name === 'NEW' && <button className="btnSuccess" onClick={() => confirmAppointment(item.id)}>Xác nhận</button>}
                                         {userData.role.name === 'ROLE_PATIENT' && item.status.name === 'NEW' && <button className="btnCancel" onClick={() => cancelAppointment(item.id)}>Hủy cuộc hẹn</button>}
-                                        {userData.role.name === 'ROLE_PATIENT'&& item.status.id === 3 && <button className="btnReview" onClick={() => showReviewItem(item)}>Đánh giá</button>}
+                                        {userData.role.name === 'ROLE_PATIENT'&& item.status.id === 3 && item.rating === null && <button className="btnReview" onClick={() => showReviewItem(item)}>Đánh giá</button>}
                                     </td>
                                 </tr>
                             ))

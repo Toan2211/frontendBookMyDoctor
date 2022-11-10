@@ -14,7 +14,7 @@ import './index.scss'
 import Pagination from 'components/Pagination'
 function PatientList() {
     const [isLoading, setIsLoading] = useState(true)
-
+    const [patientsData, setPatientsData] = useState([])
     const [clinicList, setClinicList] = useState([])
     const [pagination, setPagination] = useState({
         totalPages: 3,
@@ -48,7 +48,6 @@ function PatientList() {
         navigate(`?${queryString.stringify(params)}`)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [debounceValue])
-    const [patientsData, setPatientsData] = useState([])
     useEffect(() => {
         (async () => {
             const data = await patientsApi.getAllPatients({
@@ -109,7 +108,8 @@ function PatientList() {
                             <th>Giới tính</th>
                             <th>Ngày sinh</th>
                             <th>Số điện thoại</th>
-                            <th>Địa chỉ</th>
+                            {/* <th>Địa chỉ</th> */}
+                            <th>Vi phạm</th>
                             <th>Trạng thái</th>
                         </tr>
                     </thead>
@@ -134,7 +134,8 @@ function PatientList() {
                                 <td>
                                     {pateintItem.user.phoneNumber}
                                 </td>
-                                <td>{pateintItem.user.address}</td>
+                                {/* <td>{pateintItem.user.address}</td> */}
+                                <td>{!pateintItem.user.violation ? 0 : pateintItem.user.violation}</td>
                                 <td>
                                     <SwitchButton
                                         id={pateintItem.user.id}

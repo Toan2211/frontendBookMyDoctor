@@ -31,21 +31,12 @@
         text-align: center;
     }
     &__message {
-        padding: 0 20px;
-        margin-top: 16px;
-        &-textarea {
-            width: 100%;
-            font-size: 18px;
-            min-height: 100px;
-            outline: none;
-            border: 1px solid $primary-color;
-            border-radius: 4px;
-            padding: 10px;
-        }
+        text-align: center;
     }
     &__button {
-        margin-top: 16px;
-        margin-left: 20px;
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
     }
 }
 .icon__active {

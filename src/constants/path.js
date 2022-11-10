@@ -29,6 +29,7 @@ class Path {
         this.updateDoctor = '/system/updateDoctor/:id'
         this.scheduleManagement = '/system/scheduleManagement'
         this.appointmentManagement = '/system/appointmentManagement'
+        this.myAppointment = '/myAppointment'
     }
 }
 

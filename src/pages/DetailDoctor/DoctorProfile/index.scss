@@ -40,6 +40,11 @@
         &-star-active {
             color: $primary-color;
         }
+        &-list {
+            display: flex;
+            margin-top: 10px;
+            gap: 4px;
+        }
     }
 }
 @media only screen and (max-width: 1024px) {

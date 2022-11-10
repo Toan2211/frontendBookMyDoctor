@@ -35,6 +35,7 @@ import DetailHospital from 'pages/DetailHospital'
 import ScheduleDoctorManagement from 'pages/Schedule/ScheduleDoctorManagement'
 import AddSchedule from 'pages/Schedule/AddSchedule'
 import AppointmentManagement from 'pages/Appointment/AppointmentManagement'
+import AppointmentManager from 'pages/Profile/components/AppointmentManager'
 
 
 function RoutesComponent() {
@@ -78,6 +79,7 @@ function RoutesComponent() {
                     <Route element = {<MainLayout />}>
                         <Route path = {path.profile} element = {<Profile />}/>
                         <Route path = {path.bookAppointment} element = {<BookAppointment />}/>
+                        <Route path = {path.myAppointment} element = {<AppointmentManager />} />
                     </Route>
                 </Route>
                 <Route element = {<UnauthenticatedGuard />}>

@@ -21,6 +21,9 @@ const appointmentApi = {
     },
     resolveReport(idAppointment, data, config) {
         return http.put(`/appointment/violate/${idAppointment}`, data, config)
+    },
+    ratingAppointment(idAppointment, data, config) {
+        return http.put(`/appointment/rate/${idAppointment}`, data, config)
     }
 }
 export default appointmentApi
