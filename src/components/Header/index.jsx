@@ -29,6 +29,10 @@ function Header() {
         navigate(path.system)
         setShowDropdown(false)
     }
+    const handleAppoinment = () => {
+        navigate(path.myAppointment)
+        setShowDropdown(false)
+    }
     return (
         <header className="header">
             <div className="header__left">
@@ -112,6 +116,12 @@ function Header() {
                                         onClick={handleProfile}
                                     >
                                         Trang cá nhân
+                                    </li>
+                                    <li
+                                        className="header__profile-dropdown-item"
+                                        onClick={handleAppoinment}
+                                    >
+                                        Quản lí cuộc hẹn
                                     </li>
                                     <li
                                         className="header__profile-dropdown-item"

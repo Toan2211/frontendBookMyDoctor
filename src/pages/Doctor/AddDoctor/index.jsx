@@ -108,7 +108,7 @@ function AddDoctor() {
         <div className="addDoctor">
             <div className="addDoctor__container">
                 <header className="addDoctor__title">Thêm mới bác sĩ</header>
-                <form onSubmit={form.handleSubmit(handleSubmitForm)}>
+                <form onSubmit={form.handleSubmit(handleSubmitForm)} className = "addDoctor__form">
                     <div className="authform__form-element-two-input">
                         <div>
                             <InputField

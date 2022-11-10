@@ -5,7 +5,7 @@
     &__container {
         border-radius: 1px solid #ccc;
         margin-top: 10px;
-        height: 300px;
+        max-height: 300px;
         overflow-y: auto;
         padding-left: 10px;
     }

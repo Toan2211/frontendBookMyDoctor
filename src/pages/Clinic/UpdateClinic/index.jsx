@@ -60,7 +60,7 @@ function UpdateClinic() {
             <div className="updateClinic__container">
                 <header>Cập nhật phòng khám</header>
                 <form
-                    className="form"
+                    className="form updateClinic__form"
                     onSubmit={form.handleSubmit(handleSubmitForm)}
                 >
                     <div className="form__element">

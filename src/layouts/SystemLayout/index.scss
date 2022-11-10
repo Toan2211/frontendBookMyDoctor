@@ -11,15 +11,15 @@
     }
     &__left {
         flex: 1;
-        background-color: $hover-color;
+        background-color: #00112A;
         height: auto;
         display: flex;
         flex-direction: column;
     }
     &__content {
-        flex: 4;
-        background-color: $second-color-background;
-        padding: 40px;
+        flex: 5;
+        background-color: #F0F2F5;
+        padding: 20px;
         height: 100vh;
         overflow-y: auto;
     }

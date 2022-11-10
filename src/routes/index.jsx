@@ -32,6 +32,10 @@ import SpecialistManagement from 'pages/Specialist/SpecialistManagement'
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import DetailHospital from 'pages/DetailHospital'
+import ScheduleDoctorManagement from 'pages/Schedule/ScheduleDoctorManagement'
+import AddSchedule from 'pages/Schedule/AddSchedule'
+import AppointmentManagement from 'pages/Appointment/AppointmentManagement'
+import AppointmentManager from 'pages/Profile/components/AppointmentManager'
 
 
 function RoutesComponent() {
@@ -65,12 +69,17 @@ function RoutesComponent() {
                         <Route path= {path.doctorManagement} element = {<DoctorManagement />}/>
                         <Route path = {path.addDoctor} element = {<AddDoctor />} />
                         <Route path = {path.updateDoctor} element = {<UpdateDoctor />} />
+                        <Route path = {path.scheduleManagement} element = {<ScheduleDoctorManagement />} />
+                        <Route path = {path.addSchedule} element = {<AddSchedule />} />
+
+                        <Route path= {path.appointmentManagement} element = {<AppointmentManagement />} />
                     </Route>
                 </Route>
                 <Route element ={<AuthenticatedGuard />}>
                     <Route element = {<MainLayout />}>
                         <Route path = {path.profile} element = {<Profile />}/>
                         <Route path = {path.bookAppointment} element = {<BookAppointment />}/>
+                        <Route path = {path.myAppointment} element = {<AppointmentManager />} />
                     </Route>
                 </Route>
                 <Route element = {<UnauthenticatedGuard />}>

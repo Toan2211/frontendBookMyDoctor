@@ -64,15 +64,16 @@ function HospitalManagement() {
             <div className="hospitalManagement__container">
                 <header>Quản lí bệnh viện</header>
                 <div className="hospitalManagement__action">
+                    <div className="hospitalManagement__action-search">
+                        <SearchInput placeholder="Tìm kiếm bệnh viện" mode = "list" handleSearch = {handleOnChangeSearchInput} value = {searchValue}/>
+                    </div>
                     <button
                         className="btnSuccess"
                         onClick={() => navigate(path.addHospital)}
                     >
                         Thêm bệnh viện mới
                     </button>
-                    <div className="hospitalManagement__action-search">
-                        <SearchInput placeholder="Tìm kiếm bệnh viện" mode = "list" handleSearch = {handleOnChangeSearchInput} value = {searchValue}/>
-                    </div>
+
                 </div>
                 <table>
                     <thead>
