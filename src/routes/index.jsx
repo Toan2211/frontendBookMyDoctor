@@ -36,6 +36,7 @@ import ScheduleDoctorManagement from 'pages/Schedule/ScheduleDoctorManagement'
 import AddSchedule from 'pages/Schedule/AddSchedule'
 import AppointmentManagement from 'pages/Appointment/AppointmentManagement'
 import AppointmentManager from 'pages/Profile/components/AppointmentManager'
+import RevenueManagement from 'pages/Revenue/RevenueManagement'
 
 
 function RoutesComponent() {
@@ -72,7 +73,9 @@ function RoutesComponent() {
                         <Route path = {path.scheduleManagement} element = {<ScheduleDoctorManagement />} />
                         <Route path = {path.addSchedule} element = {<AddSchedule />} />
 
-                        <Route path= {path.appointmentManagement} element = {<AppointmentManagement />} />
+                        <Route path = {path.appointmentManagement} element = {<AppointmentManagement />} />
+
+                        <Route path = {path.revenueManagement} element = {<RevenueManagement />}/>
                     </Route>
                 </Route>
                 <Route element ={<AuthenticatedGuard />}>

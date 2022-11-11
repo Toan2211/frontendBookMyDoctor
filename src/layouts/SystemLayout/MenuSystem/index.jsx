@@ -11,6 +11,7 @@ import {
 import { MdFolderSpecial } from 'react-icons/md'
 import { AiFillSchedule } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
+import { RiMoneyDollarCircleFill } from 'react-icons/ri'
 
 function MenuSystem() {
     const userData = useSelector(state => state.user.profile)
@@ -140,6 +141,21 @@ function MenuSystem() {
                     </NavLink>
                 </li>
             )}
+            <li className="menuSystem-item">
+                <NavLink
+                    to={path.revenueManagement}
+                    className={({ isActive }) =>
+                        isActive
+                            ? 'menuSystem-item-link--active menuSystem-item-link'
+                            : 'menuSystem-item-link'
+                    }
+                >
+                    <span className="menuSystem-item-icon">
+                        <RiMoneyDollarCircleFill />
+                    </span>
+                    Doanh thu
+                </NavLink>
+            </li>
         </ul>
     )
 }
