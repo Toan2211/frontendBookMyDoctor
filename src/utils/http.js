@@ -3,6 +3,7 @@ class Http {
     constructor() {
         this.instance = axios.create({
             baseURL: 'https://bookmydoctor-opal.vercel.app/api/',
+            // baseURL: 'https://mydoctor.onrender.com/api/',
             // baseURL: 'http://localhost:3001/api/',
             headers: {
                 'Content-Type': 'application/json'
