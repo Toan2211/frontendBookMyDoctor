@@ -4,7 +4,7 @@ import './index.scss'
 function BaseTableItem({ data, onClick }) {
     return (
         <li className={`${data.status ? 'baseTableItem--active ': ''}baseTableItem`} onClick = {() => onClick(data.id)}>
-            {data.value}
+            {data.label}
         </li>
     )
 }

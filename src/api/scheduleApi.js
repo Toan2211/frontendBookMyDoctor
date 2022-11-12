@@ -5,7 +5,7 @@ const scheduleApi = {
         return http.post('/schedule', data, config)
     },
     addMultiSchedule(data, config) {
-        return http.post('/multi', data, config)
+        return http.post('/schedule/multi', data, config)
     },
     getSchedule(id, config) {
         return http.get(`/schedule/doctor/${id}`, config)
