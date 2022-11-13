@@ -1,3 +1,4 @@
+import scheduleApi from 'api/scheduleApi'
 import BaseTableItem from 'components/BaseTableItem.jsx'
 import listTimes from 'constants/listTimes'
 import weekdays from 'constants/weekdays'
@@ -66,18 +67,46 @@ function AddMultiSchedule({ onClose }) {
         }
         weekdaysSubmit.map(weekday => {
             if (weekday.status)
-                valueToSubmit.weekdays.push(weekday.value)
+                valueToSubmit.weekdays.push(weekday.label)
         })
         scheduleSubmit.map(schedule => {
             if (schedule.status)
                 valueToSubmit.schedules.push(schedule.value)
         })
-        valueToSubmit.beginDate = new Date(
-            strftime('%Y-%m-%dT00:00:00', startDate)
-        ).toISOString()
-        valueToSubmit.endDate = new Date(
-            strftime('%Y-%m-%dT00:00:00', endDate)
-        ).toISOString()
+        if (valueToSubmit.weekdays.length <= 0 || valueToSubmit.schedules.length <=0) {
+            toast.error('Nhập thiếu thông tin thứ ngày hoặc khung giờ', {
+                position: toast.POSITION.BOTTOM_RIGHT,
+                autoClose: 2000
+            })
+            return
+        }
+        valueToSubmit.beginDate = strftime('%Y-%m-%d', startDate)
+        valueToSubmit.endDate = strftime('%Y-%m-%d', endDate)
+        ;(
+            async () => {
+                try {
+                    await scheduleApi.addMultiSchedule(valueToSubmit,
+                        {
+                            headers: {
+                                Authorization: `${localStorage.getItem(
+                                    'access_token'
+                                )}`
+                            }
+                        }
+                    )
+                    toast.success('Tạo lịch khám thành công', {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                        autoClose: 2000
+                    })
+                }
+                catch (err) {
+                    toast.error(err.message, {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                        autoClose: 2000
+                    })
+                }
+            }
+        )()
     }
     useEffect(() => {
         const daysBetweenTwoDates = getDaysOfWeekBetweenDates(startDate, endDate)

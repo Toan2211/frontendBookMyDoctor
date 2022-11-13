@@ -1,38 +1,38 @@
 const weekdays = [
     {
         id: 1,
-        value: 'Monday',
-        status: false
+        label: 'Monday',
+        status: true
     },
     {
         id: 2,
-        value: 'Tuesday',
-        status: false
+        label: 'Tuesday',
+        status: true
     },
     {
         id: 3,
-        value: 'Wednesday',
-        status: false
+        label: 'Wednesday',
+        status: true
     },
     {
         id: 4,
-        value: 'Thursday',
-        status: false
+        label: 'Thursday',
+        status: true
     },
     {
         id: 5,
-        value: 'Friday',
-        status: false
+        label: 'Friday',
+        status: true
     },
     {
         id: 6,
-        value: 'Saturday',
-        status: false
+        label: 'Saturday',
+        status: true
     },
     {
         id: 0,
-        value: 'Sunday',
-        status: false
+        label: 'Sunday',
+        status: true
     }
 ]
 export default weekdays
