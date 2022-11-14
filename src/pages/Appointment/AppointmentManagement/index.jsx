@@ -1,6 +1,6 @@
 import appointmentApi from 'api/appointmentApi'
 import Pagination from 'components/Pagination'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import convertTZ7Str from 'utils/convertTZ7Str'
@@ -13,6 +13,7 @@ import SearchInput from 'components/SearchInput'
 import { useDebounce } from 'hooks/useDebounce'
 import ReactDatePicker from 'react-datepicker'
 import strftime from 'strftime'
+import { SocketContext } from 'App'
 const options = [
     { value: '', label: 'Tất cả' },
     { value: 'NEW', label: 'Chờ xử lí' },
@@ -24,6 +25,7 @@ const options = [
 
 ]
 function AppointmentManagement() {
+    const socket = useContext(SocketContext)
     const [listAppointment, setListAppointment] = useState([])
     const [pagination, setPagination] = useState({})
     const userData = useSelector(state => state.user.profile)
@@ -100,7 +102,7 @@ function AppointmentManagement() {
     const confirmAppointment = (idAppointment) => {
         try {
             ( async () => {
-                await appointmentApi.confirmAppointment(
+                const respone = await appointmentApi.confirmAppointment(
                     idAppointment,
                     {
                         headers: {
@@ -114,6 +116,10 @@ function AppointmentManagement() {
                 toast.success('Chấp nhận cuộc hẹn thành công', {
                     position: toast.POSITION.BOTTOM_RIGHT,
                     autoClose: 2000
+                })
+                respone.message.forEach(element => {
+                    if (element !== {})
+                        socket.emit('createNotify', element)
                 })
             })()
         }
@@ -153,7 +159,7 @@ function AppointmentManagement() {
     const reportPatient = (appointmentID) => {
         try {
             ( async () => {
-                await appointmentApi.reportAppointment(
+                const respone = await appointmentApi.reportAppointment(
                     appointmentID,
                     {
                         headers: {
@@ -169,6 +175,10 @@ function AppointmentManagement() {
                     position: toast.POSITION.BOTTOM_RIGHT,
                     autoClose: 2000
                 })
+                respone.message.forEach(element => {
+                    if (element !== {})
+                        socket.emit('createNotify', element)
+                })
             })()
         }
         catch (err) {
@@ -181,7 +191,7 @@ function AppointmentManagement() {
     const resolveReport = (idAppointment, actor) => {
         try {
             ( async () => {
-                await appointmentApi.resolveReport(
+                const respone = await appointmentApi.resolveReport(
                     idAppointment,
                     { violator: actor },
                     {
@@ -196,6 +206,10 @@ function AppointmentManagement() {
                 toast.success('Xử lí thành công', {
                     position: toast.POSITION.BOTTOM_RIGHT,
                     autoClose: 2000
+                })
+                respone.message.forEach(element => {
+                    if (element !== {})
+                        socket.emit('createNotify', element)
                 })
             })()
         }

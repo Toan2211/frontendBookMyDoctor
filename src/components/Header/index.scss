@@ -59,6 +59,40 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        gap: 10px;
+        &-notify {
+            position: relative;
+            span {
+                display: block;
+                cursor: pointer;
+                background-color: #F0F2F5;
+                padding: 4px 6px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 50%;
+                font-size: 22px;
+                &:hover {
+                    opacity: 0.5;
+                }
+            }
+            &-count {
+                position: absolute;
+                right: 0px;
+                top: -10px;
+                color: white;
+                padding: 2px 4px !important;
+                font-size: 14px !important;
+                font-weight: 500;
+                background-color: red !important;
+                z-index: 10;
+            }
+            &-area {
+                position: absolute;
+                top: 36px;
+                left: -20px;
+            }
+        }
         &-auth {
             &-button {
                 padding: 4px 20px;
