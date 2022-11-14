@@ -98,6 +98,7 @@ function AddMultiSchedule({ onClose }) {
                         position: toast.POSITION.BOTTOM_RIGHT,
                         autoClose: 2000
                     })
+                    onClose()
                 }
                 catch (err) {
                     toast.error(err.message, {

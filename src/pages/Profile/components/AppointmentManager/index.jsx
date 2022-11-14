@@ -1,7 +1,8 @@
 import appointmentApi from 'api/appointmentApi'
+import { SocketContext } from 'App'
 import ReviewDialog from 'components/ReviewDialog'
 import AppointmentDetail from 'pages/Appointment/AppointmentDetail'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import convertTZ7Str from 'utils/convertTZ7Str'
@@ -9,6 +10,7 @@ import './index.scss'
 AppointmentManager.propTypes = {}
 
 function AppointmentManager() {
+    const socket = useContext(SocketContext)
     const [listAppointment, setListAppointment] = useState([])
     const userData = useSelector(state => state.user.profile)
     const getAllAppointmentFromAPI = async () => {
@@ -43,6 +45,10 @@ function AppointmentManager() {
                 position: toast.POSITION.BOTTOM_RIGHT,
                 autoClose: 2000
             })
+            // console.log(respone)
+            // respone.message.forEach(element => {
+            //     socket.emit('createNotify', element)
+            // })
         }
         catch (err) {
             toast.error(err.message, {
@@ -54,7 +60,7 @@ function AppointmentManager() {
     const confirmAppointment = (idAppointment) => {
         try {
             ( async () => {
-                await appointmentApi.confirmAppointment(
+                const respone = await appointmentApi.confirmAppointment(
                     idAppointment,
                     {
                         headers: {
@@ -68,6 +74,10 @@ function AppointmentManager() {
                 toast.success('Chấp nhận cuộc hẹn thành công', {
                     position: toast.POSITION.BOTTOM_RIGHT,
                     autoClose: 2000
+                })
+                respone.message.forEach(element => {
+                    if (element !== {})
+                        socket.emit('createNotify', element)
                 })
             })()
         }
