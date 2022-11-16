@@ -1,0 +1,221 @@
+/* eslint-disable no-console */
+/* eslint-disable react-hooks/exhaustive-deps */
+import messageApi from 'api/messageApi'
+import userApi from 'api/userApi'
+import { SocketContext } from 'App'
+import images from 'assets'
+import { path } from 'constants/path'
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { Link, useParams } from 'react-router-dom'
+import strftime from 'strftime'
+import convertTZ from 'utils/convertTZ'
+import './index.scss'
+import UserChatItem from './UserChatItem'
+
+function MesageApp() {
+    const socket = useContext(SocketContext)
+    const userSendID = useSelector(state => state.user).profile.id
+    const [message, setMessage] = useState('')
+    const userId = useParams().id
+    const [userReceive, setUserReceive] = useState({})
+    const [listUserChat, setListUserChat] = useState([])
+    const [listMessageChat, setListMessageChat] = useState([])
+    const [pagination, setPagination] = useState({})
+    const divRef = useRef(null)
+
+    const setUserReceiveFunc = user => setUserReceive(user)
+    const getListUserChat = async () => {
+        try {
+            const respone = await messageApi.getListUserChat(userSendID, {
+                headers: {
+                    Authorization: `${localStorage.getItem(
+                        'access_token')}`
+                }
+            })
+            setListUserChat(respone.users)
+        } catch (err) {
+            return err.message
+        }
+    }
+    const getMessageChat = async (page) => {
+        console.log(page);
+        const userReceiveId = userReceive.id || userReceive.user_id
+        try {
+            const respone = await messageApi.getMessage({
+                from_user: userSendID,
+                to_user: userReceiveId,
+                page: page || 0
+            })
+            if (page)
+                setListMessageChat([...listMessageChat, ...respone.messages])
+            else
+                setListMessageChat(respone.messages)
+            setPagination(respone.page)
+        }
+        catch (err) {
+            // console.log(err)
+        }
+    }
+    useEffect(() => {
+        getListUserChat()
+    }, [userSendID])
+
+    useEffect(() => {
+        if (userId !== ':id') {
+            const userChat = listUserChat.find(user => user.id === userId)
+            if (userChat)
+                setUserReceive(userChat)
+            else {
+                (async () => {
+                    try {
+                        const respone = await userApi.getUserById(userId, {
+                            headers: {
+                                Authorization: `${localStorage.getItem(
+                                    'access_token')}`
+                            }
+                        })
+                        setUserReceive(respone.user)
+                    }
+                    catch (err) {
+                        console.log('get usre', err)
+                    }
+                }
+                )()
+            }
+        }
+
+    }, [listUserChat, userId])
+
+    const handleChangeMessage = (e) => setMessage(e.target.value)
+
+    const handleSendMess = () => {
+        if (message === '') return
+        const userReceiveId = userReceive.user ? userReceive.user.id : userReceive.id
+        const valueSubmit = {
+            from_user: userSendID,
+            to_user: userReceiveId,
+            text: message,
+            image: ''
+        }
+        ;(async () => {
+            try {
+                const respone = await messageApi.addMessage(valueSubmit, {
+                    headers: {
+                        Authorization: `${localStorage.getItem(
+                            'access_token')}`
+                    }
+                })
+                console.log(respone.message)
+                const valueSocket = {
+                    to_user: respone.message.to_user,
+                    text: respone.message.text,
+                    from_user: respone.message.from_user,
+                    date: respone.message.date,
+                    image:  respone.message.image
+                }
+                socket.emit('addMessage', valueSocket)
+                setMessage('')
+                if (listMessageChat.length > 19) {
+                    const arrTemp = [...listMessageChat, respone.message]
+                    arrTemp.splice(0, 1)
+                    setListMessageChat(arrTemp)
+                }
+                else {
+                    setListMessageChat([...listMessageChat, respone.message])
+                }
+                if (!listUserChat.find (user => user.id === userReceive.id))
+                    getListUserChat()
+            }
+            catch (err) {
+                return err.message
+            }
+        })()
+    }
+    const handleTextEnter = (e) => {
+        if (e.key === 'Enter')
+            handleSendMess()
+    }
+
+    useEffect(() => {
+        if (Object.keys(userReceive).length) {
+            getMessageChat()
+        }
+
+    }, [userSendID, userReceive])
+
+    useEffect(() => {
+        divRef.current.scrollIntoView({ behavior: 'smooth' })
+    })
+
+    //nhan
+    useEffect(() => {
+        socket.on('addMessageToClient', msg => {
+            console.log('addMessageToClient', msg)
+            const userReceiveId = userReceive.id || userReceive.user_id
+
+            if (msg.from_user === userReceiveId) {
+                if (listMessageChat.length > 19) {
+                    const arrTemp = [...listMessageChat, msg]
+                    arrTemp.splice(0, 1)
+                    setListMessageChat(arrTemp)
+                }
+                else {
+                    setListMessageChat([...listMessageChat, msg])
+                }
+            }
+            else {
+                if (!listUserChat.find (user => user.id === userReceive.id))
+                    getListUserChat()
+            }
+        })
+
+        return () => socket.off('addMessageToClient')
+    }, [socket])
+    const handleOnScrollMessage = (e) => {
+        if (e.currentTarget.scrollTop === 0 && pagination.page < pagination.totalPages - 1)
+            getMessageChat(++ pagination.page)
+        // e.currentTarget.scrollTop = 50
+    }
+    console.log(listMessageChat);
+    return (
+        <div className="messageApp">
+            <div className="messageApp__container">
+                <div className="messageApp__infoPeople">
+                    <div className="systemLayout__logo">
+                        <Link to={path.home}>
+                            <img
+                                src={images.logo}
+                                alt="logo"
+                                className="logo"
+                            />
+                        </Link>
+                    </div>
+                    <ul className="messageApp__infoPeople-list">
+                        {
+                            listUserChat.map((user, index) => <UserChatItem key={index} user = {user} setUserReceiveFunc={setUserReceiveFunc} userReceive = {userReceive}/>)
+                        }
+                    </ul>
+                </div>
+                <div className="messageApp__messageArea" >
+                    <header>{userReceive.id && `${userReceive.firsname} ${userReceive.lastname}`}</header>
+                    <ul className="messageApp__messageArea-content" ref={divRef} onScroll = {handleOnScrollMessage}>
+                        {
+                            listMessageChat.length > 0 && listMessageChat.sort((item, item1) => item.id - item1.id).map(mess => 
+                                <li key={mess.id} className = {`${mess.from_user === userSendID ? 'li-send' : 'li-receive'}`}>
+                                    <span className = {`${mess.from_user === userSendID ? 'text-send' : 'text-receive'}`}>{mess.text}</span>
+                                    <span>{strftime('%d/%m/%Y, %H:%M:%S', convertTZ(mess.date))}</span>
+                                </li>)
+                        }
+                    </ul>
+                    <div className="messageApp__messageArea-input">
+                        <input placeholder="Nhập tin nhắn" onChange={handleChangeMessage} onKeyDown = {handleTextEnter} value = {message}/>
+                        <button className="btnReview" onClick={handleSendMess}>Gửi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default MesageApp

@@ -1,10 +1,15 @@
 import React from 'react'
 import { AiFillStar } from 'react-icons/ai'
+import { useNavigate } from 'react-router-dom'
 import './index.scss'
 DoctorProfile.propTypes = {}
 
 function DoctorProfile({ doctor }) {
     const arr = [1, 2, 3, 4, 5]
+    const navigate = useNavigate()
+    const handleMessage = () => {
+        navigate(`/messageApp/${doctor.user_id}`)
+    }
     return (
         <div className="doctorProfile">
             <div className="doctorProfile__container">
@@ -18,6 +23,7 @@ function DoctorProfile({ doctor }) {
                             {doctor.user.lastname}
                         </span>
                         <p>{doctor.description}</p>
+                        <button className = "btnReview" onClick={handleMessage}>Nhắn tin</button>
                     </div>
                 </div>
                 <div className="doctorProfile__rate">
