@@ -4,8 +4,10 @@ import messageApi from 'api/messageApi'
 import userApi from 'api/userApi'
 import { SocketContext } from 'App'
 import images from 'assets'
+import ImageFullScreen from 'components/ImageFullScreen'
 import { path } from 'constants/path'
 import React, { useContext, useEffect, useRef, useState } from 'react'
+import { BsImage } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import strftime from 'strftime'
@@ -39,7 +41,6 @@ function MesageApp() {
         }
     }
     const getMessageChat = async (page) => {
-        console.log(page);
         const userReceiveId = userReceive.id || userReceive.user_id
         try {
             const respone = await messageApi.getMessage({
@@ -78,7 +79,7 @@ function MesageApp() {
                         setUserReceive(respone.user)
                     }
                     catch (err) {
-                        console.log('get usre', err)
+                        return err.message
                     }
                 }
                 )()
@@ -90,18 +91,23 @@ function MesageApp() {
     const handleChangeMessage = (e) => setMessage(e.target.value)
 
     const handleSendMess = () => {
-        if (message === '') return
+        if (message === '' && fileImg === '') return
         const userReceiveId = userReceive.user ? userReceive.user.id : userReceive.id
         const valueSubmit = {
             from_user: userSendID,
             to_user: userReceiveId,
             text: message,
-            image: ''
+            image: fileImg
         }
-        ;(async () => {
+        const formData = new FormData()
+        for (let key in valueSubmit) {
+            formData.append(key, valueSubmit[key])
+        }
+        (async () => {
             try {
-                const respone = await messageApi.addMessage(valueSubmit, {
+                const respone = await messageApi.addMessage(formData, {
                     headers: {
+                        'Content-Type': 'multipart/form-data',
                         Authorization: `${localStorage.getItem(
                             'access_token')}`
                     }
@@ -114,6 +120,7 @@ function MesageApp() {
                     date: respone.message.date,
                     image:  respone.message.image
                 }
+                handleDeleteImg()
                 socket.emit('addMessage', valueSocket)
                 setMessage('')
                 if (listMessageChat.length > 19) {
@@ -151,7 +158,6 @@ function MesageApp() {
     //nhan
     useEffect(() => {
         socket.on('addMessageToClient', msg => {
-            console.log('addMessageToClient', msg)
             const userReceiveId = userReceive.id || userReceive.user_id
 
             if (msg.from_user === userReceiveId) {
@@ -177,7 +183,41 @@ function MesageApp() {
             getMessageChat(++ pagination.page)
         // e.currentTarget.scrollTop = 50
     }
-    console.log(listMessageChat);
+    const [fileInput, setFileInput] = useState('')
+    const [fileImg, setFileImg] = useState('')
+    const [previewSource, setPreviewSource] = useState('')
+    const handleChangeImage = (e) => {
+        const file = e.target.files[0]
+        if (file) {
+            setFileImg(e.target.files[0])
+            setFileInput(e.target.value)
+            previewFile(file)
+        }
+    }
+    const previewFile = file => {
+        if (!file)
+            return
+        const reader = new FileReader(file)
+        reader.readAsDataURL(file)
+        reader.onloadend = () => {
+            setPreviewSource(reader.result)
+        }
+    }
+    const handleDeleteImg = () => {
+        setFileInput('')
+        setPreviewSource('')
+        setFileImg('')
+    }
+    const [isImageShow, setIsImageShow] = useState(false)
+    const [imageLink, setImageLink] = useState('')
+    const showFullImage = (src) => {
+        setIsImageShow(!isImageShow)
+        setImageLink(src)
+    }
+    const closeFullImage = () => {
+        setIsImageShow(!isImageShow)
+        setImageLink('')
+    }
     return (
         <div className="messageApp">
             <div className="messageApp__container">
@@ -201,19 +241,29 @@ function MesageApp() {
                     <header>{userReceive.id && `${userReceive.firsname} ${userReceive.lastname}`}</header>
                     <ul className="messageApp__messageArea-content" ref={divRef} onScroll = {handleOnScrollMessage}>
                         {
-                            listMessageChat.length > 0 && listMessageChat.sort((item, item1) => item.id - item1.id).map(mess => 
+                            listMessageChat.length > 0 && listMessageChat.sort((item, item1) => item.id - item1.id).map(mess =>
                                 <li key={mess.id} className = {`${mess.from_user === userSendID ? 'li-send' : 'li-receive'}`}>
                                     <span className = {`${mess.from_user === userSendID ? 'text-send' : 'text-receive'}`}>{mess.text}</span>
+                                    <span>{mess.image && <img src={mess.image} onClick = {() => showFullImage(mess.image)}/>}</span>
                                     <span>{strftime('%d/%m/%Y, %H:%M:%S', convertTZ(mess.date))}</span>
                                 </li>)
                         }
                     </ul>
+                    {
+                        previewSource && (<div className="messageApp__messageArea-img">
+                            <div><img src= {previewSource}/> <span onClick={handleDeleteImg}>X</span></div>
+                        </div>)
+                    }
+
                     <div className="messageApp__messageArea-input">
                         <input placeholder="Nhập tin nhắn" onChange={handleChangeMessage} onKeyDown = {handleTextEnter} value = {message}/>
+                        <label className="messageApp__messageArea-input-img" htmlFor="chooseImgMess"><BsImage /></label>
+                        <input type="file" onChange={handleChangeImage} value = {fileInput} id = "chooseImgMess" className='inputFile'/>
                         <button className="btnReview" onClick={handleSendMess}>Gửi</button>
                     </div>
                 </div>
             </div>
+            {isImageShow && <ImageFullScreen sourceImg = {imageLink} onClose = {closeFullImage}/>}
         </div>
     )
 }

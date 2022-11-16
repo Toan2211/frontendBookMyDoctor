@@ -11,7 +11,7 @@ import {
     BsFillTelephoneFill
 } from 'react-icons/bs'
 import { AiFillPlusCircle } from 'react-icons/ai'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import scheduleApi from 'api/scheduleApi'
 import strftime from 'strftime'
 import convertTZ from 'utils/convertTZ'
@@ -20,8 +20,10 @@ import Loading from 'components/Loading'
 import appointmentApi from 'api/appointmentApi'
 import { toast } from 'react-toastify'
 import { SocketContext } from 'App'
+import { path } from 'constants/path'
 
 function BookAppointment() {
+    const navigate = useNavigate()
     const socket = useContext(SocketContext)
     const [isLoading, setIsLoading] = useState(true)
     const idSchedule = useParams().id
@@ -87,6 +89,7 @@ function BookAppointment() {
                 respone.notification.forEach(element => {
                     socket.emit('createNotify', element)
                 })
+                navigate(path.myAppointment)
             } catch (err) {
                 return err.message
             }
