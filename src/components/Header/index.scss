@@ -60,7 +60,7 @@
         justify-content: center;
         align-items: center;
         gap: 10px;
-        &-notify {
+        &-notify, &-message {
             position: relative;
             span {
                 display: block;

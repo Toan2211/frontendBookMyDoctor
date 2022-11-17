@@ -9,6 +9,7 @@ import { FiMenu } from 'react-icons/fi'
 import { useSystemAuthenticated } from 'hooks/useSystemAuthenticated'
 import { IoIosNotifications } from 'react-icons/io'
 import Notification from './components/Notification'
+import { AiFillMessage } from 'react-icons/ai'
 function Header() {
     const isSystem = useSystemAuthenticated()
     const location = useLocation()
@@ -44,6 +45,7 @@ function Header() {
         navigate(path.myAppointment)
         setShowDropdown(false)
     }
+    const handleToMessage = () => navigate(path.messageApp)
     return (
         <header className="header">
             <div className="header__left">
@@ -113,11 +115,17 @@ function Header() {
                                 <span onClick={toggleNotifications}>
                                     <IoIosNotifications />
                                 </span>
+
                                 {showNotification && (
                                     <div className="header__action-notify-area">
                                         <Notification />
                                     </div>
                                 )}
+                            </div>
+                            <div className="header__action-message">
+                                <span onClick={handleToMessage}>
+                                    <AiFillMessage />
+                                </span>
                             </div>
                             <div className="header__profile">
                                 <img

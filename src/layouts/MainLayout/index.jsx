@@ -4,7 +4,8 @@ import Header from 'components/Header'
 import Footer from 'components/Footer'
 import './index.scss'
 import images from 'assets'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
+import { BsChatSquareDots } from 'react-icons/bs'
 MainLayout.propTypes = {
     children: PropTypes.oneOfType([
         PropTypes.element,
@@ -13,6 +14,7 @@ MainLayout.propTypes = {
 }
 
 function MainLayout() {
+    const navigate = useNavigate()
     return (
         <>
             <Header />
@@ -34,6 +36,9 @@ function MainLayout() {
                         />
                     </div>
                 </div>
+            </div>
+            <div className="mainlayout-content--iconMess">
+                <span onClick={() => navigate(`/messageApp/${2}`)}><BsChatSquareDots /></span>
             </div>
             <Footer />
         </>

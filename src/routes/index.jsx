@@ -37,6 +37,7 @@ import AddSchedule from 'pages/Schedule/AddSchedule'
 import AppointmentManagement from 'pages/Appointment/AppointmentManagement'
 import AppointmentManager from 'pages/Profile/components/AppointmentManager'
 import RevenueManagement from 'pages/Revenue/RevenueManagement'
+import MesageApp from 'pages/MessageApp'
 
 
 function RoutesComponent() {
@@ -79,6 +80,7 @@ function RoutesComponent() {
                     </Route>
                 </Route>
                 <Route element ={<AuthenticatedGuard />}>
+                    <Route path={path.messageApp} element = {<MesageApp />}/>
                     <Route element = {<MainLayout />}>
                         <Route path = {path.profile} element = {<Profile />}/>
                         <Route path = {path.bookAppointment} element = {<BookAppointment />}/>
