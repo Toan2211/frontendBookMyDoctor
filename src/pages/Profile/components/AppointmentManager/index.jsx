@@ -1,5 +1,6 @@
 import appointmentApi from 'api/appointmentApi'
 import { SocketContext } from 'App'
+import Pagination from 'components/Pagination'
 import ReviewDialog from 'components/ReviewDialog'
 import AppointmentDetail from 'pages/Appointment/AppointmentDetail'
 import React, { useContext, useEffect, useState } from 'react'
@@ -12,8 +13,9 @@ AppointmentManager.propTypes = {}
 function AppointmentManager() {
     const socket = useContext(SocketContext)
     const [listAppointment, setListAppointment] = useState([])
+    const [pagination, setPagination] = useState([])
     const userData = useSelector(state => state.user.profile)
-    const getAllAppointmentFromAPI = async () => {
+    const getAllAppointmentFromAPI = async (page) => {
         const respone =
             await appointmentApi.getAllAppointmentOfUser(
                 userData.id,
@@ -22,9 +24,11 @@ function AppointmentManager() {
                         Authorization: `${localStorage.getItem(
                             'access_token'
                         )}`
-                    }
+                    },
+                    params: { page: page || 0 }
                 }
             )
+        setPagination(respone.page)
         setListAppointment(respone.appointment)
     }
     useEffect(() => {
@@ -45,10 +49,6 @@ function AppointmentManager() {
                 position: toast.POSITION.BOTTOM_RIGHT,
                 autoClose: 2000
             })
-            // console.log(respone)
-            // respone.message.forEach(element => {
-            //     socket.emit('createNotify', element)
-            // })
         }
         catch (err) {
             toast.error(err.message, {
@@ -101,6 +101,9 @@ function AppointmentManager() {
         toggleShowReview()
         setAppointmentItemDetail(item)
     }
+    const handlePageChange = (page) => {
+        getAllAppointmentFromAPI(page)
+    }
     return (
         <div className="appointmentManager">
             <div className="appointmentManager__container">
@@ -130,7 +133,7 @@ function AppointmentManager() {
                                     {item.status.id === 4 && <td><span className="label__cancel">Đã hủy</span></td>}
                                     {item.status.id === 3 && <td><span className="label__done">Hoàn thành</span></td>}
                                     {item.status.id === 5 && <td><span className="label__cancel">Admin xử lí ...</span></td>}
-
+                                    {item.status.id === 6 && <td><span className="label__cancel">Vi phạm</span></td>}
                                     <td><button className="btnDetail" onClick={() => showAppointmentItemDetail(item)}>Chi tiết</button></td>
                                     <td>
                                         {userData.role.name === 'ROLE_DOCTOR' && item.status.name === 'NEW' && <button className="btnSuccess" onClick={() => confirmAppointment(item.id)}>Xác nhận</button>}
@@ -142,6 +145,7 @@ function AppointmentManager() {
                         }
                     </tbody>
                 </table>
+                <Pagination totalPage={pagination.totalPages} currentPage={pagination.page} onClick = {handlePageChange}/>
             </div>
             {isShowAppointmentItemDetail && <AppointmentDetail appointmentData = {AppointmentItemDetail} onClose = {toggleShowItem} confirmAppointment = {confirmAppointment}/>}
             {isShowReview && <ReviewDialog appointmentData = {AppointmentItemDetail} onClose = {toggleShowReview}/>}
