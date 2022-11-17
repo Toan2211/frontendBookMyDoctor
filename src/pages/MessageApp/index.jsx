@@ -25,7 +25,7 @@ function MesageApp() {
     const [listMessageChat, setListMessageChat] = useState([])
     const [pagination, setPagination] = useState({})
     const divRef = useRef(null)
-
+    const messagesEndRef = useRef(null)
     const setUserReceiveFunc = user => setUserReceive(user)
     const getListUserChat = async () => {
         try {
@@ -55,7 +55,7 @@ function MesageApp() {
             setPagination(respone.page)
         }
         catch (err) {
-            // console.log(err)
+            return err
         }
     }
     useEffect(() => {
@@ -112,7 +112,6 @@ function MesageApp() {
                             'access_token')}`
                     }
                 })
-                console.log(respone.message)
                 const valueSocket = {
                     to_user: respone.message.to_user,
                     text: respone.message.text,
@@ -150,10 +149,6 @@ function MesageApp() {
         }
 
     }, [userSendID, userReceive])
-
-    useEffect(() => {
-        divRef.current.scrollIntoView({ behavior: 'smooth' })
-    })
 
     //nhan
     useEffect(() => {
@@ -218,6 +213,9 @@ function MesageApp() {
         setIsImageShow(!isImageShow)
         setImageLink('')
     }
+    useEffect(() => {
+        messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
+    }, [listMessageChat])
     return (
         <div className="messageApp">
             <div className="messageApp__container">
@@ -248,6 +246,7 @@ function MesageApp() {
                                     <span>{strftime('%d/%m/%Y, %H:%M:%S', convertTZ(mess.date))}</span>
                                 </li>)
                         }
+                        <div ref={messagesEndRef}></div>
                     </ul>
                     {
                         previewSource && (<div className="messageApp__messageArea-img">
