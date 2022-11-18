@@ -42,8 +42,8 @@ import MesageApp from 'pages/MessageApp'
 
 function RoutesComponent() {
     return (
-        <BrowserRouter>
-            <Routes>
+        <BrowserRouter basename='/client'>
+            <Routes >
                 <Route element = {<MainLayout />}>
                     <Route path = {path.home} element = {<HomePage />}/>
                     <Route path = {path.detailDoctor} element = {<DetailDoctor />}/>
