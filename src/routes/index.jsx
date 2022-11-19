@@ -38,6 +38,7 @@ import AppointmentManagement from 'pages/Appointment/AppointmentManagement'
 import AppointmentManager from 'pages/Profile/components/AppointmentManager'
 import RevenueManagement from 'pages/Revenue/RevenueManagement'
 import MesageApp from 'pages/MessageApp'
+import PaymentReturn from 'pages/PaymentReturn'
 
 
 function RoutesComponent() {
@@ -94,6 +95,7 @@ function RoutesComponent() {
                         <Route path = {path.forgotPassword} element = {<ForgotPassWordForm />} />
                     </Route>
                 </Route>
+                <Route path={path.returnPayment} element = {<PaymentReturn />} />
             </Routes>
         </BrowserRouter>
     )
