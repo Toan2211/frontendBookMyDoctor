@@ -32,6 +32,7 @@ class Path {
         this.revenueManagement = '/system/revenueManagement'
         this.myAppointment = '/myAppointment'
         this.messageApp = '/messageApp/:id'
+        this.returnPayment = '/payment/return'
     }
 }
 
