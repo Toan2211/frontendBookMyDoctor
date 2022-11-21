@@ -33,6 +33,7 @@ function Header() {
         dispatch(logout())
         navigate('/login')
     }
+    console.log(userData)
     const handleProfile = () => {
         navigate(path.profile)
         setShowDropdown(false)

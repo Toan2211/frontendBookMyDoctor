@@ -127,7 +127,8 @@ function RevenueManagement() {
                                     <td>{item.revenue}</td>
                                     <td>{item.profits}</td>
                                 </tr>
-                            ))}
+                            ))
+                        }
                         {userRole === 'ROLE_DOCTOR' &&
                             (
                                 <tr key={listRevenue.id}>
