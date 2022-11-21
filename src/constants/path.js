@@ -33,6 +33,7 @@ class Path {
         this.myAppointment = '/myAppointment'
         this.messageApp = '/messageApp/:id'
         this.returnPayment = '/payment/return'
+        this.dashBoard = '/system/dashboard'
     }
 }
 

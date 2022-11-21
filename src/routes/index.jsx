@@ -39,6 +39,7 @@ import AppointmentManager from 'pages/Profile/components/AppointmentManager'
 import RevenueManagement from 'pages/Revenue/RevenueManagement'
 import MesageApp from 'pages/MessageApp'
 import PaymentReturn from 'pages/PaymentReturn'
+import Dashboard from 'pages/Dashboard'
 
 
 function RoutesComponent() {
@@ -55,7 +56,7 @@ function RoutesComponent() {
                 <Route path = {path.headerDoctor} element = {<HeaderDoctorList />}/>
                 <Route path = {path.headerSpecialist} element = {<HeaderSpecialist />}/>
                 <Route element = {<SystemAuthenticated />}>
-                    <Route path={path.system} element = {<SystemLayout />} >
+                    <Route path={path.system} element = {<SystemLayout />}>
                         <Route path={path.specialistManagement} element = {<SpecialistManagement />}/>
                         <Route path = {path.addSpecialist} element = {<AddSpecialist />}/>
                         <Route path = {path.editSpecialist} element = {<EditSpecialist />}/>
@@ -78,6 +79,7 @@ function RoutesComponent() {
                         <Route path = {path.appointmentManagement} element = {<AppointmentManagement />} />
 
                         <Route path = {path.revenueManagement} element = {<RevenueManagement />}/>
+                        <Route path = {path.dashBoard} element = {<Dashboard />} />
                     </Route>
                 </Route>
                 <Route element ={<AuthenticatedGuard />}>

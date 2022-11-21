@@ -8,7 +8,7 @@ import {
     FaUserAlt,
     FaUserNurse
 } from 'react-icons/fa'
-import { MdFolderSpecial } from 'react-icons/md'
+import { MdDashboard, MdFolderSpecial } from 'react-icons/md'
 import { AiFillSchedule } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
 import { RiMoneyDollarCircleFill } from 'react-icons/ri'
@@ -17,6 +17,21 @@ function MenuSystem() {
     const userData = useSelector(state => state.user.profile)
     return (
         <ul className="menuSystem">
+            {userData.role.name === 'ROLE_ADMIN' &&<li className="menuSystem-item">
+                <NavLink
+                    to={path.dashBoard}
+                    className={({ isActive }) =>
+                        isActive
+                            ? 'menuSystem-item-link--active menuSystem-item-link'
+                            : 'menuSystem-item-link'
+                    }
+                >
+                    <span className="menuSystem-item-icon">
+                        <MdDashboard />
+                    </span>
+                    Tổng quan
+                </NavLink>
+            </li>}
             <li className="menuSystem-item">
                 <NavLink
                     to={path.clinicManagement}

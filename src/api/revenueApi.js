@@ -6,6 +6,12 @@ const revenueApi = {
     },
     getRevenueDoctorById(id, config) {
         return http.get(`/doctor/${id}/revenue`, config)
+    },
+    getRevenueByTime(config) {
+        return http.get('/revenue', config)
+    },
+    getRevenueAllSpecialist(config) {
+        return http.get('/revenue/specialties', config)
     }
 }
 export default revenueApi
