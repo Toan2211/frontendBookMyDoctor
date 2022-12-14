@@ -2,7 +2,6 @@ import axios from 'axios'
 class Http {
     constructor() {
         this.instance = axios.create({
-            // baseURL: 'https://bookmydoctor-opal.vercel.app/api/',
             baseURL: 'https://bookmydoctor.onrender.com/api/',
             // baseURL: 'http://localhost:3001/api/',
             headers: {
@@ -18,7 +17,6 @@ class Http {
                 return result
             },
             error => {
-
                 return Promise.reject(error.response.data)
             }
         )

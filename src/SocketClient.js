@@ -12,7 +12,7 @@ function SocketClient() {
     useEffect(() => {
         const userSubmit = { _id: user.profile.id }
         socket.emit('joinUser', userSubmit)
-        socket.on('getUsers', users => console.log(users))
+        // socket.on('getUsers', users => console.log(users))
     }, [socket, user])
     // Notification
     useEffect(() => {

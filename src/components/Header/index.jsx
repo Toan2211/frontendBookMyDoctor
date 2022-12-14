@@ -33,7 +33,6 @@ function Header() {
         dispatch(logout())
         navigate('/login')
     }
-    console.log(userData)
     const handleProfile = () => {
         navigate(path.profile)
         setShowDropdown(false)
@@ -46,7 +45,7 @@ function Header() {
         navigate(path.myAppointment)
         setShowDropdown(false)
     }
-    const handleToMessage = () => navigate(path.messageApp)
+    const handleToMessage = () => navigate(path.messageAppLayout)
     return (
         <header className="header">
             <div className="header__left">
