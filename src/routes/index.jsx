@@ -40,6 +40,7 @@ import RevenueManagement from 'pages/Revenue/RevenueManagement'
 import MesageApp from 'pages/MessageApp'
 import PaymentReturn from 'pages/PaymentReturn'
 import Dashboard from 'pages/Dashboard'
+import MesageAppLayout from 'pages/MessageAppLayout'
 
 
 function RoutesComponent() {
@@ -83,6 +84,7 @@ function RoutesComponent() {
                     </Route>
                 </Route>
                 <Route element ={<AuthenticatedGuard />}>
+                    <Route path={path.messageAppLayout} element = {<MesageAppLayout />}/>
                     <Route path={path.messageApp} element = {<MesageApp />}/>
                     <Route element = {<MainLayout />}>
                         <Route path = {path.profile} element = {<Profile />}/>

@@ -67,4 +67,14 @@
             // }
         }
     }
+    &__action {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        span {
+            font-weight: 500;
+            color: red;
+            margin-right: 10px;
+        }
+    }
 }

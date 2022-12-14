@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import appointmentApi from 'api/appointmentApi'
 import clinicApi from 'api/clinicApi'
 import doctorApi from 'api/doctorApi'
@@ -122,6 +123,9 @@ function Dashboard() {
         setDate(month)
         getRevenueAllSpecialties(month)
     }
+    useEffect(() => {
+        document.title = 'Tổng quan'
+    }, [])
     if (isLoading) return <Loading />
     return (
         <div className='dashboard'>

@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getNotifies } from 'components/Header/components/Notification/notificationSlice'
 import { io } from 'socket.io-client'
 import SocketClient from 'SocketClient'
+import 'react-loading-skeleton/dist/skeleton.css'
+
 export const SocketContext = createContext()
 function App() {
     const token = localStorage.getItem('access_token')
