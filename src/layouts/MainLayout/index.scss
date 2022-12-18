@@ -39,7 +39,22 @@
 
 
 }
-
+.mainlayout-content--iconMess {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    background-color: #01B3F5;
+    color: white;
+    padding: 14px 16px;
+    border-radius: 50%;
+    cursor: pointer;
+    span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 36px;
+    }
+}
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     .mainlayout-banner-content {
         &-slogan {

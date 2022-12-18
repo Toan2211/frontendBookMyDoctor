@@ -16,6 +16,9 @@ function SpecialistManagement() {
             setIsLoading(false)
         })()
     }, [])
+    useEffect(() => {
+        document.title = 'Quản lí chuyên khoa'
+    }, [])
     if (isLoading) return <Loading />
     return (
         <div className="specialistManagement">
@@ -29,41 +32,45 @@ function SpecialistManagement() {
                         Thêm chuyên khoa mới
                     </button>
                 </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Tên chuyên khoa</th>
-                            <th>Mô tả</th>
-                            <th>Số lượng bác sĩ</th>
-                            <th>Chỉnh sửa</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {specialistData.map(specialistItem => (
-                            <tr key={specialistItem.id}>
-                                <td>{specialistItem.id}</td>
-                                <td>{specialistItem.name}</td>
-                                <td>{specialistItem.description}</td>
-                                <td>
-                                    {specialistItem.sum_doctor
-                                        ? specialistItem.sum_doctor
-                                        : 0}
-                                </td>
-                                <td>
-                                    <Link
-                                        to={`/system/editSpecialist/${specialistItem.id}`}
-                                        state={{ specialistItem }}
-                                    >
-                                        <span className="edit__icon">
-                                            <AiFillEdit />
-                                        </span>
-                                    </Link>
-                                </td>
+                <div className="table__wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tên chuyên khoa</th>
+                                <th>Mô tả</th>
+                                <th>Số lượng bác sĩ</th>
+                                <th>Chỉnh sửa</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {specialistData.map(specialistItem => (
+                                <tr key={specialistItem.id}>
+                                    <td>{specialistItem.id}</td>
+                                    <td>{specialistItem.name}</td>
+                                    <td>
+                                        {specialistItem.description}
+                                    </td>
+                                    <td>
+                                        {specialistItem.sum_doctor
+                                            ? specialistItem.sum_doctor
+                                            : 0}
+                                    </td>
+                                    <td>
+                                        <Link
+                                            to={`/system/editSpecialist/${specialistItem.id}`}
+                                            state={{ specialistItem }}
+                                        >
+                                            <span className="edit__icon">
+                                                <AiFillEdit />
+                                            </span>
+                                        </Link>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     )

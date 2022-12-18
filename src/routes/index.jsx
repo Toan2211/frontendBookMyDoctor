@@ -32,6 +32,15 @@ import SpecialistManagement from 'pages/Specialist/SpecialistManagement'
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import DetailHospital from 'pages/DetailHospital'
+import ScheduleDoctorManagement from 'pages/Schedule/ScheduleDoctorManagement'
+import AddSchedule from 'pages/Schedule/AddSchedule'
+import AppointmentManagement from 'pages/Appointment/AppointmentManagement'
+import AppointmentManager from 'pages/Profile/components/AppointmentManager'
+import RevenueManagement from 'pages/Revenue/RevenueManagement'
+import MesageApp from 'pages/MessageApp'
+import PaymentReturn from 'pages/PaymentReturn'
+import Dashboard from 'pages/Dashboard'
+import MesageAppLayout from 'pages/MessageAppLayout'
 
 
 function RoutesComponent() {
@@ -48,7 +57,7 @@ function RoutesComponent() {
                 <Route path = {path.headerDoctor} element = {<HeaderDoctorList />}/>
                 <Route path = {path.headerSpecialist} element = {<HeaderSpecialist />}/>
                 <Route element = {<SystemAuthenticated />}>
-                    <Route path={path.system} element = {<SystemLayout />} >
+                    <Route path={path.system} element = {<SystemLayout />}>
                         <Route path={path.specialistManagement} element = {<SpecialistManagement />}/>
                         <Route path = {path.addSpecialist} element = {<AddSpecialist />}/>
                         <Route path = {path.editSpecialist} element = {<EditSpecialist />}/>
@@ -65,12 +74,22 @@ function RoutesComponent() {
                         <Route path= {path.doctorManagement} element = {<DoctorManagement />}/>
                         <Route path = {path.addDoctor} element = {<AddDoctor />} />
                         <Route path = {path.updateDoctor} element = {<UpdateDoctor />} />
+                        <Route path = {path.scheduleManagement} element = {<ScheduleDoctorManagement />} />
+                        <Route path = {path.addSchedule} element = {<AddSchedule />} />
+
+                        <Route path = {path.appointmentManagement} element = {<AppointmentManagement />} />
+
+                        <Route path = {path.revenueManagement} element = {<RevenueManagement />}/>
+                        <Route path = {path.dashBoard} element = {<Dashboard />} />
                     </Route>
                 </Route>
                 <Route element ={<AuthenticatedGuard />}>
+                    <Route path={path.messageAppLayout} element = {<MesageAppLayout />}/>
+                    <Route path={path.messageApp} element = {<MesageApp />}/>
                     <Route element = {<MainLayout />}>
                         <Route path = {path.profile} element = {<Profile />}/>
                         <Route path = {path.bookAppointment} element = {<BookAppointment />}/>
+                        <Route path = {path.myAppointment} element = {<AppointmentManager />} />
                     </Route>
                 </Route>
                 <Route element = {<UnauthenticatedGuard />}>
@@ -80,6 +99,7 @@ function RoutesComponent() {
                         <Route path = {path.forgotPassword} element = {<ForgotPassWordForm />} />
                     </Route>
                 </Route>
+                <Route path={path.returnPayment} element = {<PaymentReturn />} />
             </Routes>
         </BrowserRouter>
     )

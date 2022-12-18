@@ -24,6 +24,9 @@
                 color: $primary-color;
                 margin-bottom: 10px;
             }
+            p {
+                margin-bottom: 20px;
+            }
         }
     }
     &__rate {
@@ -39,6 +42,11 @@
         }
         &-star-active {
             color: $primary-color;
+        }
+        &-list {
+            display: flex;
+            margin-top: 10px;
+            gap: 4px;
         }
     }
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import * as yup from 'yup'
 import './index.scss'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -55,12 +55,15 @@ function UpdateHospital() {
             }
         })()
     }
+    useEffect(() => {
+        document.title = 'Cập nhật bệnh viện'
+    }, [])
     return (
         <div className="updateClinic">
             <div className="updateClinic__container">
                 <header>Cập nhật bệnh viện</header>
                 <form
-                    className="form"
+                    className="form updateClinic__form"
                     onSubmit={form.handleSubmit(handleSubmitForm)}
                 >
                     <div className="form__element">

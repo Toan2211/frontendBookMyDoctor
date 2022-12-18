@@ -55,25 +55,33 @@ function ClinicManagement() {
                 setPagination(data.page)
                 setIsLoading(false)
             } catch (err) {
-                alert(err)
+                return err.message
             }
         })()
     }, [queryParams])
+    useEffect(() => {
+        document.title = 'Quản lí phòng khám'
+    }, [])
     if (isLoading) return <Loading />
     return (
         <div className="clinicManagement">
             <div className="clinicManagement__container">
                 <header>Quản lí phòng khám</header>
                 <div className="clinicManagement__action">
+                    <div className="clinicManagement__action-search">
+                        <SearchInput
+                            placeholder="Tìm kiếm phòng khám"
+                            mode="list"
+                            handleSearch={handleOnChangeSearchInput}
+                            value={searchValue}
+                        />
+                    </div>
                     <button
                         className="btnSuccess"
                         onClick={() => navigate(path.addClinic)}
                     >
                         Thêm phòng khám mới
                     </button>
-                    <div className="clinicManagement__action-search">
-                        <SearchInput placeholder="Tìm kiếm phòng khám" mode = "list" handleSearch = {handleOnChangeSearchInput} value = {searchValue}/>
-                    </div>
                 </div>
                 <table>
                     <thead>
@@ -107,7 +115,11 @@ function ClinicManagement() {
                     </tbody>
                 </table>
                 <div className="clinicManagement__pagination">
-                    <Pagination totalPage={pagination.totalPages} currentPage={pagination.page} onClick = {handlePageChange}/>
+                    <Pagination
+                        totalPage={pagination.totalPages}
+                        currentPage={pagination.page}
+                        onClick={handlePageChange}
+                    />
                 </div>
             </div>
         </div>

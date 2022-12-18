@@ -59,6 +59,9 @@ function DoctorManagement() {
             }
         })()
     }, [queryParams])
+    useEffect(() => {
+        document.title = 'Quản lí bác sĩ'
+    }, [])
     if (isLoading) return <Loading />
     return (
         <div className="doctorManagement">
@@ -72,52 +75,83 @@ function DoctorManagement() {
                         Thêm bác sĩ mới
                     </button>
                     <div className="clinicManagement__action-search">
-                        <SearchInput placeholder="Tìm kiếm bác sĩ" mode = "list" handleSearch = {handleOnChangeSearchInput} value = {searchValue}/>
+                        <SearchInput
+                            placeholder="Tìm kiếm bác sĩ"
+                            mode="list"
+                            handleSearch={handleOnChangeSearchInput}
+                            value={searchValue}
+                        />
                     </div>
                 </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Họ tên</th>
-                            <th>Ngày sinh</th>
-                            <th>Số điện thoại</th>
-                            <th>Giới tính</th>
-                            <th>Email</th>
-                            <th>Chuyên khoa</th>
-                            <th>Phòng khám </th>
-                            <th>Bệnh viện </th>
-                            <th>Chỉnh sửa </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {dataListDoctors && dataListDoctors.map(doctor => (
-                            <tr key={doctor.id}>
-                                <td>{doctor.id}</td>
-                                <td>{`${doctor.user.firsname} ${doctor.user.lastname}`}</td>
-                                <td>{doctor.user.birthday.split('T')[0]}</td>
-                                <td>{doctor.user.phoneNumber}</td>
-                                <td>{doctor.user.gender === 1 ? 'Nam' : 'Nữ'}</td>
-                                <td>{doctor.user.email}</td>
-                                <td>{doctor.specialty.name}</td>
-                                <td>{doctor.clinic.name}</td>
-                                <td>{doctor.hospital.name}</td>
-                                <td>
-                                    <Link
-                                        to={`/system/updateDoctor/${doctor.id}`}
-                                        state={{ doctor }}
-                                    >
-                                        <span className="edit__icon">
-                                            <AiFillEdit />
-                                        </span>
-                                    </Link>
-                                </td>
+                <div className="table__wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Họ tên</th>
+                                <th>Ngày sinh</th>
+                                <th>Điện thoại</th>
+                                <th>Giới tính</th>
+                                <th>Email</th>
+                                <th>Chuyên khoa</th>
+                                <th>Phòng khám </th>
+                                <th>Bệnh viện </th>
+                                <th>Vi phạm</th>
+                                <th>Chỉnh sửa </th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {dataListDoctors &&
+                                dataListDoctors.map(doctor => (
+                                    <tr key={doctor.id}>
+                                        <td>{doctor.id}</td>
+                                        <td>{`${doctor.user.firsname} ${doctor.user.lastname}`}</td>
+                                        <td>
+                                            {
+                                                doctor.user.birthday.split(
+                                                    'T'
+                                                )[0]
+                                            }
+                                        </td>
+                                        <td>
+                                            {doctor.user.phoneNumber}
+                                        </td>
+                                        <td>
+                                            {doctor.user.gender === 1
+                                                ? 'Nam'
+                                                : 'Nữ'}
+                                        </td>
+                                        <td>{doctor.user.email}</td>
+                                        <td>
+                                            {doctor.specialty.name}
+                                        </td>
+                                        <td>{doctor.clinic.name}</td>
+                                        <td>
+                                            {doctor.hospital.name}
+                                        </td>
+                                        <td>{!doctor.user.violation ? 0 : doctor.user.violation}</td>
+                                        <td>
+                                            <Link
+                                                to={`/system/updateDoctor/${doctor.id}`}
+                                                state={{ doctor }}
+                                            >
+                                                <span className="edit__icon">
+                                                    <AiFillEdit />
+                                                </span>
+                                            </Link>
+                                        </td>
+                                    </tr>
+                                ))}
+                        </tbody>
+                    </table>
+                </div>
+
                 <div className="doctorManagement__pagination">
-                    <Pagination totalPage={pagination.totalPages} currentPage={pagination.page} onClick = {handlePageChange}/>
+                    <Pagination
+                        totalPage={pagination.totalPages}
+                        currentPage={pagination.page}
+                        onClick={handlePageChange}
+                    />
                 </div>
             </div>
         </div>

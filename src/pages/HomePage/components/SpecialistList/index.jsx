@@ -6,6 +6,7 @@ import {
     BsFillArrowDownCircleFill
 } from 'react-icons/bs'
 import specialistApi from 'api/specialistApi'
+import SpecialistItemSkeleton from './components/SpecialistItemSkeleton'
 
 function SpecialistList() {
     const [data, setData] = useState([])
@@ -21,13 +22,13 @@ function SpecialistList() {
         }
     }
     useEffect(() => {
-
         (async () => {
             const respone = await specialistApi.getAllSpecialist()
             setData(respone.message)
             setDataShow(respone.message.slice(0, 6))
         })()
     }, [])
+
     return (
         <div className="specialistList">
             <div className="specialistList__container">
@@ -39,9 +40,20 @@ function SpecialistList() {
                     </span>
                 </header>
                 <div className="specialistList__list">
-                    {dataShow.map((item, index) => (
-                        <SpecialistItem key={index} data={item} />
-                    ))}
+                    {dataShow.length !== 0
+                        ? dataShow.map((item, index) => (
+                            <SpecialistItem
+                                key={index}
+                                data={item}
+                            />
+                        ))
+                        : Array(6)
+                            .fill(1)
+                            .map((item, index) => (
+                                <SpecialistItemSkeleton
+                                    key={index}
+                                />
+                            ))}
                 </div>
                 {!showAll && (
                     <div

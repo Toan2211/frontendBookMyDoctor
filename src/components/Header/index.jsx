@@ -7,16 +7,28 @@ import { useDispatch, useSelector } from 'react-redux'
 import { logout } from 'pages/Auth/userSlice'
 import { FiMenu } from 'react-icons/fi'
 import { useSystemAuthenticated } from 'hooks/useSystemAuthenticated'
+import { IoIosNotifications } from 'react-icons/io'
+import Notification from './components/Notification'
+import { AiFillMessage } from 'react-icons/ai'
 function Header() {
     const isSystem = useSystemAuthenticated()
     const location = useLocation()
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const userData = useSelector(state => state.user.profile)
+    const notificationList = useSelector(
+        state => state.notification.notificationList
+    )
+    const notificationCount = notificationList.filter(
+        item => item.status === false
+    ).length
     const [showDropdown, setShowDropdown] = useState(false)
     const toggleDropdownProfile = () => {
         setShowDropdown(!showDropdown)
     }
+    const [showNotification, setShowNotification] = useState(false)
+    const toggleNotifications = () =>
+        setShowNotification(!showNotification)
     const handleLogout = () => {
         dispatch(logout())
         navigate('/login')
@@ -29,6 +41,11 @@ function Header() {
         navigate(path.system)
         setShowDropdown(false)
     }
+    const handleAppoinment = () => {
+        navigate(path.myAppointment)
+        setShowDropdown(false)
+    }
+    const handleToMessage = () => navigate(path.messageAppLayout)
     return (
         <header className="header">
             <div className="header__left">
@@ -90,38 +107,70 @@ function Header() {
             <div className="header__right">
                 <div className="header__action">
                     {userData.id && (
-                        <div className="header__profile">
-                            <img
-                                className="header__profile-img"
-                                src={userData.image}
-                                onClick={toggleDropdownProfile}
-                            />
-                            {showDropdown && (
-                                <ul className="header__profile-dropdown">
-                                    {isSystem && (
+                        <>
+                            <div className="header__action-notify">
+                                <span className="header__action-notify-count">
+                                    {notificationCount}
+                                </span>
+                                <span onClick={toggleNotifications}>
+                                    <IoIosNotifications />
+                                </span>
+
+                                {showNotification && (
+                                    <div className="header__action-notify-area">
+                                        <Notification />
+                                    </div>
+                                )}
+                            </div>
+                            <div className="header__action-message">
+                                <span onClick={handleToMessage}>
+                                    <AiFillMessage />
+                                </span>
+                            </div>
+                            <div className="header__profile">
+                                <img
+                                    className="header__profile-img"
+                                    src={userData.image}
+                                    onClick={toggleDropdownProfile}
+                                />
+                                {showDropdown && (
+                                    <ul className="header__profile-dropdown">
+                                        {isSystem && (
+                                            <li
+                                                className="header__profile-dropdown-item"
+                                                onClick={handleSystem}
+                                            >
+                                                Quản lí
+                                            </li>
+                                        )}
+
                                         <li
                                             className="header__profile-dropdown-item"
-                                            onClick={handleSystem}
+                                            onClick={handleProfile}
                                         >
-                                            Quản lí
+                                            Trang cá nhân
                                         </li>
-                                    )}
+                                        {!isSystem && (
+                                            <li
+                                                className="header__profile-dropdown-item"
+                                                onClick={
+                                                    handleAppoinment
+                                                }
+                                            >
+                                                Quản lí cuộc hẹn
+                                            </li>
+                                        )}
 
-                                    <li
-                                        className="header__profile-dropdown-item"
-                                        onClick={handleProfile}
-                                    >
-                                        Trang cá nhân
-                                    </li>
-                                    <li
-                                        className="header__profile-dropdown-item"
-                                        onClick={handleLogout}
-                                    >
-                                        Đăng xuất
-                                    </li>
-                                </ul>
-                            )}
-                        </div>
+                                        <li
+                                            className="header__profile-dropdown-item"
+                                            onClick={handleLogout}
+                                        >
+                                            Đăng xuất
+                                        </li>
+                                    </ul>
+                                )}
+                            </div>
+                        </>
                     )}
                     {!userData.email && (
                         <div className="header__action-auth">

@@ -57,7 +57,21 @@ button {
 .btnCancel:hover {
   background-color: #C82333;
 }
-
+.btnDetail {
+  background-color: #2EA7C6;
+  border: none;
+  color: #ffffff;
+  font-weight: 500;
+}
+.btnReview {
+  padding: 6px 20px;
+  background-color: $primary-color;
+  border: 1px solid $primary-color;
+  color: #ffffff;
+}
+.btnReview:hover {
+  background-color: $hover-color;
+}
 .slick-slide {
   // margin: 0 6px;
   padding: 0 6px;
@@ -127,4 +141,67 @@ button {
   &__action {
       margin-bottom: 40px;
   }
+}
+
+//label
+.label {
+  &__confirm {
+    padding: 4px 4px;
+    display: inline-block;
+    background-color: green;
+    color: #ffffff;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100px;
+    text-align: center;
+  }
+  &__cancel {
+    padding: 4px 4px;
+    display: inline-block;
+    background-color: red;
+    color: #ffffff;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100px;
+    text-align: center;
+  }
+  &__pending {
+    padding: 4px 4px;
+    display: inline-block;
+    background-color: #2EA7C6;
+    color: #ffffff;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100px;
+    text-align: center;
+  }
+  &__done {
+    padding: 4px 4px;
+    display: inline-block;
+    background-color: #0f363f;
+    color: #ffffff;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100px;
+    text-align: center;
+  }
+}
+.react-datepicker-wrapper {
+  .react-datepicker__input-container {
+    input {
+      padding: 8px 4px;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 4px;
+      outline: none;
+      border: 1px solid #ccc;
+      // box-shadow: #ccc 0px 5px 15px;
+      &:focus {
+        border: 1px solid $primary-color;
+      }
+    }
+  }
+}
+.payment-btn {
+  border-radius: 10px;
 }
