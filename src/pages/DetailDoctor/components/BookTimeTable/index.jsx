@@ -60,7 +60,7 @@ function BookTimeTable({ doctor }) {
             }
         })()
     }, [day, doctorId])
-    const [selectedDate, setSelectedDate] = useState(new Date())
+    const [selectedDate, setSelectedDate] = useState(new Date(dataDay[0].value))
     const handleDateChange = date => {
         setSelectedDate(date)
         setDay(strftime('%Y-%m-%d', date))
@@ -80,6 +80,7 @@ function BookTimeTable({ doctor }) {
                             <ReactDatePicker
                                 selected={selectedDate}
                                 onChange={handleDateChange}
+                                minDate={new Date(dataDay[0].value)}
                             />
                         </div>
                     </div>
@@ -98,7 +99,7 @@ function BookTimeTable({ doctor }) {
                         </span>
                     </span>
                     <span className="price">
-                        <span>Giá khám: </span> 300.000đ
+                        <span>Giá khám trung bình: </span> 300.000đ
                     </span>
                 </div>
             </div>
