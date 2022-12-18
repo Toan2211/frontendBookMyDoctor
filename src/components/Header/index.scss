@@ -78,7 +78,7 @@
             }
             &-count {
                 position: absolute;
-                right: 0px;
+                right: -5px;
                 top: -10px;
                 color: white;
                 padding: 2px 4px !important;
@@ -86,6 +86,8 @@
                 font-weight: 500;
                 background-color: red !important;
                 z-index: 10;
+                width: 20px;
+                height: 20px;
             }
             &-area {
                 position: absolute;
@@ -155,6 +157,15 @@
         }
     }
 }
+@media only screen and (min-width: 768px) and (max-width: 1200px){
+    .header {
+        padding: 4px $margin-tablet;
+        font-size: 80%;
+    }
+    .header__action-notify-area {
+        left: -16vw !important;
+    }
+}
 @media only screen and (max-width: 768px) {
     .header {
         padding: 4px $margin-mobile;
@@ -175,5 +186,8 @@
                 display: block;
             }
         }
+    }
+    .header__action-notify-area {
+        left: -52vw !important;
     }
 }

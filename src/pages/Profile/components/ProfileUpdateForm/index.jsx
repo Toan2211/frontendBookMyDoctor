@@ -1,6 +1,6 @@
 import InputField from 'components/InputFiled'
 import RadioGroup from 'components/RadioGroup'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import {
     BsFillCalendarFill,
@@ -50,6 +50,15 @@ function ProfileUpdateForm({ onClose }) {
         },
         resolver: yupResolver(schema)
     })
+    useEffect(() => {
+        form.setValue('phoneNumber', userData.phoneNumber)
+        form.setValue('address', userData.email)
+        form.setValue('firsname', userData.firsname)
+        form.setValue('lastname', userData.lastname)
+        form.setValue('gender', userData.gender == 1 ? '1' : '0')
+        form.setValue('birthday', userData.birthday.split('T')[0])
+        form.setValue('address', userData.address)
+    }, [userData, form])
     const handleSubmitForm = value => {
         const submitValue = { ...value, id: userData.id }
         submitValue.gender = submitValue.gender === '1' ? 1 : 0

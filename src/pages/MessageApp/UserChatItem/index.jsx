@@ -2,7 +2,6 @@ import React from 'react'
 import './index.scss'
 import { useNavigate } from 'react-router-dom'
 function UserChatItem({ user, setUserReceiveFunc }) {
-    // console.log('user chart item', user);
     const navigate = useNavigate()
     const handleUserClick = () => {
         setUserReceiveFunc(user)
