@@ -28,7 +28,7 @@ function ProfileInfo() {
             email: userData.email,
             firsname: userData.firsname,
             lastname: userData.lastname,
-            gender: userData.gender === true ? '1' : '0',
+            gender: userData.gender === 1 ? 1 : 0,
             birthday: userData.birthday.split('T')[0],
             address: userData.address
         }
@@ -38,7 +38,7 @@ function ProfileInfo() {
         form.setValue('address', userData.email)
         form.setValue('firsname', userData.firsname)
         form.setValue('lastname', userData.lastname)
-        form.setValue('gender', userData.gender === true ? '1' : '0')
+        form.setValue('gender', userData.gender == 1 ? '1' : '0')
         form.setValue('birthday', userData.birthday.split('T')[0])
         form.setValue('address', userData.address)
     }, [userData, form])
@@ -87,8 +87,8 @@ function ProfileInfo() {
                         disabled={true}
                         mode = "gender"
                         optionData={[
-                            { label: 'Nam', value: Number(1) },
-                            { label: 'Nữ', value: Number(0) }
+                            { label: 'Nam', value: 1 },
+                            { label: 'Nữ', value: 0 }
                         ]}
                     />
                 </div>

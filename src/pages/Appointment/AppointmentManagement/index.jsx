@@ -14,6 +14,7 @@ import { useDebounce } from 'hooks/useDebounce'
 import ReactDatePicker from 'react-datepicker'
 import strftime from 'strftime'
 import { SocketContext } from 'App'
+import Loading from 'components/Loading'
 const options = [
     { value: '', label: 'Tất cả' },
     { value: 'NEW', label: 'Chờ xử lí' },
@@ -26,6 +27,7 @@ const options = [
 ]
 function AppointmentManagement() {
     const socket = useContext(SocketContext)
+    const [isLoading, setIsLoading] = useState(true)
     const [listAppointment, setListAppointment] = useState([])
     const [pagination, setPagination] = useState({})
     const userData = useSelector(state => state.user.profile)
@@ -58,7 +60,7 @@ function AppointmentManagement() {
                 )
                 setListAppointment(respone.appointment)
                 setPagination(respone.page)
-
+                if (isLoading) setIsLoading(false)
             })()
         }
         catch (err) {
@@ -82,6 +84,7 @@ function AppointmentManagement() {
                     })
                     setListAppointment(respone.appointment)
                     setPagination(respone.page)
+                    if (isLoading) setIsLoading(false)
                 }
             )()
         }
@@ -229,6 +232,7 @@ function AppointmentManagement() {
     useEffect(() => {
         document.title = 'Quản lí cuộc hẹn'
     }, [])
+    if (isLoading) return <Loading />
     return (
         <div className="appointmentManagement">
             <div className="appointmentManagement__container">

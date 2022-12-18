@@ -13,7 +13,7 @@ import './index.scss'
 function AddMultiSchedule({ onClose }) {
     const userDoctor = useSelector(state => state.user.profile)
     const [startDate, setStartDate] = useState(new Date())
-    const [endDate, setEndDate] = useState(new Date())
+    const [endDate, setEndDate] = useState((new Date()).setDate((new Date()).getDate() + 1))
     const [weekdaysSubmit, setWeekDaysSubmit] = useState(
         () => [...weekdays]
     )
@@ -133,6 +133,7 @@ function AddMultiSchedule({ onClose }) {
                                 <ReactDatePicker
                                     selected={startDate}
                                     onChange={handleStartDateChange}
+                                    minDate = {new Date()}
                                 />
                             </div>
                             <div>
@@ -140,6 +141,7 @@ function AddMultiSchedule({ onClose }) {
                                 <ReactDatePicker
                                     selected={endDate}
                                     onChange={handleEndDateChange}
+                                    minDate = {(new Date()).setDate((new Date()).getDate() + 1)}
                                 />
                             </div>
                         </div>

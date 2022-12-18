@@ -13,7 +13,7 @@ function TopHospitals() {
         slidesToShow: 4,
         slidesToScroll: 2,
         initialSlide: 0,
-        autoplay: hospitalData.length > 0 ? true : false,
+        autoplay: true,
         autoplaySpeed: 3000,
         responsive: [
             {
