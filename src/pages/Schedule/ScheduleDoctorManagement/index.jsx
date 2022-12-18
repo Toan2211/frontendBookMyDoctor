@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import AddSchedule from '../AddSchedule'
 import './index.scss'
 import { useSelector } from 'react-redux'
 import scheduleApi from 'api/scheduleApi'
@@ -21,7 +20,6 @@ function ScheduleDoctorManagement() {
     const [doctorId, setDoctorId] = useState(
         () => user.doctor && user.doctor.id
     )
-    const [showAddSchedule, setShowAddSchedule] = useState(false)
     const [listDoctor, setListDoctor] = useState([])
     useEffect(() => {
         (async () => {
@@ -46,8 +44,6 @@ function ScheduleDoctorManagement() {
     const handleDoctorChange = value => {
         setDoctorId(value.value)
     }
-    const toggleShowAddSchedule = () =>
-        setShowAddSchedule(!showAddSchedule)
     const [showAddMultiSchedule, setShowAddMultiSchedule] =
         useState(false)
     const toggleShowAddMultiSchedule = () =>
@@ -165,15 +161,9 @@ function ScheduleDoctorManagement() {
                         <div>
                             <button
                                 className="btnSuccess"
-                                onClick={toggleShowAddSchedule}
-                            >
-                                Thêm lịch khám mới
-                            </button>
-                            <button
-                                className="btnSuccess"
                                 onClick={toggleShowAddMultiSchedule}
                             >
-                                Thêm nhiều lịch khám mới
+                                Thêm lịch khám mới
                             </button>
                         </div>
                     )}
@@ -249,9 +239,6 @@ function ScheduleDoctorManagement() {
                     </div>
                 )}
             </div>
-            {showAddSchedule && (
-                <AddSchedule onClose={toggleShowAddSchedule} />
-            )}
             {showAddMultiSchedule && (
                 <AddMultiSchedule
                     onClose={toggleShowAddMultiSchedule}

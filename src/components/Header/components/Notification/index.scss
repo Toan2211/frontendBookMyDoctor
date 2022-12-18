@@ -1,12 +1,11 @@
 .notification {
     &__container {
         width: 360px;
-        max-height: 400px;
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 25px;
         background-color: white;
         border-radius: 4px;
         overflow: hidden;
-        overflow-y: scroll;
+
         padding-bottom: 10px;
         header {
             padding: 6px 4px;
@@ -20,6 +19,8 @@
         }
     }
     &__list {
+        max-height: 360px;
+        overflow-y: scroll;
         margin: 0 4px
     }
 }

@@ -114,7 +114,7 @@ function RevenueManagement() {
     // phi
     useEffect(() => {
         if (userRole !== 'ROLE_DOCTOR') return
-        ;(async () => {
+        (async () => {
             try {
                 const respone = await paymentApi.getAmountFee(
                     userId,
@@ -165,7 +165,6 @@ function RevenueManagement() {
         // )
         // console.log('adjlsad')
     }, [listRevenue])
-    console.log(listRevenue)
     useEffect(() => {
         document.title = 'Quản lí doanh thu'
     }, [])
@@ -216,6 +215,7 @@ function RevenueManagement() {
                     </thead>
                     <tbody>
                         {userRole !== 'ROLE_DOCTOR' &&
+                            listRevenue.length > 0 &&
                             listRevenue.map(item => (
                                 <tr key={item.id}>
                                     <td>{item.id}</td>
