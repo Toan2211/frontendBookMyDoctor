@@ -8,7 +8,7 @@ import { getNotifies } from 'components/Header/components/Notification/notificat
 import { io } from 'socket.io-client'
 import SocketClient from 'SocketClient'
 import 'react-loading-skeleton/dist/skeleton.css'
-
+//REACT_APP_FB_ID = 719375579337227
 export const SocketContext = createContext()
 function App() {
     const token = localStorage.getItem('access_token')
