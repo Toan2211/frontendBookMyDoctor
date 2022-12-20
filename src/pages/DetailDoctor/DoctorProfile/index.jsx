@@ -1,10 +1,11 @@
 import React from 'react'
 import { AiFillStar } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
+import LikeShare from '../components/LikeShare'
 import './index.scss'
 DoctorProfile.propTypes = {}
 
-function DoctorProfile({ doctor }) {
+function DoctorProfile({ doctor, dataHref }) {
     const arr = [1, 2, 3, 4, 5]
     const navigate = useNavigate()
     const handleMessage = () => {
@@ -23,7 +24,9 @@ function DoctorProfile({ doctor }) {
                             {doctor.user.lastname}
                         </span>
                         <p>{doctor.description}</p>
+                        <LikeShare dataHref = {dataHref}/>
                         <button className = "btnReview" onClick={handleMessage}>Nhắn tin</button>
+
                     </div>
                 </div>
                 <div className="doctorProfile__rate">
