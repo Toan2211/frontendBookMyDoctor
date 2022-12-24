@@ -26,7 +26,11 @@ function Register() {
             .string()
             .required('Vui lòng nhập Email')
             .email('Email không hợp lệ'),
-        password: yup.string().required('Vui lòng nhập mật khẩu'),
+        password: yup
+            .string()
+            .required('Vui lòng nhập mật khẩu')
+            .min(5, 'Mật khẩu 5 - 15 kí tự')
+            .max(15, 'Mật khẩu 5 - 15 kí tự'),
         birthday: yup.string().required('Vui lòng nhập ngày sinh'),
         passwordConfirm: yup
             .string()
@@ -63,9 +67,12 @@ function Register() {
                 const data = await authApi.signup(formData, {
                     headers: { 'Content-Type': 'multipart/form-data' }
                 })
-                toast.success('Đăng ký thành công, mời bạn vào mail để xác nhận', {
-                    position: toast.POSITION.BOTTOM_RIGHT
-                })
+                toast.success(
+                    'Đăng ký thành công, mời bạn vào mail để xác nhận',
+                    {
+                        position: toast.POSITION.BOTTOM_RIGHT
+                    }
+                )
                 navigate('/login')
             } catch (err) {
                 toast.error(err.message, {
@@ -128,7 +135,7 @@ function Register() {
                             title="Giới tính"
                             name="gender"
                             form={form}
-                            mode = "gender"
+                            mode="gender"
                             optionData={[
                                 { label: 'Nam', value: Number(1) },
                                 { label: 'Nữ', value: Number(0) }
@@ -174,7 +181,7 @@ function Register() {
                         <button
                             type="submit"
                             className="button-submit-login"
-                            disabled = {disableButton}
+                            disabled={disableButton}
                         >
                             Đăng ký
                         </button>
