@@ -18,7 +18,11 @@ function Login() {
             .string()
             .required('Vui lòng nhập Email')
             .email('Email không hợp lệ'),
-        password: yup.string().required('Vui lòng nhập mật khẩu')
+        password: yup
+            .string()
+            .required('Vui lòng nhập mật khẩu')
+            .min(5, 'Mật khẩu 5 - 15 kí tự')
+            .max(15, 'Mật khẩu 5 - 15 kí tự')
     })
     const form = useForm({
         defaultValues: {
