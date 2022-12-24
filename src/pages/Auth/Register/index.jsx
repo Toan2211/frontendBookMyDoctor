@@ -31,7 +31,8 @@ function Register() {
         passwordConfirm: yup
             .string()
             .required('Vui lòng nhập lại mật khẩu')
-            .oneOf([yup.ref('password')], 'Mật khẩu không khớp')
+            .oneOf([yup.ref('password')], 'Mật khẩu không khớp'),
+        address: yup.string().required('Vui lòng nhập địa chỉ')
     })
     const form = useForm({
         defaultValues: {
@@ -39,7 +40,7 @@ function Register() {
             email: '',
             firsname: '',
             lastname: '',
-            gender: '',
+            gender: '0',
             birthday: '',
             password: '',
             passwordConfirm: '',

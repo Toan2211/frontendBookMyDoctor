@@ -35,6 +35,7 @@ class Path {
         this.messageApp = '/messageApp/:id'
         this.returnPayment = '/payment/return'
         this.dashBoard = '/system/dashboard'
+        this.veirifyEmail = '/auth/verify-account'
     }
 }
 
