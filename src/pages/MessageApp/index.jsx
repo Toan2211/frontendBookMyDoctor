@@ -10,12 +10,14 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { BsImage } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import strftime from 'strftime'
 import convertTZ from 'utils/convertTZ'
 import './index.scss'
 import UserChatItem from './UserChatItem'
 
 function MesageApp() {
+    const listUser = useSelector(state => state.listUser.listUser)
     const socket = useContext(SocketContext)
     const userSendID = useSelector(state => state.user).profile.id
     const [message, setMessage] = useState('')
@@ -166,8 +168,19 @@ function MesageApp() {
                 }
             }
             else {
-                if (!listUserChat.find (user => user.id === userReceive.id))
+                if (!listUserChat.find (user => user.id === userReceive.id)) {
                     getListUserChat()
+                }
+                if (!(window.location.href).includes(`messageApp/${msg.from_user}`)
+                ) {
+                    const user = listUser.find(
+                        user => user.id === msg.from_user
+                    )
+                    const msgShow = `${user.firsname} ${user.lastname}: ${msg.text}`
+                    toast.info(msgShow, {
+                        position: toast.POSITION.BOTTOM_RIGHT
+                    })
+                }
             }
         })
 
