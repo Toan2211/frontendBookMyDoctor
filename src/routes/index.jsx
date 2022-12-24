@@ -41,12 +41,14 @@ import MesageApp from 'pages/MessageApp'
 import PaymentReturn from 'pages/PaymentReturn'
 import Dashboard from 'pages/Dashboard'
 import MesageAppLayout from 'pages/MessageAppLayout'
+import VerifyEmail from 'pages/Auth/VerifyEmail'
 
 
 function RoutesComponent() {
     return (
         <BrowserRouter>
             <Routes>
+                <Route path= {path.veirifyEmail} element = {<VerifyEmail />}/>
                 <Route element = {<MainLayout />}>
                     <Route path = {path.home} element = {<HomePage />}/>
                     <Route path = {path.detailDoctor} element = {<DetailDoctor />}/>

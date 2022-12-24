@@ -13,8 +13,16 @@ function EditPassword({ onClose }) {
     const dispatch = useDispatch()
     const { id } = useSelector(state => state.user.profile)
     const schema = yup.object().shape({
-        password: yup.string().required('Nhập mật khẩu cũ'),
-        newPassword: yup.string().required('Nhập mật khẩu mới'),
+        password: yup
+            .string()
+            .required('Nhập mật khẩu cũ')
+            .min(5, 'Mật khẩu 5 - 15 kí tự')
+            .max(15, 'Mật khẩu 5 - 15 kí tự'),
+        newPassword: yup
+            .string()
+            .required('Nhập mật khẩu mới')
+            .min(5, 'Mật khẩu 5 - 15 kí tự')
+            .max(15, 'Mật khẩu 5 - 15 kí tự'),
         retypeNewPassword: yup
             .string()
             .required('Vui lòng nhập lại mật khẩu')
