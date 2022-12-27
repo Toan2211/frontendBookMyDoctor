@@ -16,10 +16,10 @@ import DashboardItem from './DashboardItem'
 import './index.scss'
 import MultiBarChart from './MultiBarChart'
 import PieChart from './PieChart'
+import ProfitCompanyChart from './ProfitCompanyChart'
 
 function Dashboard() {
     const [isLoading, setIsLoading] = useState(true)
-    const [revenueByTime, setRevenueByTime] = useState([])
     const [listTime, setListTime] = useState(() => getArrDateInYear())
     const [date, setDate] = useState(() => new Date())
     const [countItems, setCountItems] = useState({
@@ -30,67 +30,6 @@ function Dashboard() {
         countAppoiment: 0
     })
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const dataClinic = await clinicApi.getAllClinic()
-                const dataHospital = await hospitalApi.getAllHospital()
-                const dataDoctor = await doctorApi.getAllDoctor()
-                const dataPatient = await patientsApi.getAllPatients({
-                    headers: {
-                        Authorization: `${localStorage.getItem(
-                            'access_token'
-                        )}`
-                    }
-                })
-                const dataAppointment =await appointmentApi.getAllAppointment({
-                    headers: {
-                        Authorization: `${localStorage.getItem(
-                            'access_token'
-                        )}`
-                    },
-                    params: { date: strftime('%Y-%m-%d', new Date()) }
-                })
-                setCountItems({
-                    countClinic: dataClinic.page.totalElements,
-                    countHospital: dataHospital.page.totalElements,
-                    countDoctor: dataDoctor.page.totalElements,
-                    countPatient: dataPatient.page.totalElements,
-                    countAppoiment: dataAppointment.page.totalElements
-                })
-            } catch (err) {
-                return err.message
-            }
-        })()
-    }, [])
-
-    const getRevenueByTime = queryParams => {
-        try {
-            const promise = revenueApi.getRevenueByTime({
-                headers: {
-                    Authorization: `${localStorage.getItem(
-                        'access_token'
-                    )}`
-                },
-                params: queryParams
-            })
-            return promise
-        } catch (err) {
-            return err.message
-        }
-    }
-    useEffect(() => {
-        const promises = []
-        listTime.forEach(time => {
-            promises.push(getRevenueByTime(time))
-        })
-        Promise.all(promises).then(resultArr => {
-            setRevenueByTime(resultArr.map(result => result.message))
-            getRevenueAllSpecialties(date)
-            setIsLoading(false)
-        })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
     const getRevenueAllSpecialties = month => {
         const endDateOfMonth = new Date(
             month.getFullYear(),
@@ -124,6 +63,70 @@ function Dashboard() {
         getRevenueAllSpecialties(month)
     }
     useEffect(() => {
+        getRevenueAllSpecialties(date)
+    }, [date])
+    //Get Profits of the Company
+    const [statisticalData, setStatisticalData] = useState([])
+    const getStatisticalInfo = (queryParams) => {
+        try {
+            const promise = revenueApi.getRevenueStatistical({
+                headers: {
+                    Authorization: `${localStorage.getItem(
+                        'access_token'
+                    )}`
+                },
+                params: queryParams
+            })
+            return promise
+        } catch (err) {
+            return err.message
+        }
+    }
+    useEffect(() => {
+        (async () => {
+            try {
+                const dataClinic = await clinicApi.getAllClinic()
+                const dataHospital = await hospitalApi.getAllHospital()
+                const dataDoctor = await doctorApi.getAllDoctor()
+                const dataPatient = await patientsApi.getAllPatients({
+                    headers: {
+                        Authorization: `${localStorage.getItem(
+                            'access_token'
+                        )}`
+                    }
+                })
+                const dataAppointment =await appointmentApi.getAllAppointment({
+                    headers: {
+                        Authorization: `${localStorage.getItem(
+                            'access_token'
+                        )}`
+                    },
+                    params: { date: strftime('%Y-%m-%d', new Date()) }
+                })
+                setCountItems({
+                    countClinic: dataClinic.page.totalElements,
+                    countHospital: dataHospital.page.totalElements,
+                    countDoctor: dataDoctor.page.totalElements,
+                    countPatient: dataPatient.page.totalElements,
+                    countAppoiment: dataAppointment.page.totalElements
+                })
+            } catch (err) {
+                return err.message
+            }
+        })()
+        const promises = []
+        listTime.forEach(time => {
+            promises.push(getStatisticalInfo(time))
+        })
+        Promise.all(promises).then(resultArr => {
+            setStatisticalData(resultArr.map(result => result.statistics))
+            setIsLoading(false)
+
+        })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    useEffect(() => {
         document.title = 'Tổng quan'
     }, [])
     if (isLoading) return <Loading />
@@ -138,8 +141,8 @@ function Dashboard() {
             </div>
             <div className="dashboard__chart">
                 <div className="dashboard__chart-barchart">
-                    {revenueByTime.length > 0 && (
-                        <MultiBarChart dataRevenue={revenueByTime} />
+                    {statisticalData.length > 0 && (
+                        <MultiBarChart dataRevenue={statisticalData} />
                     )}
                 </div>
                 <div className="dashboard__chart-piechart">
@@ -157,6 +160,10 @@ function Dashboard() {
                         )}
                     </div>
                 </div>
+
+            </div>
+            <div className= "dashboard__chart-profits-company">
+                <ProfitCompanyChart dataProfitsCompany = {statisticalData} />
             </div>
         </div>
     )

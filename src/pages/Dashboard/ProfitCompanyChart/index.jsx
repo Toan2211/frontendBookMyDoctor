@@ -18,8 +18,7 @@ ChartJS.register(
     Tooltip,
     Legend
 )
-
-function MultiBarChart({ dataRevenue }) {
+function ProfitCompanyChart({ dataProfitsCompany }) {
     const options = {
         responsive: true,
         plugins: {
@@ -28,7 +27,7 @@ function MultiBarChart({ dataRevenue }) {
             },
             title: {
                 display: true,
-                text: 'Biểu đồ doanh thu của bác sĩ'
+                text: 'Biểu đồ doanh thu của công ty'
             }
         }
     }
@@ -53,16 +52,12 @@ function MultiBarChart({ dataRevenue }) {
         datasets: [
             {
                 label: 'Doanh thu',
-                data: dataRevenue.map(data => data.sumRevenue),
-                backgroundColor: '#FFCD58'
-            },
-            {
-                label: 'Lợi nhuận',
-                data: dataRevenue.map(data => data.sumProfits),
+                data: dataProfitsCompany.map(data => data.companyProfit),
                 backgroundColor: '#369CE1'
             }
         ]
     }
     return <Bar options={options} data={data} />
 }
-export default MultiBarChart
+
+export default ProfitCompanyChart

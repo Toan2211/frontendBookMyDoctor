@@ -46,9 +46,15 @@ function MesageApp() {
         const userReceiveId = userReceive.id || userReceive.user_id
         try {
             const respone = await messageApi.getMessage({
-                from_user: userSendID,
-                to_user: userReceiveId,
-                page: page || 0
+                params: {
+                    from_user: userSendID,
+                    to_user: userReceiveId,
+                    page: page || 0
+                },
+                headers: {
+                    Authorization: `${localStorage.getItem(
+                        'access_token')}`
+                }
             })
             if (page)
                 setListMessageChat([...listMessageChat, ...respone.messages])

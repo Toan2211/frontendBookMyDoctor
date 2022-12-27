@@ -7,7 +7,7 @@ function SelectGroup({ dataSelectGroup, title, form, name }) {
             <header className="select-group__title">{title}</header>
             <select {...form.register(name)}>
                 {dataSelectGroup.map(item => (
-                    <option value={item.id} key={item.id}>
+                    <option value={item.id} key={item.id} selected = {form.getValues(name) == item.id} >
                         {item.name}
                     </option>
                 ))}
