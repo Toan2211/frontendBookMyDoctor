@@ -10,6 +10,11 @@ import Pagination from 'components/Pagination'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import paymentApi from 'api/paymentApi'
+import DashboardItem from 'pages/Dashboard/DashboardItem'
+import { FaUserNurse } from 'react-icons/fa'
+import { AiFillSchedule } from 'react-icons/ai'
+import { RiMoneyDollarCircleFill } from 'react-icons/ri'
+import Loading from 'components/Loading'
 
 function RevenueManagement() {
     const userInfo = useSelector(state => state.user.profile)
@@ -114,7 +119,7 @@ function RevenueManagement() {
     // phi
     useEffect(() => {
         if (userRole !== 'ROLE_DOCTOR') return
-        (async () => {
+        ;(async () => {
             try {
                 const respone = await paymentApi.getAmountFee(
                     userId,
@@ -132,6 +137,7 @@ function RevenueManagement() {
                     setLinkPayment(responeLink.message)
                 }
                 setTotalPayment(respone.message.totalPayment)
+                setIsLoading(false)
             } catch (err) {
                 toast.error(err.message, {
                     position: toast.POSITION.BOTTOM_RIGHT
@@ -139,39 +145,43 @@ function RevenueManagement() {
             }
         })()
     }, [userRole, userId])
-    // const getFeeDoctor = doctor_id => {
-    //     try {
-    //         const respone = paymentApi.getAmountFee(doctor_id, {
-    //             headers: {
-    //                 Authorization: `${localStorage.getItem(
-    //                     'access_token'
-    //                 )}`
-    //             }
-    //         })
-    //         return respone
-    //     } catch (err) {
-    //         console.log(err, 'err admin')
-    //     }
-    // }
+
+    const [isLoading, setIsLoading] = useState(true)
+    const [allDataRevenue, setAllDataRevenue] = useState([])
+    const [statistics, setStatistics] = useState([])
+    // Get all Revenue
     useEffect(() => {
-        if (listRevenue.length === 0) return
-        // const listCall = []
-        // listRevenue.forEach(item => {
-        //     console.log(item.doctor_id)
-        //     listCall.push(getFeeDoctor(item.doctor_id))
-        // })
-        // Promise.all(listCall).then(
-        //     result => console.log(result)
-        // )
-        // console.log('adjlsad')
-    }, [listRevenue])
+        if (userRole === 'ROLE_DOCTOR') return
+        (async () => {
+            try {
+                const respone =
+                    await revenueApi.getRevenueStatistical({
+                        params: { ...queryParams },
+                        headers: {
+                            Authorization: `${localStorage.getItem(
+                                'access_token'
+                            )}`
+                        }
+                    })
+                setStatistics(respone.statistics)
+                setAllDataRevenue(respone.data)
+                setIsLoading(false)
+            } catch (err) {
+                toast.error(err.message, {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                })
+            }
+        })()
+    }, [queryParams, userRole])
     useEffect(() => {
         document.title = 'Quản lí doanh thu'
     }, [])
+    if (isLoading) return <Loading />
     return (
         <div className="revenueManagement">
             <div className="revenueManagement__container">
                 <header>Quản lí doanh thu</header>
+
                 <div className="addMultiSchedule__content-left-time revenueManagement__action">
                     <div>
                         <label>Tháng/Năm</label>
@@ -179,6 +189,7 @@ function RevenueManagement() {
                             selected={date}
                             showMonthYearPicker
                             onChange={handleMonthChange}
+                            // dateFormat="yyyy-mm-dd"
                         />
                     </div>
                     {userRole === 'ROLE_DOCTOR' && (
@@ -200,6 +211,45 @@ function RevenueManagement() {
                         </div>
                     )}
                 </div>
+                {userRole !== 'ROLE_DOCTOR' && (
+                    <div className="dashboard__itemInstance dashboard__itemInstance--revenue">
+                        <DashboardItem
+                            name="Lợi nhuận công ty"
+                            count={statistics.companyProfit}
+                            icon={<RiMoneyDollarCircleFill />}
+                            money
+                        />
+                        <DashboardItem
+                            name="Phí chưa trả"
+                            count={statistics.sumUnpaid}
+                            icon={<RiMoneyDollarCircleFill />}
+                            money
+                        />
+                        <DashboardItem
+                            name="Doanh thu bác sĩ"
+                            count={statistics.sumRevenue}
+                            icon={<RiMoneyDollarCircleFill />}
+                            money
+                        />
+                        <DashboardItem
+                            name="Lợi nhuận bác sĩ"
+                            count={statistics.sumProfits}
+                            icon={<RiMoneyDollarCircleFill />}
+                            money
+                        />
+                        <DashboardItem
+                            name="Bác sĩ"
+                            count={statistics.numberOfDoctor}
+                            icon={<FaUserNurse />}
+                        />
+                        <DashboardItem
+                            name="Cuộc hẹn hoàn thành"
+                            count={statistics.sumAppointmentDone}
+                            icon={<AiFillSchedule />}
+                        />
+                    </div>
+                )}
+
                 <table>
                     <thead>
                         <tr>
@@ -210,23 +260,22 @@ function RevenueManagement() {
                             <th>Cuộc hẹn hoàn thành</th>
                             <th>Doanh thu (VND)</th>
                             <th>Lợi nhuận (VND)</th>
-                            <th>Phí chưa trả</th>
+                            {userRole !== 'ROLE_DOCTOR' && <th>Phí chưa trả</th> }
                         </tr>
                     </thead>
                     <tbody>
                         {userRole !== 'ROLE_DOCTOR' &&
-                            listRevenue.length > 0 &&
-                            listRevenue.map(item => (
+                            allDataRevenue.length > 0 &&
+                            allDataRevenue.map(item => (
                                 <tr key={item.id}>
                                     <td>{item.id}</td>
-                                    <td>{`${item['user.firsname']} ${item['user.lastname']}`}</td>
-                                    <td>
-                                        {item['user.phoneNumber']}
-                                    </td>
-                                    <td>{item['user.email']}</td>
+                                    <td>{item.name}</td>
+                                    <td>{item.phoneNumber}</td>
+                                    <td>{item.email}</td>
                                     <td>{item.done}</td>
                                     <td>{item.revenue}</td>
                                     <td>{item.profits}</td>
+                                    <td>{item.unpaid}</td>
                                 </tr>
                             ))}
                         {userRole === 'ROLE_DOCTOR' && (

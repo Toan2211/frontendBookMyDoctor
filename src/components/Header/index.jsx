@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import images from 'assets'
 import './index.scss'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
@@ -10,6 +10,7 @@ import { useSystemAuthenticated } from 'hooks/useSystemAuthenticated'
 import { IoIosNotifications } from 'react-icons/io'
 import Notification from './components/Notification'
 import { AiFillMessage } from 'react-icons/ai'
+import useComponentVisible from 'hooks/useComponentVisible'
 function Header() {
     const isSystem = useSystemAuthenticated()
     const location = useLocation()
@@ -46,6 +47,12 @@ function Header() {
         setShowDropdown(false)
     }
     const handleToMessage = () => navigate(path.messageAppLayout)
+
+    const { ref, isComponentVisible } = useComponentVisible(false)
+    useEffect(() => {
+        if (isComponentVisible) setShowNotification(true)
+        else setShowNotification(false)
+    }, [isComponentVisible])
     return (
         <header className="header">
             <div className="header__left">
@@ -108,7 +115,7 @@ function Header() {
                 <div className="header__action">
                     {userData.id && (
                         <>
-                            <div className="header__action-notify">
+                            <div className="header__action-notify" ref={ref}>
                                 <span className="header__action-notify-count">
                                     {notificationCount}
                                 </span>
@@ -116,7 +123,7 @@ function Header() {
                                     <IoIosNotifications />
                                 </span>
 
-                                {showNotification && (
+                                {showNotification && isComponentVisible && (
                                     <div className="header__action-notify-area">
                                         <Notification />
                                     </div>
@@ -127,7 +134,7 @@ function Header() {
                                     <AiFillMessage />
                                 </span>
                             </div>
-                            <div className="header__profile">
+                            <div className="header__profile" >
                                 <img
                                     className="header__profile-img"
                                     src={userData.image}
