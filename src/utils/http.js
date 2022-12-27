@@ -17,7 +17,7 @@ class Http {
                 return result
             },
             error => {
-                if (error.response.status === 403) {
+                if (error.response.status === 403 || error.response.status === 401) {
                     localStorage.removeItem('access_token')
                     localStorage.removeItem('user')
                 }
