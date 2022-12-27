@@ -1,9 +1,9 @@
 .dashboard {
     padding-top: 40px;
     &__itemInstance {
-        margin-bottom: 80px;
+        margin-bottom: 40px;
         display: flex;
-        gap: 20px;
+        gap: 10px;
     }
     &__chart {
         display: flex;
@@ -11,7 +11,6 @@
         width: 100%;
         &-barchart {
             flex: 2;
-            // width: 30vw;
             background-color: #FFFFFF;
             box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 25px;
             padding: 20px;
@@ -25,6 +24,16 @@
             align-items: center;
             background-color: #FFFFFF;
             box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 25px;
+            padding: 20px;
+            border-radius: 4px;
+        }
+        &-profits-company {
+
+            width: 65%;
+            // margin: 0 auto;
+            margin-top: 40px;
+            background-color: #FFFFFF;
+            box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 25px;
             padding: 20px;
             border-radius: 4px;
         }

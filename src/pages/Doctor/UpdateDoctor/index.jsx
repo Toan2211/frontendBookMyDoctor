@@ -93,8 +93,8 @@ function UpdateDoctor() {
     }
     useEffect(() => {
         (async () => {
-            const dataHospitalAPI = await hospitalApi.getAllHospital()
-            const dataClinicAPI = await clinicApi.getAllClinic()
+            const dataHospitalAPI = await hospitalApi.getAllHospital({ limit: 100 })
+            const dataClinicAPI = await clinicApi.getAllClinic({ limit: 100 })
             const dataSpecialist= await specialistApi.getAllSpecialist()
 
             setDataHospital(dataHospitalAPI.hospital)

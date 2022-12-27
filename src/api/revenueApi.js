@@ -12,6 +12,9 @@ const revenueApi = {
     },
     getRevenueAllSpecialist(config) {
         return http.get('/revenue/specialties', config)
+    },
+    getRevenueStatistical(config) {
+        return http.get('/revenue/get-statistical-info', config)
     }
 }
 export default revenueApi
