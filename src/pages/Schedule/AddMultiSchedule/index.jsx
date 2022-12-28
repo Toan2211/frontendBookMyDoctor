@@ -57,6 +57,19 @@ function AddMultiSchedule({ onClose }) {
             })
             return
         }
+        if(cost < 100000 || cost >50000000) {
+
+            toast.error('Giá tiền khám vượt mức giới hạn', {
+
+                position: toast.POSITION.BOTTOM_RIGHT,
+
+                autoClose: 2000
+
+            })
+
+            return
+
+        }
         const valueToSubmit = {
             weekdays: [],
             schedules: [],
