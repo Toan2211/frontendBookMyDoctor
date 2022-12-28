@@ -263,10 +263,10 @@ function MesageApp() {
                         {
                             listMessageChat.length > 0 && listMessageChat.sort((item, item1) => item.id - item1.id).map(mess =>
                                 <li key={mess.id} className = {`${mess.from_user === userSendID ? 'li-send' : 'li-receive'}`}>
-                                    <span className = {`${mess.from_user === userSendID ? 'text-send' : 'text-receive'}`}>{mess.text}</span>
-                                    <span>{mess.image && <img src={mess.image} onClick = {() => showFullImage(mess.image)}/>}</span>
-                                    <span>{strftime('%d/%m/%Y, %H:%M:%S', convertTZ(mess.date))}</span>
-                                </li>)
+                                {mess.text && <span className = {`${mess.from_user === userSendID ? 'text-send' : 'text-receive'}`}>{mess.text}</span>}
+                                {mess.image && <span><img src={mess.image} onClick = {() => showFullImage(mess.image)}/></span>}
+                                <span>{strftime('%d/%m/%Y, %H:%M:%S', convertTZ(mess.date))}</span>
+                            </li>)
                         }
                         <div ref={messagesEndRef}></div>
                     </ul>
