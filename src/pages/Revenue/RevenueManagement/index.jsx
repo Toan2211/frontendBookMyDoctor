@@ -189,6 +189,7 @@ function RevenueManagement() {
                             selected={date}
                             showMonthYearPicker
                             onChange={handleMonthChange}
+                            dateFormat="MMMM yyyy"
                             // dateFormat="yyyy-mm-dd"
                         />
                     </div>
