@@ -33,7 +33,7 @@ class Path {
         this.myAppointment = '/myAppointment'
         this.messageAppLayout = '/messageApp'
         this.messageApp = '/messageApp/:id'
-        this.returnPayment = '/payment/return'
+        this.returnPayment = '/payment-momo/return'
         this.dashBoard = '/system/dashboard'
         this.veirifyEmail = '/auth/verify-account'
     }

@@ -1,9 +1,9 @@
 import React from 'react'
 import formatter from 'utils/formatMoney'
 import './index.scss'
-function DashboardItem({ count, name, icon, money }) {
+function DashboardItem({ count, name, icon, money, countShow }) {
     return (
-        <div className="dashboard__itemInstance-item">
+        <div className={`${countShow ? 'dashboard__itemInstance-item-4-item ': ''}dashboard__itemInstance-item`}>
             <div className="dashboard__itemInstance-item-content">
                 <span>{money ? formatter.format(count) : count}</span>
                 <span>{name}</span>
@@ -15,6 +15,9 @@ function DashboardItem({ count, name, icon, money }) {
             </div>
         </div>
     )
+
 }
+
+
 
 export default DashboardItem
