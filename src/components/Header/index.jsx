@@ -39,7 +39,10 @@ function Header() {
         setShowDropdown(false)
     }
     const handleSystem = () => {
-        navigate(path.system)
+        if(userData.role.name === 'ROLE_ADMIN')
+            navigate(path.dashBoard)
+        else
+            navigate(path.appointmentManagement)
         setShowDropdown(false)
     }
     const handleAppoinment = () => {
