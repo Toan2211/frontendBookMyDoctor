@@ -24,14 +24,14 @@ function DoctorProfile({ doctor, dataHref }) {
                             {doctor.user.lastname}
                         </span>
                         <p>{doctor.description}</p>
-                        <LikeShare dataHref = {dataHref}/>
-                        <button className = "btnReview" onClick={handleMessage}>Nhắn tin</button>
+                        <LikeShare dataHref={dataHref} />
+                        <button className="btnReview" onClick={handleMessage}>Nhắn tin</button>
 
                     </div>
                 </div>
                 <div className="doctorProfile__rate">
                     <span className="doctorProfile__rate-point">
-                        {doctor.rate} trên 5
+                        {doctor.rate > 0 ? doctor.rate.toFixed(1) : doctor.rate} / 5
                     </span>
                     <span className="doctorProfile__rate-count">
                         {doctor.numberOfReviews} đánh giá
