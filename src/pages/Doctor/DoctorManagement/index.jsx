@@ -9,6 +9,9 @@ import SearchInput from 'components/SearchInput'
 import { useDebounce } from 'hooks/useDebounce'
 import Loading from 'components/Loading'
 import Pagination from 'components/Pagination'
+import SwitchButton from 'components/SwitchButton'
+import userApi from 'api/userApi'
+import { toast } from 'react-toastify'
 
 function DoctorManagement() {
     const [isLoading, setIsLoading] = useState(true)
@@ -40,7 +43,33 @@ function DoctorManagement() {
             key: params.key || ''
         }
     }, [location.search])
+    const handleChangeStatus = (id, status) => {
+        (async () => {
+            try {
+                await userApi.toggleStatusUser(id, status, {
+                    headers: {
+                        Authorization: `${localStorage.getItem(
+                            'access_token'
+                        )}`
+                    }
+                })
+                const arrTemp = [...dataListDoctors]
+                const doctorItem = arrTemp.find(x => x.user.id === id)
+                doctorItem.user.status = !status
+                setDataListDoctors(arrTemp)
+                toast.success('Thay đổi trạng thái thành công', {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                })
 
+            }
+            catch (err) {
+                console.log(err)
+                toast.error(err.message, {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                })
+            }
+        })()
+    }
     useEffect(() => {
         const params = { ...queryParams, key: debounceValue, page: 0 }
         navigate(`?${queryString.stringify(params)}`)
@@ -98,6 +127,7 @@ function DoctorManagement() {
                                 <th>Bệnh viện </th>
                                 <th>Vi phạm</th>
                                 <th>Chỉnh sửa </th>
+                                <th>Trạng thái</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -139,6 +169,17 @@ function DoctorManagement() {
                                                     <AiFillEdit />
                                                 </span>
                                             </Link>
+                                        </td>
+                                        <td>
+                                        <SwitchButton
+                                            id={doctor.user.id}
+                                            status={
+                                                doctor.user.status
+                                            }
+                                            handleChangeStatus={
+                                                handleChangeStatus
+                                            }
+                                        />
                                         </td>
                                     </tr>
                                 ))}
