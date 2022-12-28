@@ -152,6 +152,7 @@ function Dashboard() {
                             selected={date}
                             showMonthYearPicker
                             onChange={handleMonthChange}
+                            dateFormat="MM / yyyy"
                         />
                     </div>
                     <div>

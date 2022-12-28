@@ -189,7 +189,7 @@ function RevenueManagement() {
                             selected={date}
                             showMonthYearPicker
                             onChange={handleMonthChange}
-                        // dateFormat="yyyy-mm-dd"
+                            dateFormat="MM / yyyy"
                         />
                     </div>
                     {userRole === 'ROLE_DOCTOR' && (
