@@ -1,9 +1,9 @@
 .dashboard {
     padding-top: 40px;
     &__itemInstance {
-        margin-bottom: 40px;
+        margin-bottom: 20px;
         display: flex;
-        gap: 10px;
+        gap: 20px;
     }
     &__chart {
         display: flex;
@@ -16,6 +16,7 @@
             padding: 20px;
             border-radius: 4px;
         }
+
         &-piechart {
             flex: 1;
             display: flex;
@@ -27,8 +28,8 @@
             padding: 20px;
             border-radius: 4px;
         }
-        &-profits-company {
 
+        &-profits-company {
             width: 65%;
             // margin: 0 auto;
             margin-top: 40px;
@@ -37,5 +38,7 @@
             padding: 20px;
             border-radius: 4px;
         }
+
     }
+
 }
