@@ -164,6 +164,9 @@ button {
     font-size: 14px;
     width: 100px;
     text-align: center;
+    &--revenue {
+      width: 120px;
+    }
   }
   &__pending {
     padding: 4px 4px;

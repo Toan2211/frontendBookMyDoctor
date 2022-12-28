@@ -119,31 +119,31 @@ function RevenueManagement() {
     // phi
     useEffect(() => {
         if (userRole !== 'ROLE_DOCTOR') return
-        ;(async () => {
-            try {
-                const respone = await paymentApi.getAmountFee(
-                    userId,
-                    {
-                        headers: {
-                            Authorization: `${localStorage.getItem(
-                                'access_token'
-                            )}`
+            ;(async () => {
+                try {
+                    const respone = await paymentApi.getAmountFee(
+                        userId,
+                        {
+                            headers: {
+                                Authorization: `${localStorage.getItem(
+                                    'access_token'
+                                )}`
+                            }
                         }
+                    )
+                    if (respone.message.totalPayment > 0) {
+                        const responeLink =
+                            await paymentApi.getLinkPayment(userId)
+                        setLinkPayment(responeLink.message)
                     }
-                )
-                if (respone.message.totalPayment > 0) {
-                    const responeLink =
-                        await paymentApi.getLinkPayment(userId)
-                    setLinkPayment(responeLink.message)
+                    setTotalPayment(respone.message.totalPayment)
+                    setIsLoading(false)
+                } catch (err) {
+                    toast.error(err.message, {
+                        position: toast.POSITION.BOTTOM_RIGHT
+                    })
                 }
-                setTotalPayment(respone.message.totalPayment)
-                setIsLoading(false)
-            } catch (err) {
-                toast.error(err.message, {
-                    position: toast.POSITION.BOTTOM_RIGHT
-                })
-            }
-        })()
+            })()
     }, [userRole, userId])
 
     const [isLoading, setIsLoading] = useState(true)
@@ -190,7 +190,6 @@ function RevenueManagement() {
                             showMonthYearPicker
                             onChange={handleMonthChange}
                             dateFormat="MM / yyyy"
-                            // dateFormat="yyyy-mm-dd"
                         />
                     </div>
                     {userRole === 'ROLE_DOCTOR' && (
@@ -213,42 +212,67 @@ function RevenueManagement() {
                     )}
                 </div>
                 {userRole !== 'ROLE_DOCTOR' && (
+                    <>
                     <div className="dashboard__itemInstance dashboard__itemInstance--revenue">
                         <DashboardItem
                             name="Lợi nhuận công ty"
                             count={statistics.companyProfit}
                             icon={<RiMoneyDollarCircleFill />}
                             money
+                            countShow
+                        />
+                        <DashboardItem
+                            name="Phí hằng tháng"
+                            count={statistics.sumMonthlyFee}
+                            icon={<RiMoneyDollarCircleFill />}
+                            money
+                            countShow
                         />
                         <DashboardItem
                             name="Phí chưa trả"
                             count={statistics.sumUnpaid}
                             icon={<RiMoneyDollarCircleFill />}
                             money
+                            countShow
                         />
                         <DashboardItem
+                            name="Phí đã trả"
+                            count={statistics.sumPaid}
+                            icon={<RiMoneyDollarCircleFill />}
+                            money
+                            countShow
+                        />
+
+                    </div>
+                    <div className="dashboard__itemInstance dashboard__itemInstance--revenue">
+                    <DashboardItem
                             name="Doanh thu bác sĩ"
                             count={statistics.sumRevenue}
                             icon={<RiMoneyDollarCircleFill />}
                             money
+                            countShow
                         />
                         <DashboardItem
                             name="Lợi nhuận bác sĩ"
                             count={statistics.sumProfits}
                             icon={<RiMoneyDollarCircleFill />}
                             money
+                            countShow
                         />
                         <DashboardItem
                             name="Bác sĩ"
                             count={statistics.numberOfDoctor}
                             icon={<FaUserNurse />}
+                            countShow
                         />
                         <DashboardItem
                             name="Cuộc hẹn hoàn thành"
                             count={statistics.sumAppointmentDone}
                             icon={<AiFillSchedule />}
+                            countShow
                         />
                     </div>
+                    </>
                 )}
 
                 <table>
@@ -261,15 +285,16 @@ function RevenueManagement() {
                             <th>Cuộc hẹn hoàn thành</th>
                             <th>Doanh thu (VND)</th>
                             <th>Lợi nhuận (VND)</th>
-                            {userRole !== 'ROLE_DOCTOR' && <th>Phí chưa trả</th> }
+                            {userRole !== 'ROLE_DOCTOR' && <th>Phí chưa trả</th>}
+                            {userRole !== 'ROLE_DOCTOR' && <th>Phí hằng tháng (300K)</th>}
                         </tr>
                     </thead>
                     <tbody>
                         {userRole !== 'ROLE_DOCTOR' &&
                             allDataRevenue.length > 0 &&
                             allDataRevenue.map(item => (
-                                <tr key={item.id}>
-                                    <td>{item.id}</td>
+                                <tr key={item.doctor_id}>
+                                    <td>{item.doctor_id}</td>
                                     <td>{item.name}</td>
                                     <td>{item.phoneNumber}</td>
                                     <td>{item.email}</td>
@@ -277,6 +302,9 @@ function RevenueManagement() {
                                     <td>{item.revenue}</td>
                                     <td>{item.profits}</td>
                                     <td>{item.unpaid}</td>
+                                    {
+                                        item.monthlyFee > 0 ? <td><span className="label__confirm">Đã thanh toán</span></td> : <td><span className="label__cancel label__cancel--revenue">Chưa thanh toán</span></td>
+                                    }
                                 </tr>
                             ))}
                         {userRole === 'ROLE_DOCTOR' && (
@@ -296,14 +324,14 @@ function RevenueManagement() {
                 </table>
                 {userRole !== 'ROLE_DOCTOR' &&
                     listRevenue.length > 0 && (
-                    <div className="scheduleDoctorManagement__pagination">
-                        <Pagination
-                            totalPage={pagination.totalPages}
-                            currentPage={pagination.page}
-                            onClick={handlePageChange}
-                        />
-                    </div>
-                )}
+                        <div className="scheduleDoctorManagement__pagination">
+                            <Pagination
+                                totalPage={pagination.totalPages}
+                                currentPage={pagination.page}
+                                onClick={handlePageChange}
+                            />
+                        </div>
+                    )}
             </div>
         </div>
     )
